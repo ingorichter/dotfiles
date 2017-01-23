@@ -87,3 +87,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Make n node version manager work
+PREFIX=$HOME
+N_PREFIX=$HOME
+PATH=$PATH:$PREFIX/bin
+export PREFIX N_PREFIX PATH
