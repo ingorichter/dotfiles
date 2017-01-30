@@ -3,6 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/opt/homebrew-cask/Caskroom"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -51,14 +52,14 @@ ZSH_THEME="nick"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git npm brew)
 
+
+# User configuration
 source $ZSH/oh-my-zsh.sh
 
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
-
-# User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -88,7 +89,20 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Make n node version manager work
-PREFIX=$HOME
-N_PREFIX=$HOME
-PATH=$PATH:$PREFIX/bin
-export PREFIX N_PREFIX PATH
+export PREFIX=$HOME/n
+export N_PREFIX=$HOME
+export PATH=$PATH:$PREFIX/bin
+# export PREFIX N_PREFIX PATH
+# The following lines were added by compinstall
+zstyle :compinstall filename '~/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+HISTFILE=~/.zsh-history
+HISTSIZE=4000
+SAVEHIST=4000
+setopt appendhistory autocd extendedglob notify
+unsetopt beep
+bindkey -e
+# End of lines added by compinstall
