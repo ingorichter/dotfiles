@@ -38,7 +38,7 @@ printErrorMessage() {
 
 link_file() {
 	printf "Create link from ${GREEN}$2${NORMAL} to ${GREEN}$1${NORMAL}\n"
-	ln -s $1 $2
+	ln -sf $1 $2
 }
 
 linkDotFiles() {
