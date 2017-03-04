@@ -41,9 +41,16 @@ link_file() {
 	ln -sf $1 $2
 }
 
+unlink_file() {
+	printf "Remove ${RED}$1${NORMAL}\n"
+	rm $1
+}
+
 linkDotFiles() {
 	link_file "${DOTFILES}/zsh/zshrc" "${HOME}/.zshrc"
-	# ln -s "${DOTFILES}/gitconfig" "${HOME}/.gitconfig"
+	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
+	link_file "${DOTFILES}/git/gitignore_global" "${HOME}/.gitignore_global"
+	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
 	# ln -s "${DOTFILES}/Gdbinit/gdbinit" "${HOME}/.gdbinit"
 	# ln -s "${DOTFILES}/ssh-keys-macpro" "${HOME}/.ssh"
 	# ln -s "${DOTFILES}/tmux.conf" "${HOME}/.tmux.conf"
@@ -60,6 +67,9 @@ linkDotFiles() {
 unlinkDotFiles() {
 	rm "${HOME}/.zshrc"
 	rm "${HOME}/.oh-my-zsh/themes/nick.zsh-theme"
+
+	unlink_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
+	unlink_file "${DOTFILES}/git/gitignore_global" "${HOME}/.gitignore_global"
 
 	# setup all mvim related stuff
 	# rm "${HOME}/.vimrc"

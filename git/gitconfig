@@ -1,0 +1,72 @@
+## http://git-scm.com/book/en/Customizing-Git-Git-Configuration
+[user]
+	name = Ingo Richter
+	email = ingo.richter+github@gmail.com
+
+[mergetool "p4merge"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge $BASE $REMOTE $LOCAL $MERGED
+
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[color "branch"]
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
+
+[color "status"]
+	added = "green bold 22"
+	changed = "yellow bold"
+	untracked = "red bold"
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+
+[color "diff-highlight"]
+        oldNormal = red bold
+        oldHighlight = "red bold 52"
+        newNormal = "green bold"
+        newHighlight = "green bold 22"
+
+[core]
+	excludesfile = /Users/irichter/.gitignore_global
+	editor = vim
+	pager = diff-highlight | diff-so-fancy | less --tabs=1,5 -R
+
+[push]
+	default = current
+
+[alias]
+	ci = commit
+	br = branch
+	st = status
+	co = checkout
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+
+[url "https://"]
+	insteadOf = git://
+
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+
+[diff]
+    algorithm = minimal
+    compactionHeuristic = true
+    renames = true
