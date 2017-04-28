@@ -89,10 +89,9 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Make n node version manager work
-export PREFIX=$HOME/n
-export N_PREFIX=$HOME
-export PATH=$PATH:$PREFIX/bin
-# export PREFIX N_PREFIX PATH
+export N_PREFIX=$HOME/n
+export PATH=$PATH:$N_PREFIX/bin
+export N_PREFIX PATH
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
