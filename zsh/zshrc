@@ -52,8 +52,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git npm brew)
-
+# thefuck
+plugins=(git npm brew docker go node osx tmux xcode yarn)
 
 # User configuration
 source $ZSH/oh-my-zsh.sh
@@ -92,6 +92,7 @@ source $ZSH/oh-my-zsh.sh
 export N_PREFIX=$HOME/n
 export PATH=$PATH:$N_PREFIX/bin
 export N_PREFIX PATH
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
@@ -105,3 +106,8 @@ setopt appendhistory autocd extendedglob notify
 unsetopt beep
 bindkey -e
 # End of lines added by compinstall
+
+# Ingo
+# import my stuff
+fpath=(/usr/local/share/zsh-completions $fpath)
+source ${HOME}/.zprofile

@@ -51,6 +51,9 @@ linkDotFiles() {
 	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
 	link_file "${DOTFILES}/git/gitignore_global" "${HOME}/.gitignore_global"
 	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
+	link_file "${DOTFILES}/asciidoc" "${HOME}/.asciidoc"
+	link_file "${DOTFILES}/iterm/com.googlecode.iterm2.plist" "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
+
 	# ln -s "${DOTFILES}/Gdbinit/gdbinit" "${HOME}/.gdbinit"
 	# ln -s "${DOTFILES}/ssh-keys-macpro" "${HOME}/.ssh"
 	# ln -s "${DOTFILES}/tmux.conf" "${HOME}/.tmux.conf"
@@ -68,9 +71,11 @@ unlinkDotFiles() {
 	rm "${HOME}/.zshrc"
 	rm "${HOME}/.oh-my-zsh/themes/nick.zsh-theme"
 
-	unlink_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
-	unlink_file "${DOTFILES}/git/gitignore_global" "${HOME}/.gitignore_global"
-
+	unlink_file "${HOME}/.gitconfig"
+	unlink_file "${HOME}/.gitignore_global"
+	unlink_file "${HOME}/.asciidoc"
+	unlink_file "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
+	
 	# setup all mvim related stuff
 	# rm "${HOME}/.vimrc"
 }
