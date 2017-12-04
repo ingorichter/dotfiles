@@ -1,0 +1,41 @@
+# Defaults
+DEV_ROOT=${HOME}/develop
+
+# Setup dev environment
+DEV=${DEV_ROOT}
+TOOLS=${DEV}/tools
+GROOVY=${TOOLS}/groovy
+MAVEN=${TOOLS}/maven
+GOPATH=${DEV_ROOT}/go-workspace
+GOBIN=$(go env GOPATH)/bin
+
+# specify JAVA_HOME. Since Java 1.9 is available, I'm going with it
+JAVA_HOME=$(/usr/libexec/java_home -v 9)
+
+# Modify the $PATH
+PATH=${PATH}:/usr/local/bin:/usr/local/sbin:${GROOVY}/bin:${MAVEN}/bin:$GOBIN
+
+# load machine specific configuration
+if [ -e "${HOME}/Dropbox/Dotfiles/`hostname -s`" ]; then
+  source "${HOME}/Dropbox/Dotfiles/`hostname -s`"
+fi
+
+# Alias definition
+for alias in $(find ~/.alias.d/ -type f -not -name .DS_Store)
+do
+    source "$alias"
+done
+
+export PATH JAVA_HOME GOPATH
+
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# setup rbenv
+#eval "$(rbenv init -)"
+
+# setup rvm
+#source ${HOME}/.rvm/scripts/rvm
+
+# setup nvm
+# source $(brew --prefix nvm)/nvm.sh
+# export NVM_DIR=~/.nvm

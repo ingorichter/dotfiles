@@ -1,0 +1,7 @@
+alias fixls='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -all system,local,user'
+alias vcs='codesign --display --verbose=4'
+alias jcli='java -jar ${DEV}/fun/jenkins-cli.jar -s '
+
+alias adbgist='GITHUB_URL=https://git.corp.adobe.com/ /usr/local/bin/gist -c'
+
+alias webserver='python -m SimpleHTTPServer'

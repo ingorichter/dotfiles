@@ -1,0 +1,2 @@
+# checkout a branch for tracking
+alias gtb='git checkout -t '

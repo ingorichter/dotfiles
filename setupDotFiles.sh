@@ -48,11 +48,13 @@ unlink_file() {
 
 linkDotFiles() {
 	link_file "${DOTFILES}/zsh/zshrc" "${HOME}/.zshrc"
+	link_file "${DOTFILES}/zsh/zprofile" "${HOME}/.zprofile"
 	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
 	link_file "${DOTFILES}/git/gitignore_global" "${HOME}/.gitignore_global"
 	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
 	link_file "${DOTFILES}/asciidoc" "${HOME}/.asciidoc"
 	link_file "${DOTFILES}/iterm/com.googlecode.iterm2.plist" "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
+	link_file "${DOTFILES}/alias.d" "${HOME}/.alias.d"
 
 	# ln -s "${DOTFILES}/Gdbinit/gdbinit" "${HOME}/.gdbinit"
 	# ln -s "${DOTFILES}/ssh-keys-macpro" "${HOME}/.ssh"
@@ -69,11 +71,13 @@ linkDotFiles() {
 
 unlinkDotFiles() {
 	rm "${HOME}/.zshrc"
+	rm "${HOME}/.zprofile"
 	rm "${HOME}/.oh-my-zsh/themes/nick.zsh-theme"
 
 	unlink_file "${HOME}/.gitconfig"
 	unlink_file "${HOME}/.gitignore_global"
 	unlink_file "${HOME}/.asciidoc"
+	unlink_file "${HOME}/.alias.d"
 	unlink_file "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
 	
 	# setup all mvim related stuff
