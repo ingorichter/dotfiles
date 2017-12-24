@@ -55,6 +55,7 @@ linkDotFiles() {
 	link_file "${DOTFILES}/asciidoc" "${HOME}/.asciidoc"
 	link_file "${DOTFILES}/iterm/com.googlecode.iterm2.plist" "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
 	link_file "${DOTFILES}/alias.d" "${HOME}/.alias.d"
+	link_file "${DOTFILES}/emacs" "${HOME}/.emacs"
 
 	# ln -s "${DOTFILES}/Gdbinit/gdbinit" "${HOME}/.gdbinit"
 	# ln -s "${DOTFILES}/ssh-keys-macpro" "${HOME}/.ssh"
@@ -79,7 +80,8 @@ unlinkDotFiles() {
 	unlink_file "${HOME}/.asciidoc"
 	unlink_file "${HOME}/.alias.d"
 	unlink_file "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
-	
+	unlink_file "${HOME}/.emacs"
+
 	# setup all mvim related stuff
 	# rm "${HOME}/.vimrc"
 }
