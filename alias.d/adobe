@@ -1,0 +1,9 @@
+#!/bin/bash
+# print the current temp adobe Analytics logfile
+alias paalog='tail -n 30 -f $HOME/Library/Logs/Adobe/LogTransport2CC/PreRelease/ulog*tmp'
+
+# remove all adobe Analytics logfiles
+alias rmaalog='rm -irf $HOME/Library/Logs/Adobe/LogTransport2CC/PreRelease/ulog*[xmltmp]'
+
+# list all adobe Analytics logfiles
+alias lsaalog='ls -al $HOME/Library/Logs/Adobe/LogTransport2CC/PreRelease/ulog*[xmltmp]'
