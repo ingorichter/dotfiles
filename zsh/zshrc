@@ -107,11 +107,7 @@ unsetopt beep
 bindkey -e
 # End of lines added by compinstall
 
-# Ingo
-# import my stuff
-eval "$(rbenv init -)"
-
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # shellcheck source=/dev/null
-[ -f "${HOME}/.zprofile" ] && source "${HOME}/.zprofile"
+

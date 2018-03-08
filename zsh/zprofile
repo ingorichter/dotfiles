@@ -13,11 +13,11 @@ GOBIN=$(go env GOPATH)/bin
 JAVA_HOME=$(/usr/libexec/java_home -v 9)
 
 # Modify the $PATH
-PATH=${PATH}:/usr/local/bin:/usr/local/sbin:${GROOVY}/bin:${MAVEN}/bin:$GOBIN
+PATH=${PATH}:${GROOVY}/bin:${MAVEN}/bin:$GOBIN
 
 # load machine specific configuration
-if [ -e "${HOME}/Dropbox/Dotfiles/`hostname -s`" ]; then
-  source "${HOME}/Dropbox/Dotfiles/`hostname -s`"
+if [ -e "${HOME}/Dropbox/Dotfiles/$(hostname -s)" ]; then
+  source "${HOME}/Dropbox/Dotfiles/$(hostname -s)"
 fi
 
 # Alias definition
@@ -27,6 +27,10 @@ do
 done
 
 export PATH JAVA_HOME GOPATH
+
+# Ingo
+# import my stuff
+eval "$(rbenv init -)"
 
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
