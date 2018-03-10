@@ -33,17 +33,17 @@ else
 fi
 
 printErrorMessage() {
-	printf "\e[0;31m  [✖] $1 $2\e[0m\n"
+	printf "%s  [✖] %s %s %s\\n" ${RED} "$1" "$2" ${NORMAL}
 }
 
 link_file() {
-	printf "Create link from ${GREEN}$2${NORMAL} to ${GREEN}$1${NORMAL}\n"
-	ln -sf $1 $2
+	printf "Create link from %s%s%s to %s%s%s\\n" ${GREEN} "$2" ${NORMAL} ${GREEN} "$1" ${NORMAL}
+	ln -sf "$1" "$2"
 }
 
 unlink_file() {
-	printf "Remove ${RED}$1${NORMAL}\n"
-	rm $1
+	printf "Remove %s%s%s\\n" ${RED} "$1" ${NORMAL}
+	rm "$1"
 }
 
 linkDotFiles() {
