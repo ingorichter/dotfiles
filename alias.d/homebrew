@@ -1,1 +1,1 @@
-alias bcoutdated='brew cask outdated | awk '{ print $1 }' | xargs brew cask reinstall'
+alias bcoutdated="brew cask outdated | awk '{ print $1 }' | xargs brew cask reinstall"
