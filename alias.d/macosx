@@ -5,3 +5,7 @@ alias jcli='java -jar ${DEV}/fun/jenkins-cli.jar -s '
 alias adbgist='GITHUB_URL=https://git.corp.adobe.com/ /usr/local/bin/gist -c'
 
 alias webserver='python -m SimpleHTTPServer'
+
+# zip recursively without the mac xattr files/folders
+# maczip name.zip folder2zip
+alias maczip='zip -X -r '

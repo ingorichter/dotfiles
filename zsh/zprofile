@@ -29,13 +29,13 @@ done
 export PATH JAVA_HOME GOPATH
 
 # Ingo
-# import my stuff
+# setup rbenv
 eval "$(rbenv init -)"
 
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+# setup pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
-# setup rbenv
-#eval "$(rbenv init -)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 # setup rvm
 #source ${HOME}/.rvm/scripts/rvm
