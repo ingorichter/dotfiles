@@ -53,7 +53,7 @@
  '(package-install-selected-packages (quote (which-key try use-package org-bullets)))
  '(package-selected-packages
    (quote
-    (rust-mode restclient treemacs projectile magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
+    (yasnippet-snippets yasnippets-snippets counsel-projectile counsel-projectil ivy rust-mode restclient treemacs projectile magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(projectile-mode t nil (projectile))
  '(show-paren-mode t)
@@ -78,22 +78,23 @@
      (320 . "#8CD0D3")
      (340 . "#94BFF3")
      (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
+ '(vc-annotate-very-old-color "#DC8CC3")
+ '(yas-global-mode t))
 
 (package-install-selected-packages)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-;; (defun fontify-frame (frame)
-;;   (set-frame-parameter frame 'font "Consolas-24"))
+;; Font settings
+;; (set-default-font "Consolas-24")
+(defun fontify-frame (frame)
+  (set-frame-parameter frame 'font "IBM Plex Mono Medium 24"))
+;; (set-frame-parameter frame 'font "Consolas for Powerline 24"))
 ;; Fontify current frame
-;; (fontify-frame nil)
+(fontify-frame nil)
 ;; Fontify any future frames
-;; (push 'fontify-frame after-make-frame-functions)
+(push 'fontify-frame after-make-frame-functions) 
+
+;; Global word wrap
+(visual-line-mode t)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -106,7 +107,13 @@
   :ensure t
   :config (which-key-mode))
 
-;; (require 'helm-config)
+;; Autocomplete with ivy
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t))
 
 (require 'org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
@@ -186,17 +193,26 @@
 
 ;; yasnippet plugin
 (use-package yasnippet
-  :ensure t)
-(setq yas-snippet-dirs
-      '("~/.emacs.d/snippets"                 ;; personal snippets
-        "/dotfiles/snippets/"           ;; foo-mode and bar-mode snippet collection
-        "/path/to/yasnippet/yasmate/snippets" ;; the yasmate collection
-        ))
+  :ensure t
+  :config
+  (setq yas-snippet-dirs
+      '("~/dotfiles/yasnippets"
+	"~/.emacs.d/snippets"                 ;; personal snippets
+        )))
 
 (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
 
+(use-package yasnippet-snippets
+  :ensure t)
+
 ;; projectile
 (use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode))
+
+;; counsel-projectile
+(use-package counsel-projectile
   :ensure t)
 
 ;; treemacs
@@ -213,3 +229,4 @@
   (interactive)
   (find-file org-directory)
   )
+
