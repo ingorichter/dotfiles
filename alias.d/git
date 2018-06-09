@@ -1,2 +1,5 @@
 # checkout a branch for tracking
 alias gtb='git checkout -t '
+
+# clean repo from untracked files and empty directories
+alias gdp='git clean -dfx'
