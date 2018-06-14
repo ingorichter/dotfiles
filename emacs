@@ -53,7 +53,7 @@
  '(package-install-selected-packages (quote (which-key try use-package org-bullets)))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell yasnippet-snippets yasnippets-snippets counsel-projectile counsel-projectil ivy rust-mode restclient treemacs projectile magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
+    (spaceline exec-path-from-shell yasnippet-snippets yasnippets-snippets counsel-projectile counsel-projectil ivy rust-mode restclient treemacs projectile magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(projectile-mode t nil (projectile))
  '(show-paren-mode t)
@@ -231,9 +231,9 @@
   :ensure t)
 
 (use-package spacemacs-theme
-  :ensure t
+  :defer t
   :init
-  (load-theme 'spacemacs-dark t)
+  (load-theme 'spacemacs-light t)
   (setq spacemacs-theme-org-agenda-height nil)
   (setq spacemacs-theme-org-height nil))
 
@@ -246,7 +246,7 @@
 (set-face-attribute 'org-table nil :foreground "#008787")
 
 (use-package spaceline
-  :demand t
+  :ensure t
   :init
   (setq powerline-default-separator 'arrow-fade)
   :config
