@@ -9,8 +9,8 @@ MAVEN=${TOOLS}/maven
 GOPATH=${DEV_ROOT}/go-workspace
 GOBIN=$(go env GOPATH)/bin
 
-# specify JAVA_HOME. Since Java 1.9 is available, I'm going with it
-JAVA_HOME=$(/usr/libexec/java_home -v 9)
+# specify JAVA_HOME. Since Java 10 is available, I'm going with it
+JAVA_HOME=$(/usr/libexec/java_home -v 10)
 
 # Modify the $PATH
 PATH=${PATH}:${GROOVY}/bin:${MAVEN}/bin:$GOBIN
