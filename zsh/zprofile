@@ -4,16 +4,16 @@ DEV_ROOT=${HOME}/develop
 # Setup dev environment
 DEV=${DEV_ROOT}
 TOOLS=${DEV}/tools
-GROOVY=${TOOLS}/groovy
-MAVEN=${TOOLS}/maven
+GROOVYBIN=${TOOLS}/groovy/bin
+MAVENBIN=${TOOLS}/maven/bin
 GOPATH=${DEV_ROOT}/go-workspace
-GOBIN=$(go env GOPATH)/bin
+GOBIN=$(export GOPATH; go env GOPATH)/bin
 
 # specify JAVA_HOME. Since Java 10 is available, I'm going with it
 JAVA_HOME=$(/usr/libexec/java_home -v 10)
 
 # Modify the $PATH
-PATH=${PATH}:${GROOVY}/bin:${MAVEN}/bin:$GOBIN
+PATH=${PATH}:${GROOVYBIN}:${MAVENBIN}:$GOBIN
 
 # load machine specific configuration
 if [ -e "${HOME}/Dropbox/Dotfiles/$(hostname -s)" ]; then
