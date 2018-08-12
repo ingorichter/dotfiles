@@ -6,7 +6,14 @@
 	     '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
 	     '("org" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives
+	     '("gnu" . "http://elpa.gnu.org/packages/") t)
 (package-initialize)
+
+;; Bootstrap 'use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 (setq org-directory "~/Nextcloud/org")
 
@@ -53,9 +60,9 @@
  '(package-install-selected-packages (quote (which-key try use-package org-bullets)))
  '(package-selected-packages
    (quote
-    (spaceline exec-path-from-shell yasnippet-snippets yasnippets-snippets counsel-projectile counsel-projectil ivy rust-mode restclient treemacs projectile magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
+    (spaceline exec-path-from-shell yasnippet-snippets yasnippets-snippets ivy rust-mode restclient treemacs magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(projectile-mode t nil (projectile))
+;; '(projectile-mode t nil (projectile))
  '(show-paren-mode t)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -98,7 +105,7 @@
   :ensure t
   :config
   (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize)))
+    (exec-path-from-shell-initialize)))
 
 ;; Global word wrap
 (visual-line-mode t)
@@ -218,9 +225,13 @@
   :config
   (projectile-global-mode))
 
-;; counsel-projectile
-(use-package counsel-projectile
+;; counsel
+(use-package counsel
   :ensure t)
+
+;; counsel-projectile
+;; (use-package counsel-projectile
+;;   :ensure t)
 
 ;; treemacs
 (use-package treemacs
@@ -253,7 +264,7 @@
   (require 'spaceline-config)
   (spaceline-spacemacs-theme))
 
-;; script experiements
+;; script experiments
 (defun notes ()
   "Switch to my notes dir"
   (interactive)
@@ -312,3 +323,14 @@
 
 ;;bind to key
 ;;(define-key org-mode-map (kbd "C-<") 'org-begin-template)
+
+(defun org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/DONE" 'tree))
+
+;;
+(global-visual-line-mode t)
