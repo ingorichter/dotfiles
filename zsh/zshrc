@@ -8,7 +8,8 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="nick"
+#ZSH_THEME="nick"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -99,6 +100,11 @@ zstyle :compinstall filename "${HOME}/.zshrc"
 autoload -Uz compinit
 compinit
 
+# TODO(Ingo): this doesn't work
+# autoload -U promptinit
+# promptinit
+# prompt spaceship
+
 HISTFILE=~/.zsh-history
 HISTSIZE=4000
 SAVEHIST=4000
@@ -110,4 +116,3 @@ bindkey -e
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # shellcheck source=/dev/null
-
