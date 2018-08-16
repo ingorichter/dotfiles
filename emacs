@@ -67,7 +67,7 @@
  '(package-install-selected-packages (quote (which-key try use-package org-bullets)))
  '(package-selected-packages
    (quote
-    (edit-indirect spaceline exec-path-from-shell yasnippet-snippets yasnippets-snippets ivy rust-mode restclient treemacs magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
+    (edit-indirect spaceline exec-path-from-shell yasnippet-snippets ivy rust-mode restclient treemacs magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(show-paren-mode t)
  '(vc-annotate-background "#2B2B2B")
@@ -218,7 +218,8 @@
   (setq yas-snippet-dirs
       '("~/dotfiles/yasnippets"
 	"~/.emacs.d/snippets"                 ;; personal snippets
-        )))
+        ))
+  (yas-global-mode 1))
 
 (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
 
