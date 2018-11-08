@@ -72,3 +72,9 @@
     algorithm = minimal
     compactionHeuristic = true
     renames = true
+[cola]
+	spellcheck = false
+[commit]
+	template = /Users/irichter/.stCommitMsg
+[fetch]
+	prune = true
