@@ -9,11 +9,21 @@
 (global-set-key (kbd "<f5>") 'revert-buffer)
 
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq-default indent-tabs-mode nil)
 #+END_SRC
 * try
 #+BEGIN_SRC emacs-lisp
 (use-package try
 :ensure t)
+#+END_SRC
+* Benchmark startup
+#+BEGIN_SRC emacs-lisp
+(use-package benchmark-init
+:config
+(add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+(add-hook 'after-init-hook
+(lambda () (message "loaded in %s" (emacs-init-time))))
 #+END_SRC
 * which key
 #+BEGIN_SRC emacs-lisp
@@ -32,7 +42,6 @@
 (setq org-agenda-files (list org-directory))
 
 (use-package org-bullets
-:ensure t
 :config
 (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
 
@@ -100,6 +109,55 @@
 
 (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
 (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
+#+END_SRC
+* Org-Super-Agenda
+#+BEGIN_SRC emacs-lisp
+(use-package org-super-agenda
+:config
+(let ((org-super-agenda-groups
+       '(;; Each group has an implicit boolean OR operator between its selectors.
+         (:name "Today"  ; Optionally specify section name
+                :time-grid t  ; Items that appear on the time grid
+                :todo "TODAY")  ; Items that have this TODO keyword
+         (:name "Important"
+                ;; Single arguments given alone
+                :tag "bills"
+                :priority "A")
+         ;; Set order of multiple groups at once
+         (:order-multi (2 (:name "Shopping in town"
+                                 ;; Boolean AND group matches items that match all subgroups
+                                 :and (:tag "shopping" :tag "@town"))
+                          (:name "Food-related"
+                                 ;; Multiple args given in list with implicit OR
+                                 :tag ("food" "dinner"))
+                                 (:name "Work-related"
+                                 :tag ("xd" "work" "office"))
+                          (:name "Personal"
+                                 :habit t
+                                 :tag "personal")
+                          (:name "Space-related (non-moon-or-planet-related)"
+                                 ;; Regexps match case-insensitively on the entire entry
+                                 :and (:regexp ("space" "NASA")
+                                               ;; Boolean NOT also has implicit OR between selectors
+                                               :not (:regexp "moon" :tag "planet")))))
+         ;; Groups supply their own section names when none are given
+         (:todo "WAITING" :order 8)  ; Set order of this section
+         (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
+                ;; Show this group at the end of the agenda (since it has the
+                ;; highest number). If you specified this group last, items
+                ;; with these todo keywords that e.g. have priority A would be
+                ;; displayed in that group instead, because items are grouped
+                ;; out in the order the groups are listed.
+                :order 9)
+         (:priority<= "B"
+                      ;; Show this section after "Today" and "Important", because
+                      ;; their order is unspecified, defaulting to 0. Sections
+                      ;; are displayed lowest-number-first.
+                      :order 1)
+         ;; After the last group, the agenda will display items that didn't
+         ;; match any of these groups, with the default order position of 99
+         )))
+  (org-agenda nil "a")))
 #+END_SRC
 * Shell path
 #+BEGIN_SRC emacs-lisp
@@ -175,6 +233,13 @@
 (insert (format-time-string "%G-%m-%d %a %H:%M")))
 
 (global-set-key (kbd "<f8>") 'now)
+
+(defun find-config ()
+"Edit emacs-init.org"
+(interactive)
+(find-file "~/dotfiles/emacs/emacs-init.org"))
+
+(global-set-key (kbd "C-c I") 'find-config)
 #+END_SRC
 * keybindings
 #+BEGIN_SRC emacs-lisp
@@ -216,9 +281,8 @@
 * Smart Parens
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
-:ensure t
 :config
-(use-package smartparens-config)
+(require 'smartparens-config)
 (smartparens-global-mode t)
 (show-smartparens-global-mode t))
 #+END_SRC
@@ -233,28 +297,49 @@
 #+END_SRC
 * Spacemacs and Spaceline
 #+BEGIN_SRC emacs-lisp
-(use-package spacemacs-theme
-  :defer t
-  :init
-  (load-theme 'whiteboard t)
-  (setq spacemacs-theme-org-agenda-height nil)
-  (setq spacemacs-theme-org-height nil))
+    ;; (use-package spacemacs-theme
+    ;;   :defer t
+    ;;   :init
+    ;;   (load-theme 'whiteboard t)
+    ;;   (setq spacemacs-theme-org-agenda-height nil)
+    ;;   (setq spacemacs-theme-org-height nil))
 
-;; set sizes here to stop spacemacs theme resizing these
-(set-face-attribute 'org-level-1 nil :height 1.0)
-(set-face-attribute 'org-level-2 nil :height 1.0)
-(set-face-attribute 'org-level-3 nil :height 1.0)
-(set-face-attribute 'org-scheduled-today nil :height 1.0)
-(set-face-attribute 'org-agenda-date-today nil :height 1.1)
-(set-face-attribute 'org-table nil :foreground "#008787")
+    ;; ;; set sizes here to stop spacemacs theme resizing these
+    ;; (set-face-attribute 'org-level-1 nil :height 1.0)
+    ;; (set-face-attribute 'org-level-2 nil :height 1.0)
+    ;; (set-face-attribute 'org-level-3 nil :height 1.0)
+    ;; (set-face-attribute 'org-scheduled-today nil :height 1.0)
+    ;; (set-face-attribute 'org-agenda-date-today nil :height 1.1)
+    ;; (set-face-attribute 'org-table nil :foreground "#008787")
 
-(use-package spaceline
-  :ensure t
-  :init
-  (setq powerline-default-separator 'arrow-fade)
-  :config
-  (require 'spaceline-config)
-  (spaceline-spacemacs-theme))
+    ;; (use-package spaceline
+    ;;   :ensure t
+    ;;   :init
+    ;;   (setq powerline-default-separator 'arrow-fade)
+    ;;   :config
+    ;;   (require 'spaceline-config)
+    ;;   (spaceline-spacemacs-theme))
+
+(use-package solarized-theme
+      :config
+      (load-theme 'solarized-light t)
+      (let ((line (face-attribute 'mode-line :underline)))
+        (set-face-attribute 'mode-line          nil :overline   line)
+        (set-face-attribute 'mode-line-inactive nil :overline   line)
+        (set-face-attribute 'mode-line-inactive nil :underline  line)
+        (set-face-attribute 'mode-line          nil :box        nil)
+        (set-face-attribute 'mode-line-inactive nil :box        nil)
+        (set-face-attribute 'mode-line-inactive nil :background "#f9f2d9")))
+
+(use-package moody
+:config
+(setq x-underline-at-descent-line t)
+(moody-replace-mode-line-buffer-identification)
+(moody-replace-vc-mode))
+
+(use-package minions
+:config
+(minions-mode 1))
 #+END_SRC
 * Custom Functions
 #+BEGIN_SRC emacs-lisp
@@ -273,4 +358,53 @@
      (setq org-map-continue-from (outline-previous-heading)))
    "/DONE" 'tree))
 
+#+END_SRC
+* BART
+#+BEGIN_SRC emacs-lisp
+(use-package bart-mode
+:ensure t)
+(setq bart-station 'civc)
+#+END_SRC
+* Hackernews
+#+BEGIN_SRC emacs-lisp
+(use-package hackernews
+:ensure t)
+#+END_SRC
+* Company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+:ensure t
+:config
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 3)
+(global-company-mode t)
+)
+
+(use-package company-tern
+:ensure t
+:config
+(add-to-list 'company-backends 'company-tern)
+)
+#+END_SRC
+* Ivy/Counsel/Swiper
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+:ensure t
+:config
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "%d/%d")
+(setq ivy-display-style 'fancy))
+
+(use-package counsel
+:ensure t)
+
+(use-package swiper
+:ensure t
+:config
+(progn
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-display-style 'fancy)
+))
 #+END_SRC
