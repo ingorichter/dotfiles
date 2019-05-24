@@ -18,6 +18,11 @@
 	     '("org" . "https://orgmode.org/elpa/") t)
 (add-to-list 'package-archives
 	     '("gnu" . "http://elpa.gnu.org/packages/") t)
+;; I've found the priority setting in this blog https://krsoninikhil.github.io/2018/12/15/easy-moving-from-vscode-to-emacs/
+(setq package-archive-priorities
+      '(("melpa" . 0)
+        ("melpa3" . 5)
+        ("gnu" . 10)))
 
 ;; load my config
 (org-babel-load-file (expand-file-name "~/dotfiles/emacs/emacs-init.org"))
@@ -113,9 +118,21 @@ High Level Ziele fuer die x. Woche
       (file+olp+datetree org-journal-location)
       "* %U - %?
   %i" :clock-in t :clock-resume t))) t)
+ '(org-structure-template-alist
+   (quote
+    (("a" . "export ascii")
+     ("c" . "center")
+     ("C" . "comment")
+     ("e" . "example")
+     ("E" . "export")
+     ("h" . "export html")
+     ("l" . "export latex")
+     ("q" . "quote")
+     ("s" . "src")
+     ("v" . "verse"))))
  '(package-selected-packages
    (quote
-    (org-super-agenda benchmark-init minions moody solarized-theme smartparens-config projectile edit-indirect spaceline exec-path-from-shell yasnippet-snippets ivy rust-mode restclient treemacs magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
+    (lsp-mode telephone-line rustic flycheck-rust cargo racer elfeed-org elfeed-goodies elfeed rainbow-delimiters crystal-mode buffer-expose nim-mode nim org-super-agenda benchmark-init minions moody solarized-theme smartparens-config projectile edit-indirect spaceline exec-path-from-shell yasnippet-snippets ivy rust-mode restclient treemacs magit-org-todos magit yasnippet org-pomodoro markdown-mode zenburn-theme easy-hugo mic-paren org-caldav org-dashboard org-plus-contrib org kaolin-themes spacemacs-theme nimbus-theme which-key try use-package org-bullets)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
@@ -160,4 +177,5 @@ High Level Ziele fuer die x. Woche
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(line-number-current-line ((t (:inherit default :background "OrangeRed1"))))
+ '(telephone-line-accent-active ((t (:inherit mode-line :background "DarkOrange1" :foreground "white")))))

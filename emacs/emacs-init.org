@@ -1,8 +1,8 @@
 #+STARTUP: overview
 * Some Global settings
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Ingo Richter")
-(setq user-mail-address "ingo.richter@gmail.com")
+  #+BEGIN_SRC emacs-lisp
+(setq user-full-name "Ingo Richter"
+user-mail-address "ingo.richter@gmail.com")
 
 (setq org-src-fontify-natively t)
 (global-visual-line-mode t)
@@ -10,30 +10,65 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq-default indent-tabs-mode nil)
-#+END_SRC
+
+(setq gc-cons-threshold 50000000)
+(setq large-file-warning-threshold 10000000)
+
+;; Some Linenumber settings
+(global-hl-line-mode +1)
+(line-number-mode +1)
+(global-display-line-numbers-mode 1)
+(column-number-mode t)
+(size-indication-mode t)
+
+;; set file name with in title bar
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+       (abbreviate-file-name (buffer-file-name))
+       "%b"))))
+
+;; found here: https://emacs.stackexchange.com/questions/13941/move-selected-lines-up-and-down
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key [(meta shift up)]  'move-line-up)
+(global-set-key [(meta shift down)]  'move-line-down)
+  #+END_SRC
 * try
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package try
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * Benchmark startup
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package benchmark-init
 :config
 (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (add-hook 'after-init-hook
 (lambda () (message "loaded in %s" (emacs-init-time))))
-#+END_SRC
+  #+END_SRC
 * which key
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package which-key
 :ensure t
 :config
 (which-key-mode))
-#+END_SRC
+  #+END_SRC
 * Orgmode
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package org
 :ensure t
 :pin org)
@@ -94,13 +129,13 @@
       ("DONE" :foreground "green" :weight bold)
 	      ("NEXT" :foreground "blue" :weight bold))))
 )
-#+END_SRC
+  #+END_SRC
 * CalDav
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package org-caldav
   :ensure t
   :config
-  (setq org-caldav-url "https://familie-richter.synology.me/remote.php/dav/calendars/ingo"
+  (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/Ingo"
 	org-caldav-calendar-id "main"
 	org-caldav-inbox "~/Nextcloud/org/gcal.org"
 	org-caldav-files org-agenda-files
@@ -109,9 +144,9 @@
 
 (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
 (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
-#+END_SRC
+  #+END_SRC
 * Org-Super-Agenda
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package org-super-agenda
 :config
 (let ((org-super-agenda-groups
@@ -158,18 +193,18 @@
          ;; match any of these groups, with the default order position of 99
          )))
   (org-agenda nil "a")))
-#+END_SRC
+  #+END_SRC
 * Shell path
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 ;; modify the exec-path to find system apps
 (use-package exec-path-from-shell
   :ensure t
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
-#+END_SRC
+  #+END_SRC
 * MacOS special keys and german keyboard fixes
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 ;; fix keyboard on macOS
 (if (eq system-type 'darwin)
   (progn
@@ -182,29 +217,31 @@
     (global-set-key "\M-7" '(lambda () (interactive) (insert "|")))
     (global-set-key "\M-/" '(lambda () (interactive) (insert "\\")))
     (global-set-key "\M-n" '(lambda () (interactive) (insert "~")))))
-#+END_SRC
+  #+END_SRC
 * Font Settings
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 ;; Font settings
 ;; Set IBM Plex Mono Medium 18 as default font
+(set-frame-font "Fira Code 18" nil t)
 (defun fontify-frame (frame)
-  (set-frame-parameter frame 'font "IBM Plex Mono Medium 18"))
+  ;;(set-frame-parameter frame 'font "IBM Plex Mono Medium 18"))
+(set-frame-parameter frame 'font "Fira Code 18"))
 (fontify-frame nil)
 ;; Fontify any future frames
 (push 'fontify-frame after-make-frame-functions) 
-#+END_SRC
+  #+END_SRC
 * auto-yasnippet
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package auto-yasnippet
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * multiple-cursors
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * yasnippet
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 ;; yasnippet plugin
 (use-package yasnippet
   :ensure t
@@ -219,14 +256,14 @@
 (use-package yasnippet-snippets
   :ensure t
   :after (yasnippet))
-#+END_SRC
+  #+END_SRC
 * pomodoro
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package org-pomodoro
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * custom functions
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (defun now ()
 "Insert the current date time in this format '2018-09-10 Mon 11:15'"
 (interactive)
@@ -240,13 +277,13 @@
 (find-file "~/dotfiles/emacs/emacs-init.org"))
 
 (global-set-key (kbd "C-c I") 'find-config)
-#+END_SRC
+  #+END_SRC
 * keybindings
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<f9>") 'org-pomodoro)
-#+END_SRC
+  #+END_SRC
 * Reveal.js
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package ox-reveal
 :ensure t
 :config
@@ -255,19 +292,19 @@
 (setq org-reveal-mathjax t))
 (use-package htmlize
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * Restclient
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package restclient
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * Treemacs
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package treemacs
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * Easy Hugo
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package easy-hugo
   :ensure t
   :init
@@ -277,72 +314,26 @@
   (setq easy-hugo-root "/")
   (setq easy-hugo-previewtime "300")
   :bind ("C-c C-e" . easy-hugo))
-#+END_SRC
+  #+END_SRC
 * Smart Parens
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package smartparens
 :config
 (require 'smartparens-config)
 (smartparens-global-mode t)
 (show-smartparens-global-mode t))
-#+END_SRC
+  #+END_SRC
 * Markdown
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
-#+END_SRC
-* Spacemacs and Spaceline
-#+BEGIN_SRC emacs-lisp
-    ;; (use-package spacemacs-theme
-    ;;   :defer t
-    ;;   :init
-    ;;   (load-theme 'whiteboard t)
-    ;;   (setq spacemacs-theme-org-agenda-height nil)
-    ;;   (setq spacemacs-theme-org-height nil))
-
-    ;; ;; set sizes here to stop spacemacs theme resizing these
-    ;; (set-face-attribute 'org-level-1 nil :height 1.0)
-    ;; (set-face-attribute 'org-level-2 nil :height 1.0)
-    ;; (set-face-attribute 'org-level-3 nil :height 1.0)
-    ;; (set-face-attribute 'org-scheduled-today nil :height 1.0)
-    ;; (set-face-attribute 'org-agenda-date-today nil :height 1.1)
-    ;; (set-face-attribute 'org-table nil :foreground "#008787")
-
-    ;; (use-package spaceline
-    ;;   :ensure t
-    ;;   :init
-    ;;   (setq powerline-default-separator 'arrow-fade)
-    ;;   :config
-    ;;   (require 'spaceline-config)
-    ;;   (spaceline-spacemacs-theme))
-
-(use-package solarized-theme
-      :config
-      (load-theme 'solarized-light t)
-      (let ((line (face-attribute 'mode-line :underline)))
-        (set-face-attribute 'mode-line          nil :overline   line)
-        (set-face-attribute 'mode-line-inactive nil :overline   line)
-        (set-face-attribute 'mode-line-inactive nil :underline  line)
-        (set-face-attribute 'mode-line          nil :box        nil)
-        (set-face-attribute 'mode-line-inactive nil :box        nil)
-        (set-face-attribute 'mode-line-inactive nil :background "#f9f2d9")))
-
-(use-package moody
-:config
-(setq x-underline-at-descent-line t)
-(moody-replace-mode-line-buffer-identification)
-(moody-replace-vc-mode))
-
-(use-package minions
-:config
-(minions-mode 1))
-#+END_SRC
+  #+END_SRC
 * Custom Functions
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 ;; Switch to Notes dir
 (defun notes ()
   "Switch to my notes dir"
@@ -358,20 +349,20 @@
      (setq org-map-continue-from (outline-previous-heading)))
    "/DONE" 'tree))
 
-#+END_SRC
+  #+END_SRC
 * BART
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package bart-mode
 :ensure t)
 (setq bart-station 'civc)
-#+END_SRC
+  #+END_SRC
 * Hackernews
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package hackernews
 :ensure t)
-#+END_SRC
+  #+END_SRC
 * Company
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package company
 :ensure t
 :config
@@ -385,15 +376,15 @@
 :config
 (add-to-list 'company-backends 'company-tern)
 )
-#+END_SRC
+  #+END_SRC
 * Ivy/Counsel/Swiper
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
 (use-package ivy
 :ensure t
 :config
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
-(setq ivy-count-format "%d/%d")
+(setq ivy-count-format "%d/%d ")
 (setq ivy-display-style 'fancy))
 
 (use-package counsel
@@ -407,4 +398,222 @@
 (setq ivy-use-virtual-buffers t)
 (setq ivy-display-style 'fancy)
 ))
-#+END_SRC
+  #+END_SRC
+* Projectile
+  #+begin_src emacs-lisp
+(use-package projectile
+:ensure t
+:bind ("C-c p" . 'projectile-command-map)
+:config
+(projectile-global-mode)
+(setq projectile-completion-system 'ivy)
+)
+  #+end_src
+* Nim
+  #+BEGIN_SRC emacs-lisp
+(use-package nim-mode)
+  #+END_SRC
+* Crystal Lang
+  #+begin_src emacs-lisp
+(use-package crystal-mode)
+  #+end_src
+* m4u
+  #+begin_src emacs-lisp
+; happily borrowed this from Mike Z
+(defun load-if-exists (f)
+"load the elisp file only if it exists and is readable"
+(if (file-readable-p f)
+(load-file f)))
+
+(load-if-exists "~/dotfiles/emacs/mu4econfig.el")
+  #+end_src
+* Buffer Switching
+  #+begin_src emacs-lisp
+(package-install-file "~/develop/fun/oss/buffer-expose/buffer-expose.el")
+  #+end_src
+* Rainbow Delimiters
+  #+begin_src emacs-lisp
+(use-package rainbow-delimiters)
+  #+end_src
+* RSS Elfeed
+  #+begin_src emacs-lisp
+;; Location of Database
+(setq elfeed-db-directory "~/Nextcloud/Emacs/elfeeddb")
+
+;; Helper functions
+(defun ir/elfeed-mark-all-as-read()
+(interactive)
+(mark-whole-buffer)
+(elfeed-search-untag-all-unread))
+
+;; helper functions to enable syncing between machines
+;; ensures elfeed reads index from disk before launching
+(defun bjm/elfeed-load-db-and-open ()
+"Wrapper to load the elfeed db from disk before opening"
+(interactive)
+(elfeed-db-load)
+(elfeed)
+(elfeed-search-update--force))
+
+;; write to disk when quitting
+(defun bjm/elfeed-save-db-and-bury ()
+"Wrapper to save the elfeed db to disk before burying buffer"
+(interactive)
+(elfeed-db-save)
+(quit-window))
+
+;; shortcut functions
+(defun bjm/elfeed-show-all ()
+(interactive)
+(bookmark-maybe-load-default-file)
+(bookmark-jump "elfeed-all"))
+
+(defun bjm/elfeed-show-emacs ()
+(interactive)
+(bookmark-maybe-load-default-file)
+(bookmark-jump "elfeed-emacs"))
+
+(defun bjm/elfeed-show-daily ()
+(interactive)
+(bookmark-maybe-load-default-file)
+(bookmark-jump "elfeed-daily"))
+
+;; global key to activate elfeed
+(global-set-key (kbd "C-x w") 'elfeed)
+
+(use-package elfeed
+:bind (:map elfeed-search-mode-map
+("Q" . bjm/elfeed-save-db-and-bury)
+("m" . bjm/elfeed-toggle-star)
+("M" . bjm/elfeed-toggle-star)
+("A" . bjm/elfeed-show-all)
+("D" . bjm/elfeed-show-daily)
+("E" . bjm/elfeed-show-emacs)
+("j" . ir/make-and-run-elfeed-hydra)
+("J" . ir/make-and-run-elfeed-hydra)
+("R" . ir/elfeed-mark-all-as-read)
+; ("A" . "bjm/elfeed-show-all")
+; ("E" . "bjm/elfeed-show-emacs")
+; ("D" . "bjm/elfeed-show-daily")
+("q" . "bjm/elfeed-save-db-and-bury"))
+:config
+(defalias 'elfeed-toggle-star
+(elfeed-expose #'elfeed-search-toggle-all 'star))
+)
+
+(use-package elfeed-goodies
+:config
+(elfeed-goodies/setup))
+
+(use-package elfeed-org
+:config
+(elfeed-org)
+(setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
+
+(defun ir/hasCapLetter (s)
+  "Does the given string contain a capital letter"
+  (let ((case-fold-search nil))
+  (string-match-p "[[:upper:]]" s)
+  ))
+
+(defun ir/get-hydra-optionkey (s)
+  "returns single upper case letter (converted to lower) or first"
+  (interactive)
+  (let ( (loc (ir/hasCapLetter s)))
+  (if loc
+      (downcase (substring s loc (+ loc 1)))
+    (substring s 0 1)
+    )))
+
+(defun ir/make-elfeed-cats (tags)
+  "Returns a list of lists. Each one is a line for hydra configuration in the form (c function hint)"
+  (interactive)
+  (mapcar (lambda (tag)
+            (let* (
+                   (tagstring (symbol-name tag))
+                   (c (ir/get-hydra-optionkey tagstring))
+                   )
+              (list c (append '(elfeed-search-set-filter) (list (format "@6-months-ago +%s" tagstring) )) tagstring )))
+          tags))
+
+(defmacro ir/make-elfeed-hydra ()
+`(defhydra ir/hydra-elfeed ()
+"filter"
+,@(ir/make-elfeed-cats (elfeed-db-get-all-tags))
+("*" (elfeed-search-set-filter "@6-months-ago +star") "Starred")
+("M" elfeed-toggle-star "Mark")
+("A" (elfeed-search-set-filter "@6-months-ago") "All")
+("T" (elfeed-search-set-filter "@1-day-ago") "Today")
+("Q" bjm/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
+("q" nil "quit" :color blue)
+))
+
+(defun ir/make-and-run-elfeed-hydra ()
+""
+(interactive)
+(ir/make-elfeed-hydra)
+(ir/hydra-elfeed/body))
+
+;; sort by tags
+;; https://github.com/skeeto/elfeed/issues/203
+(defun my-elfeed-tag-sort (a b)
+(let* ((a-tags (format "%s" (elfeed-entry-tags a)))
+(b-tags (format "%s" (elfeed-entry-tags b)))) 
+(if (string= a-tags b-tags) 
+(< (elfeed-entry-date b) (elfeed-entry-date a))) 
+(string< a-tags b-tags))) 
+(setf elfeed-search-sort-function #'my-elfeed-tag-sort)
+  #+end_src
+* Rust Lang
+  #+begin_src emacs-lisp
+(use-package racer
+:config
+(add-hook 'racer-mode-hook #'company-mode)
+(setq company-tooltip-align-annotations t)
+(setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
+
+(use-package rustic
+:config
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(setq rust-format-on-save t))
+
+(use-package cargo
+:config
+(setq compilation-scroll-output t)
+(add-hook 'rust-mode-hook 'cargo-minor-mode))
+
+(use-package flycheck-rust
+:config
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(add-hook 'rust-mode-hook 'flycheck-mode))
+
+  #+end_src
+* Flycheck
+  #+begin_src emacs-lisp
+(use-package flycheck
+:init
+(global-flycheck-mode t))
+  #+end_src
+* Powerline
+  #+begin_src emacs-lisp
+(use-package telephone-line
+:config
+(setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+      telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+      telephone-line-primary-right-separator 'telephone-line-cubed-right
+      telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+(setq telephone-line-height 24
+      telephone-line-evil-use-short-tag t)
+'(telephone-line-accent-active ((t (:inherit mode-line :background "DarkOrange1" :foreground "white"))))
+
+:init
+(telephone-line-mode 1))
+  #+end_src
+* LSP
+  #+begin_src emacs-lisp
+(use-package lsp-mode
+:hook (rust-mode . lsp)
+:hook (crystat-mode . lsp)
+:commands lsp)
+  #+end_src
