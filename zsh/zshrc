@@ -54,7 +54,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # thefuck
-plugins=(git npm brew docker go node osx tmux xcode yarn)
+plugins=(git npm brew docker go node osx tmux xcode yarn z.lua)
 
 # User configuration
 source "$ZSH/oh-my-zsh.sh"
