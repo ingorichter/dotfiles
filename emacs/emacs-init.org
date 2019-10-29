@@ -1,64 +1,98 @@
 #+STARTUP: overview
 * Some Global settings
   #+BEGIN_SRC emacs-lisp
-(setq user-full-name "Ingo Richter"
-user-mail-address "ingo.richter@gmail.com")
+    (setq user-full-name "Ingo Richter"
+          user-mail-address "ingo.richter@gmail.com")
 
-(setq org-src-fontify-natively t)
-(global-visual-line-mode t)
-(global-set-key (kbd "<f5>") 'revert-buffer)
+    (setq org-src-fontify-natively t)
+    ;; (global-visual-line-mode t)
+    (global-set-key (kbd "<f5>") 'revert-buffer)
 
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq-default indent-tabs-mode nil)
+    (fset 'yes-or-no-p 'y-or-n-p)
+    (setq-default indent-tabs-mode nil)
 
-(setq gc-cons-threshold 50000000)
-(setq large-file-warning-threshold 10000000)
+    (setq gc-cons-threshold 50000000)
+    (setq large-file-warning-threshold 10000000)
 
-;; Some Linenumber settings
-(global-hl-line-mode +1)
-(line-number-mode +1)
-(global-display-line-numbers-mode 1)
-(column-number-mode t)
-(size-indication-mode t)
+    ;; Some Linenumber settings
+    (global-hl-line-mode +1)
+    (line-number-mode +1)
+    (global-display-line-numbers-mode 1)
+    (column-number-mode t)
+    (size-indication-mode t)
 
-;; set file name with in title bar
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-       (abbreviate-file-name (buffer-file-name))
-       "%b"))))
+    ;; set file name with in title bar
+    (setq frame-title-format
+          '((:eval (if (buffer-file-name)
+                       (abbreviate-file-name (buffer-file-name))
+                     "%b"))))
 
-;; found here: https://emacs.stackexchange.com/questions/13941/move-selected-lines-up-and-down
-(defun move-line-up ()
-  "Move up the current line."
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2)
-  (indent-according-to-mode))
+    ;; found here: https://emacs.stackexchange.com/questions/13941/move-selected-lines-up-and-down
+    (defun move-line-up-dis ()
+      "Move up the current line."
+      (interactive)
+      (transpose-lines 1)
+      (forward-line -2)
+      (indent-according-to-mode))
 
-(defun move-line-down ()
-  "Move down the current line."
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1)
-  (indent-according-to-mode))
+    (defun move-line-down-dis ()
+      "Move down the current line."
+      (interactive)
+      (forward-line 1)
+      (transpose-lines 1)
+      (forward-line -1)
+      (indent-according-to-mode))
 
-(global-set-key [(meta shift up)]  'move-line-up)
-(global-set-key [(meta shift down)]  'move-line-down)
+    (defun duplicate-line ()
+      "Duplicate the current line."
+      (interactive)
+      (save-mark-and-excursion
+        (beginning-of-line)
+        (insert (thing-at-point 'line t))))
+
+    (defun move-line-down ()
+      (interactive)
+      (let ((col (current-column)))
+        (save-excursion
+          (forward-line)
+          (transpose-lines 1))
+        (forward-line)
+        (move-to-column)))
+
+    (defun move-line-up ()
+      (interactive)
+      (let ((col (current-column)))
+        (save-excursion
+          (forward-line)
+          (transpose-lines -1))
+        (forward-line -1)
+        (move-to-column col)))
+
+    (global-set-key (kbd "C-S-d") 'duplicate-line)
+    (global-set-key [(meta shift up)]  'move-line-up)
+    (global-set-key [(meta shift down)]  'move-line-down)
+
   #+END_SRC
 * try
   #+BEGIN_SRC emacs-lisp
 (use-package try
 :ensure t)
   #+END_SRC
+* keyfreq
+#+begin_src emacs-lisp
+  (use-package keyfreq
+    :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+end_src
 * Benchmark startup
   #+BEGIN_SRC emacs-lisp
-(use-package benchmark-init
-:config
-(add-hook 'after-init-hook 'benchmark-init/deactivate))
+    (use-package benchmark-init
+      :config
+      (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-(add-hook 'after-init-hook
-(lambda () (message "loaded in %s" (emacs-init-time))))
+    (add-hook 'after-init-hook
+              (lambda () (message "loaded in %s" (emacs-init-time))))
   #+END_SRC
 * which key
   #+BEGIN_SRC emacs-lisp
@@ -69,66 +103,66 @@ user-mail-address "ingo.richter@gmail.com")
   #+END_SRC
 * Orgmode
   #+BEGIN_SRC emacs-lisp
-(use-package org
-:ensure t
-:pin org)
+    (use-package org
+      :ensure t
+      :pin org)
 
-(setq org-directory "~/Nextcloud/org")
-(setq org-agenda-files (list org-directory))
+    (setq org-directory "~/Nextcloud/org")
+    (setq org-agenda-files (list org-directory))
 
-(use-package org-bullets
-:config
-(add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
+    (use-package org-bullets
+      :config
+      (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1)))
 
-(setq org-archive-location (concat org-directory "/archive/%s_archive::")
-      org-default-notes-file (concat org-directory "/notes.org")
-      org-refile-location (concat org-directory "/refile.org")
-      org-gcal-location (concat org-directory "/gcal.org")
-      org-weeklygoals-location (concat org-directory "/weekly-goals.org")
-      org-journal-location (concat org-directory "/journal/journal.org")
-      org-capture-templates '(("t" "To Do Item" entry
- 			       (file+headline org-refile-location "Todo")
-			       "* TODO %^{Titel} %^g\n  %?\n  :LOGBOOK:\n  - Added: %U\n  :END:")
-			      ("a" "Appointment" entry (file org-gcal-location)
-			       "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
-			      ("n" "Note" entry
-			       (file+headline org-default-notes-file "Notes")
-			       "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n  - Added: %U\n  :END:")
-			      ("i" "Idee" entry
-			       (file+headline org-refile-location "Ideen")
-			       "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n  - Added: %U\n  :END:")
-			      ("w" "Weekly Goals" entry
-			       (file+datetree org-weeklygoals-location "Weekly Goals")
-			       "* %U\n\nHigh Level Ziele fuer die x. Woche\n - [ ] $ x in die Spardose\n - [ ] Sport\n - [ ] Laufen")
-			      ("j" "Journal" entry
-			       (file+datetree org-journal-location)
-			       "* %U - %?\n  %i" :clock-in t :clock-resume t)))
+      (setq org-archive-location (concat org-directory "/archive/%s_archive::")
+            org-default-notes-file (concat org-directory "/notes.org")
+            org-refile-location (concat org-directory "/refile.org")
+            org-gcal-location (concat org-directory "/gcal.org")
+            org-weeklygoals-location (concat org-directory "/weekly-goals.org")
+            org-journal-location (concat org-directory "/journal/journal.org")
+            org-capture-templates '(("t" "To Do Item" entry
+                                     (file+headline org-refile-location "Todo")
+                                     "* TODO %^{Titel} %^g\n  %?\n  :LOGBOOK:\n  - Added: %U\n  :END:")
+                                    ("a" "Appointment" entry (file org-gcal-location)
+                                     "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+                                    ("n" "Note" entry
+                                     (file+headline org-default-notes-file "Notes")
+                                     "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n  - Added: %U\n  :END:")
+                                    ("i" "Idee" entry
+                                     (file+headline org-refile-location "Ideen")
+                                     "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n  - Added: %U\n  :END:")
+                                    ("w" "Weekly Goals" entry
+                                     (file+datetree org-weeklygoals-location "Weekly Goals")
+                                     "* %U\n\nHigh Level Ziele fuer die x. Woche\n - [ ] $ x in die Spardose\n - [ ] Sport\n - [ ] Laufen")
+                                    ("j" "Journal" entry
+                                     (file+datetree org-journal-location)
+                                     "* %U - %?\n  %i" :clock-in t :clock-resume t)))
 
-;; Org-mode settings
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(define-key global-map "\C-cc" 'org-capture)
-(global-font-lock-mode 1)
+      ;; Org-mode settings
+      (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+      (global-set-key "\C-cl" 'org-store-link)
+      (global-set-key "\C-ca" 'org-agenda)
+      (define-key global-map "\C-cc" 'org-capture)
+      (global-font-lock-mode 1)
 
-;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-(setq org-refile-targets (quote ((nil :maxlevel . 9)
-                                 (org-agenda-files :maxlevel . 9))))
+      ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+      (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                       (org-agenda-files :maxlevel . 9))))
 
 
-;; have timestamp added to finished items
-(setq org-log-done 'time)
+      ;; have timestamp added to finished items
+      (setq org-log-done 'time)
 
-;; capture templates
-(setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-	      (sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+      ;; capture templates
+      (setq org-todo-keywords
+            (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+                    (sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
-(setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "red" :weight bold)
-      ("DONE" :foreground "green" :weight bold)
-	      ("NEXT" :foreground "blue" :weight bold))))
-)
+      (setq org-todo-keyword-faces
+            (quote (("TODO" :foreground "red" :weight bold)
+                    ("DONE" :foreground "green" :weight bold)
+                    ("NEXT" :foreground "blue" :weight bold))))
+      )
   #+END_SRC
 * CalDav
   #+BEGIN_SRC emacs-lisp
@@ -196,27 +230,27 @@ user-mail-address "ingo.richter@gmail.com")
   #+END_SRC
 * Shell path
   #+BEGIN_SRC emacs-lisp
-;; modify the exec-path to find system apps
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
+    ;;; modify the exec-path to find system apps
+    (use-package exec-path-from-shell
+      :ensure t
+      :config
+      (when (memq window-system '(mac ns x))
+        (exec-path-from-shell-initialize)))
   #+END_SRC
 * MacOS special keys and german keyboard fixes
   #+BEGIN_SRC emacs-lisp
-;; fix keyboard on macOS
-(if (eq system-type 'darwin)
-  (progn
-    ;; "fix" the broken keyboard
-    (global-set-key "\M-l" '(lambda () (interactive) (insert "@")))
-    (global-set-key "\M-(" (lambda () (interactive) (insert "{")))
-    (global-set-key "\M-)" (lambda () (interactive) (insert "}")))
-    (global-set-key "\M-8" (lambda () (interactive) (insert "[")))
-    (global-set-key "\M-9" (lambda () (interactive) (insert "]")))
-    (global-set-key "\M-7" '(lambda () (interactive) (insert "|")))
-    (global-set-key "\M-/" '(lambda () (interactive) (insert "\\")))
-    (global-set-key "\M-n" '(lambda () (interactive) (insert "~")))))
+    ;;; fix keyboard on macOS
+    (if (eq system-type 'darwin)
+        (progn
+          ;; "fix" the broken keyboard
+          (global-set-key "\M-l" '(lambda () (interactive) (insert "@")))
+          (global-set-key "\M-(" '(lambda () (interactive) (insert "{")))
+          (global-set-key "\M-)" '(lambda () (interactive) (insert "}")))
+          (global-set-key "\M-8" '(lambda () (interactive) (insert "[")))
+          (global-set-key "\M-9" '(lambda () (interactive) (insert "]")))
+          (global-set-key "\M-7" '(lambda () (interactive) (insert "|")))
+          (global-set-key "\M-/" '(lambda () (interactive) (insert "\\")))
+          (global-set-key "\M-n" '(lambda () (interactive) (insert "~")))))
   #+END_SRC
 * Font Settings
   #+BEGIN_SRC emacs-lisp
@@ -305,15 +339,15 @@ user-mail-address "ingo.richter@gmail.com")
   #+END_SRC
 * Easy Hugo
   #+BEGIN_SRC emacs-lisp
-(use-package easy-hugo
-  :ensure t
-  :init
-  (setq easy-hugo-basedir "~/develop/fun/OSS/ingorichter.io-website/")
-  (setq easy-hugo-url "https://ingo-richter.io")
-  (setq easy-hugo-sshdomain "blogdomain")
-  (setq easy-hugo-root "/")
-  (setq easy-hugo-previewtime "300")
-  :bind ("C-c C-e" . easy-hugo))
+    (use-package easy-hugo
+      :ensure t
+      :init
+      (setq easy-hugo-basedir "~/develop/fun/OSS/ingorichter.io-website/")
+      (setq easy-hugo-url "https://ingo-richter.io")
+      (setq easy-hugo-sshdomain "blogdomain")
+      (setq easy-hugo-root "/")
+      (setq easy-hugo-previewtime "300")
+      :bind ("C-c C-e" . easy-hugo))
   #+END_SRC
 * Smart Parens
   #+BEGIN_SRC emacs-lisp
@@ -352,9 +386,9 @@ user-mail-address "ingo.richter@gmail.com")
   #+END_SRC
 * BART
   #+BEGIN_SRC emacs-lisp
-(use-package bart-mode
-:ensure t)
-(setq bart-station 'civc)
+    (use-package bart-mode
+      :ensure t)
+    (setq bart-station 'civc)
   #+END_SRC
 * Hackernews
   #+BEGIN_SRC emacs-lisp
@@ -401,13 +435,13 @@ user-mail-address "ingo.richter@gmail.com")
   #+END_SRC
 * Projectile
   #+begin_src emacs-lisp
-(use-package projectile
-:ensure t
-:bind ("C-c p" . 'projectile-command-map)
-:config
-(projectile-global-mode)
-(setq projectile-completion-system 'ivy)
-)
+    (use-package projectile
+      :ensure t
+      :bind ("C-c p" . 'projectile-command-map)
+      :config
+      (projectile-global-mode)
+      (setq projectile-completion-system 'ivy)
+      )
   #+end_src
 * Nim
   #+BEGIN_SRC emacs-lisp
@@ -437,156 +471,157 @@ user-mail-address "ingo.richter@gmail.com")
   #+end_src
 * RSS Elfeed
   #+begin_src emacs-lisp
-;; Location of Database
-(setq elfeed-db-directory "~/Nextcloud/Emacs/elfeeddb")
+    ;;; Location of Database
+    (setq elfeed-db-directory "~/Nextcloud/Emacs/elfeeddb")
 
-;; Helper functions
-(defun ir/elfeed-mark-all-as-read()
-(interactive)
-(mark-whole-buffer)
-(elfeed-search-untag-all-unread))
+    ;;; Helper functions
+    (defun ir/elfeed-mark-all-as-read()
+    (interactive)
+    (mark-whole-buffer)
+    (elfeed-search-untag-all-unread))
 
-;; helper functions to enable syncing between machines
-;; ensures elfeed reads index from disk before launching
-(defun bjm/elfeed-load-db-and-open ()
-"Wrapper to load the elfeed db from disk before opening"
-(interactive)
-(elfeed-db-load)
-(elfeed)
-(elfeed-search-update--force))
+    ;; helper functions to enable syncing between machines
+    ;; ensures elfeed reads index from disk before launching
+    (defun bjm/elfeed-load-db-and-open ()
+    "Wrapper to load the elfeed db from disk before opening."
+    (interactive)
+    (elfeed-db-load)
+    (elfeed)
+    (elfeed-search-update--force))
 
-;; write to disk when quitting
-(defun bjm/elfeed-save-db-and-bury ()
-"Wrapper to save the elfeed db to disk before burying buffer"
-(interactive)
-(elfeed-db-save)
-(quit-window))
+    ;; write to disk when quitting
+    (defun bjm/elfeed-save-db-and-bury ()
+    "Wrapper to save the elfeed db to disk before burying buffer."
+    (interactive)
+    (elfeed-db-save)
+    (quit-window))
 
-;; shortcut functions
-(defun bjm/elfeed-show-all ()
-(interactive)
-(bookmark-maybe-load-default-file)
-(bookmark-jump "elfeed-all"))
+    ;; shortcut functions
+    (defun bjm/elfeed-show-all ()
+    (interactive)
+    (bookmark-maybe-load-default-file)
+    (bookmark-jump "elfeed-all"))
 
-(defun bjm/elfeed-show-emacs ()
-(interactive)
-(bookmark-maybe-load-default-file)
-(bookmark-jump "elfeed-emacs"))
+    (defun bjm/elfeed-show-emacs ()
+    (interactive)
+    (bookmark-maybe-load-default-file)
+    (bookmark-jump "elfeed-emacs"))
 
-(defun bjm/elfeed-show-daily ()
-(interactive)
-(bookmark-maybe-load-default-file)
-(bookmark-jump "elfeed-daily"))
+    (defun bjm/elfeed-show-daily ()
+      (interactive)
+      (elfeed-search-set-filter "@1-day-ago +unread"))
+    ;; (bookmark-maybe-load-default-file)
+    ;; (bookmark-jump "elfeed-daily"))
 
-;; global key to activate elfeed
-(global-set-key (kbd "C-x w") 'elfeed)
+    ;; global key to activate elfeed
+    (global-set-key (kbd "C-x w") 'elfeed)
 
-(use-package elfeed
-:bind (:map elfeed-search-mode-map
-("Q" . bjm/elfeed-save-db-and-bury)
-("m" . bjm/elfeed-toggle-star)
-("M" . bjm/elfeed-toggle-star)
-("A" . bjm/elfeed-show-all)
-("D" . bjm/elfeed-show-daily)
-("E" . bjm/elfeed-show-emacs)
-("j" . ir/make-and-run-elfeed-hydra)
-("J" . ir/make-and-run-elfeed-hydra)
-("R" . ir/elfeed-mark-all-as-read)
-; ("A" . "bjm/elfeed-show-all")
-; ("E" . "bjm/elfeed-show-emacs")
-; ("D" . "bjm/elfeed-show-daily")
-("q" . "bjm/elfeed-save-db-and-bury"))
-:config
-(defalias 'elfeed-toggle-star
-(elfeed-expose #'elfeed-search-toggle-all 'star))
-)
+    (use-package elfeed
+    :bind (:map elfeed-search-mode-map
+    ("Q" . bjm/elfeed-save-db-and-bury)
+    ("m" . bjm/elfeed-toggle-star)
+    ("M" . bjm/elfeed-toggle-star)
+    ("A" . bjm/elfeed-show-all)
+    ("D" . bjm/elfeed-show-daily)
+    ("E" . bjm/elfeed-show-emacs)
+    ("j" . ir/make-and-run-elfeed-hydra)
+    ("J" . ir/make-and-run-elfeed-hydra)
+    ("R" . ir/elfeed-mark-all-as-read)
+    ; ("A" . "bjm/elfeed-show-all")
+    ; ("E" . "bjm/elfeed-show-emacs")
+    ; ("D" . "bjm/elfeed-show-daily")
+    ("q" . "bjm/elfeed-save-db-and-bury"))
+    :config
+    (defalias 'elfeed-toggle-star
+    (elfeed-expose #'elfeed-search-toggle-all 'star))
+    )
 
-(use-package elfeed-goodies
-:config
-(elfeed-goodies/setup))
+    (use-package elfeed-goodies
+    :config
+    (elfeed-goodies/setup))
 
-(use-package elfeed-org
-:config
-(elfeed-org)
-(setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
+    (use-package elfeed-org
+    :config
+    (elfeed-org)
+    (setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
 
-(defun ir/hasCapLetter (s)
-  "Does the given string contain a capital letter"
-  (let ((case-fold-search nil))
-  (string-match-p "[[:upper:]]" s)
-  ))
+    (defun ir/hasCapLetter (s)
+      "Does the given string contain a capital letter"
+      (let ((case-fold-search nil))
+      (string-match-p "[[:upper:]]" s)
+      ))
 
-(defun ir/get-hydra-optionkey (s)
-  "returns single upper case letter (converted to lower) or first"
-  (interactive)
-  (let ( (loc (ir/hasCapLetter s)))
-  (if loc
-      (downcase (substring s loc (+ loc 1)))
-    (substring s 0 1)
-    )))
+    (defun ir/get-hydra-optionkey (s)
+      "returns single upper case letter (converted to lower) or first"
+      (interactive)
+      (let ( (loc (ir/hasCapLetter s)))
+      (if loc
+          (downcase (substring s loc (+ loc 1)))
+        (substring s 0 1)
+        )))
 
-(defun ir/make-elfeed-cats (tags)
-  "Returns a list of lists. Each one is a line for hydra configuration in the form (c function hint)"
-  (interactive)
-  (mapcar (lambda (tag)
-            (let* (
-                   (tagstring (symbol-name tag))
-                   (c (ir/get-hydra-optionkey tagstring))
-                   )
-              (list c (append '(elfeed-search-set-filter) (list (format "@6-months-ago +%s" tagstring) )) tagstring )))
-          tags))
+    (defun ir/make-elfeed-cats (tags)
+      "Returns a list of lists. Each one is a line for hydra configuration in the form (c function hint)"
+      (interactive)
+      (mapcar (lambda (tag)
+                (let* (
+                       (tagstring (symbol-name tag))
+                       (c (ir/get-hydra-optionkey tagstring))
+                       )
+                  (list c (append '(elfeed-search-set-filter) (list (format "@6-months-ago +%s" tagstring) )) tagstring )))
+              tags))
 
-(defmacro ir/make-elfeed-hydra ()
-`(defhydra ir/hydra-elfeed ()
-"filter"
-,@(ir/make-elfeed-cats (elfeed-db-get-all-tags))
-("*" (elfeed-search-set-filter "@6-months-ago +star") "Starred")
-("M" elfeed-toggle-star "Mark")
-("A" (elfeed-search-set-filter "@6-months-ago") "All")
-("T" (elfeed-search-set-filter "@1-day-ago") "Today")
-("Q" bjm/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
-("q" nil "quit" :color blue)
-))
+    (defmacro ir/make-elfeed-hydra ()
+    `(defhydra ir/hydra-elfeed ()
+    "filter"
+    ,@(ir/make-elfeed-cats (elfeed-db-get-all-tags))
+    ("*" (elfeed-search-set-filter "@6-months-ago +star") "Starred")
+    ("M" elfeed-toggle-star "Mark")
+    ("A" (elfeed-search-set-filter "@6-months-ago") "All")
+    ("T" (elfeed-search-set-filter "@1-day-ago") "Today")
+    ("Q" bjm/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
+    ("q" nil "quit" :color blue)
+    ))
 
-(defun ir/make-and-run-elfeed-hydra ()
-""
-(interactive)
-(ir/make-elfeed-hydra)
-(ir/hydra-elfeed/body))
+    (defun ir/make-and-run-elfeed-hydra ()
+    ""
+    (interactive)
+    (ir/make-elfeed-hydra)
+    (ir/hydra-elfeed/body))
 
-;; sort by tags
-;; https://github.com/skeeto/elfeed/issues/203
-(defun my-elfeed-tag-sort (a b)
-(let* ((a-tags (format "%s" (elfeed-entry-tags a)))
-(b-tags (format "%s" (elfeed-entry-tags b)))) 
-(if (string= a-tags b-tags) 
-(< (elfeed-entry-date b) (elfeed-entry-date a))) 
-(string< a-tags b-tags))) 
-(setf elfeed-search-sort-function #'my-elfeed-tag-sort)
+    ;; sort by tags
+    ;; https://github.com/skeeto/elfeed/issues/203
+    (defun my-elfeed-tag-sort (a b)
+    (let* ((a-tags (format "%s" (elfeed-entry-tags a)))
+    (b-tags (format "%s" (elfeed-entry-tags b)))) 
+    (if (string= a-tags b-tags) 
+    (< (elfeed-entry-date b) (elfeed-entry-date a))) 
+    (string< a-tags b-tags))) 
+    (setf elfeed-search-sort-function #'my-elfeed-tag-sort)
   #+end_src
 * Rust Lang
   #+begin_src emacs-lisp
-(use-package racer
-:config
-(add-hook 'racer-mode-hook #'company-mode)
-(setq company-tooltip-align-annotations t)
-(setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
+    (use-package racer
+      :config
+      (add-hook 'racer-mode-hook #'company-mode)
+      (setq company-tooltip-align-annotations t)
+      (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"))
 
-(use-package rustic
-:config
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(setq rust-format-on-save t))
+    (use-package rustic
+      :config
+      (add-hook 'rust-mode-hook #'racer-mode)
+      (add-hook 'racer-mode-hook #'eldoc-mode)
+      (setq rust-format-on-save t))
 
-(use-package cargo
-:config
-(setq compilation-scroll-output t)
-(add-hook 'rust-mode-hook 'cargo-minor-mode))
+    (use-package cargo
+      :config
+      (setq compilation-scroll-output t)
+      (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
-(use-package flycheck-rust
-:config
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-(add-hook 'rust-mode-hook 'flycheck-mode))
+    (use-package flycheck-rust
+      :config
+      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+      (add-hook 'rust-mode-hook 'flycheck-mode))
 
   #+end_src
 * Flycheck
@@ -612,8 +647,8 @@ user-mail-address "ingo.richter@gmail.com")
   #+end_src
 * LSP
   #+begin_src emacs-lisp
-(use-package lsp-mode
-:hook (rust-mode . lsp)
-:hook (crystat-mode . lsp)
-:commands lsp)
+    (use-package lsp-mode
+      :hook (rust-mode . lsp)
+      :hook (crystat-mode . lsp)
+      :commands lsp)
   #+end_src
