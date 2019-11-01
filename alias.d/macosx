@@ -9,3 +9,6 @@ alias webserver='python -m SimpleHTTPServer'
 # zip recursively without the mac xattr files/folders
 # maczip name.zip folder2zip
 alias maczip='zip -X -r '
+
+# show only softlinks
+alias sl="ls -G -ltra | grep '\->'"
