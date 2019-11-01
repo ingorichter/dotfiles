@@ -2,6 +2,7 @@
 "zsh/zprofile"                      = "~/.zprofile"
 "zsh/zshrc"                         = "~/.zshrc"
 "zsh/zsh-aliases"                   = "~/.zsh-aliases"
+"zsh/themes/nick.zsh-theme"         = "~/.oh-my-zsh/themes/nick.zsh-theme"
 "git/gitconfig"                     = "~/.gitconfig"
 "git/gitignore_global"              = "~/.gitignore_global"
 "asciidoc"                          = "~/.asciidoc"
