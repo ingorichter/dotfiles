@@ -1,0 +1,12 @@
+[general]
+"zsh/zprofile"                      = "~/.zprofile"
+"zsh/zshrc"                         = "~/.zshrc"
+"zsh/zsh-aliases"                   = "~/.zsh-aliases"
+"git/gitconfig"                     = "~/.gitconfig"
+"git/gitignore_global"              = "~/.gitignore_global"
+"asciidoc"                          = "~/.asciidoc"
+"alias.d"                           = "~/.alias.d"
+"iterm/com.googlecode.iterm2.plist" = "~/Library/Preferences/com.googlecode.iterm2.plist"
+"emacs/init.el"                     = "~/.emacs.d/init.el"
+"tmux/tmux.conf"                    = "~/.tmux.conf"
+"gdb/gdbinit"                       = "~/.gdbinit"
