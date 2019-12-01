@@ -1,0 +1,214 @@
+#+STARTUP: overview 
+#+PROPERTY: header-args :comments yes :results silent
+
+* repos
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+  (setq package-archive-priorities
+	'(("melpa" . 0)
+	  ("org" . 5)
+	  ("gnu" . 10)))
+#+END_SRC
+* Global Stuff
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Ingo Richter"
+	user-mail-address "ingo.richter@gmail.com")
+#+END_SRC
+
+* Flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init
+    (global-flycheck-mode t))
+#+END_SRC
+* Parens
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t
+    :hook (prog-mode . smartparens-mode)
+    :custom
+    (sp-escape-quotes-after-insert nil)
+    :config
+    (require 'smartparens-config))
+
+  (show-paren-mode t)
+#+END_SRC
+* User Interface Customization
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (tool-bar-mode -1)
+  (global-set-key (kbd "<f5>") 'revert-buffer)
+  (setenv "BROWSER" "firefox")
+  (setq org-ellipsis "⤵")
+#+END_SRC
+* Doom Modeline and Themes
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons)
+  (use-package doom-modeline
+	       :ensure t)
+  (doom-modeline-init)
+  (all-the-icons-install-fonts)
+
+  (use-package doom-themes)
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+  ;; Load the theme (doom-one, doom-molokai, etc); keep in mind that each theme
+  ;; may have their own settings.
+  ;; (load-theme 'doom-nord-light)
+
+  ;; Enable flashing mode-line on errors
+  ;; (doom-themes-visual-bell-config)
+
+  ;; Corrects (and improves) org-mode's native fontification.
+  ;; (doom-themes-org-config)
+#+END_SRC
+
+* Fonts
+#+begin_src emacs-lisp
+  (set-frame-font "Fira Code 16" nil t)
+#+end_src
+* Org-mode
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package org
+  ;; 	     :ensure t
+  ;; 	     :pin org)
+
+  (setq org-directory "~/Nextcloud/org"
+	org-agenda-files (list org-directory)
+	org-archive-location (concat org-directory "/archive/%s_archive::")
+	org-default-notes-file (concat org-directory "/notes.org")
+	org-default-todo-file (concat org-directory "/mylife.org")
+	org-refile-location (concat org-directory "/refile.org")
+	org-gcal-location (concat org-directory "/gcal.org")
+	org-weekly-goals (concat org-directory "/weekly-goals.org")
+	org-goals (concat org-directory "/goals.org")
+	org-journal-location (concat org-directory "/journal/journal.org"))
+
+
+  (setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Todo")
+				 "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
+				("a" "Appointment" entry (file org-gcal-location)
+				 "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+				("n" "Note" entry (file+headline org-default-notes-file "Notes")
+				 "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
+				("i" "Idee" entry (file+headline org-refile-location "Ideen")
+				 "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
+				("w" "Weekly Goals" entry
+				 (file+datetree org-weekly-goals (format-time-string "%Y"))
+				 "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
+				("j" "Journal" entry (file+datetree org-journal-location)
+				 "* %U - %?\n  %i" :clock-in t :clock-resume t)))
+
+   ;; use org-bullets for nicer formatting
+  (use-package org-bullets
+	       :ensure t
+	       :config
+	       (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1))))
+
+  ;; Org-mode settings
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  (global-font-lock-mode 1)
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
+
+  ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+  (setq org-refile-targets (quote ((nil :maxlevel . 9)
+				   (org-agenda-files :maxlevel . 9))))
+
+  ;; have a timestamp added to finished items
+  (setq org-log-done 'time)
+
+  ;; capture templates
+  (setq org-todo-keywords
+	(quote (
+		(sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+		(sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+
+#+END_SRC
+* Org-Super-Agenda
+#+BEGIN_SRC emacs-lisp
+  (use-package org-super-agenda
+    :after org-agenda
+    :config
+    (org-super-agenda-mode))
+
+  (setq org-super-agenda-groups
+	'(
+	  (:name "Today"
+		 :time-grid t
+		 :todo "TODAY")
+	  (:name "Important"
+		 :priority "A")
+	  (:name "In Progress"
+		 :time-grid t
+		 :todo "ACTIVE")
+	  (:name "Deadlines"
+		:deadline today
+		:order 0)))
+  (org-agenda nil "a")
+
+    ;; (let ((org-super-agenda-groups
+    ;; 	 '((:name "Today"
+    ;; 		  :time-grid t
+    ;; 		  :todo "TODAY")
+    ;; 	   (:name "High Priority"
+    ;; 		  :priority "A"
+    ;; 		  :order 1)
+    ;; 	   (:name "Work"
+    ;; 		  :category "work"
+    ;; 		  :tag "work"
+    ;; 		  :order 2)
+    ;; 	   (:name "Chores"
+    ;; 		  :category "chores"
+    ;; 		  :order 3)
+    ;; 	   )))
+    ;;   (org-agenda nil "a"))
+#+END_SRC
+* CalDav
+#+BEGIN_SRC emacs-lisp
+  (use-package org-caldav
+    :ensure t
+    :config
+     (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/Ingo"
+       org-caldav-calendar-id "main"
+       org-caldav-inbox "~/Nextcloud/org/gcal.org"
+       org-caldav-files org-agenda-files
+       org-icalendar-timezone "America/Los_Angeles"
+       org-icalendar-date-time-format ";TZID=%Z:%Y%m%dT%H%M%S"))
+
+   (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
+   (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
+#+END_SRC
+* RSS Elfeed
+#+begin_src emacs-lisp
+  (use-package elfeed
+    :config
+    (elfeed-set-max-connections 32)
+    (setq elfeed-db-directory "~/Nextcloud/Emacs/elfeeddb"))
+
+  (use-package elfeed-org
+    :config
+    (elfeed-org)
+    (setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
+
+  (use-package elfeed-goodies
+    :config
+    (elfeed-goodies/setup))
+
+  ;; global keyboard shortcut to open elfeed
+  (global-set-key (kbd "C-x w") 'elfeed)
+#+end_src
+* Custom Functions
+#+begin_src emacs-lisp
+  (defun org-archive-done-tasks ()
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (org-archive-subtree)
+       (setq org-map-continue-from (outline-previous-heading))) "/DONE" 'tree))
+#+end_src

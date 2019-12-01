@@ -9,5 +9,6 @@
 "alias.d"                           = "~/.alias.d"
 "iterm/com.googlecode.iterm2.plist" = "~/Library/Preferences/com.googlecode.iterm2.plist"
 "emacs/init.el"                     = "~/.emacs.d/init.el"
+"emacs/Config.org"                  = "~/.emacs.d/Config.org"
 "tmux/tmux.conf"                    = "~/.tmux.conf"
 "gdb/gdbinit"                       = "~/.gdbinit"
