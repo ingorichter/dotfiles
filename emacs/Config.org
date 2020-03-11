@@ -69,7 +69,8 @@
 
 * Fonts
 #+begin_src emacs-lisp
-  (set-frame-font "Fira Code 16" nil t)
+  ;;;(set-frame-font "Fira Code 16" nil t)
+  (set-frame-font "JetBrains Mono Medium 16" nil t)
 #+end_src
 * Org-mode
 #+BEGIN_SRC emacs-lisp
@@ -149,7 +150,10 @@
 		 :todo "ACTIVE")
 	  (:name "Deadlines"
 		:deadline today
-		:order 0)))
+		:order 0)
+	  (:name "Buy"
+		 :time-grid t
+		 :category "buy")))
   (org-agenda nil "a")
 
     ;; (let ((org-super-agenda-groups
@@ -169,6 +173,26 @@
     ;; 	   )))
     ;;   (org-agenda nil "a"))
 #+END_SRC
+* Org-Journal
+#+begin_src emacs-lisp
+  (use-package org-journal
+    :defer t
+    :custom
+    (org-journal-dir "~/Nextcloud/org/journal/")
+    (org-journal-date-format "%A, %d %B %Y"))
+
+  (defun org-journal-file-header-func ()
+    "Custom function to create journal header."
+    (concat
+     (pcase org-journal-file-type
+       (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+       (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+       (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+       (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
+  (setq org-journal-file-header 'org-journal-file-header-func)
+
+
+#+end_src
 * CalDav
 #+BEGIN_SRC emacs-lisp
   (use-package org-caldav
@@ -202,6 +226,16 @@
 
   ;; global keyboard shortcut to open elfeed
   (global-set-key (kbd "C-x w") 'elfeed)
+
+  ;; sort by tags
+  ;; https://github.com/skeeto/elfeed/issues/203
+  (defun my-elfeed-tag-sort (a b)
+    (let* ((a-tags (format "%s" (elfeed-entry-tags a)))
+	   (b-tags (format "%s" (elfeed-entry-tags b)))) 
+      (if (string= a-tags b-tags) 
+	  (< (elfeed-entry-date b) (elfeed-entry-date a))) 
+      (string< a-tags b-tags))) 
+  (setf elfeed-search-sort-function #'my-elfeed-tag-sort)
 #+end_src
 * Custom Functions
 #+begin_src emacs-lisp
@@ -211,4 +245,13 @@
      (lambda ()
        (org-archive-subtree)
        (setq org-map-continue-from (outline-previous-heading))) "/DONE" 'tree))
+#+end_src
+* Custom Keymap
+#+begin_src emacs-lisp
+  (defun i/load-keymap ()
+    (interactive)
+    (define-prefix-command 'z-map)
+    (global-set-key (kbd "C-=") 'z-map)
+    (define-key z-map (kbd "a") 'org-archive-done-tasks))
+
 #+end_src
