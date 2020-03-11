@@ -12,3 +12,4 @@
 "emacs/Config.org"                  = "~/.emacs.d/Config.org"
 "tmux/tmux.conf"                    = "~/.tmux.conf"
 "gdb/gdbinit"                       = "~/.gdbinit"
+"espanso/default.yaml"              = "~/Library/Preferences/espanso/default.yml"
