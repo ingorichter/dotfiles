@@ -11,5 +11,6 @@
 "emacs/init.el"                     = "~/.emacs.d/init.el"
 "emacs/Config.org"                  = "~/.emacs.d/Config.org"
 "tmux/tmux.conf"                    = "~/.tmux.conf"
+"tmux/tmux-powerlinerc"             = "~/.tmux-powerlinerc"
 "gdb/gdbinit"                       = "~/.gdbinit"
-"espanso/default.yaml"              = "~/Library/Preferences/espanso/default.yml"
+"espanso/default.yml"               = "~/Library/Preferences/espanso/default.yml"
