@@ -193,6 +193,11 @@
 
 
 #+end_src
+* pomodoro
+  #+BEGIN_SRC emacs-lisp
+    (use-package org-pomodoro
+      :ensure t)
+  #+END_SRC
 * CalDav
 #+BEGIN_SRC emacs-lisp
   (use-package org-caldav
@@ -252,6 +257,11 @@
     (interactive)
     (define-prefix-command 'z-map)
     (global-set-key (kbd "C-=") 'z-map)
-    (define-key z-map (kbd "a") 'org-archive-done-tasks))
+    (define-key z-map (kbd "a") 'org-archive-done-tasks)
+    (define-key z-map (kbd "j") 'org-journal-new-entry))
+
+  (i/load-keymap)
+
+  (global-set-key (kbd "<f9>") 'org-pomodoro)
 
 #+end_src
