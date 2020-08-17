@@ -14,3 +14,4 @@
 "tmux/tmux-powerlinerc"             = "~/.tmux-powerlinerc"
 "gdb/gdbinit"                       = "~/.gdbinit"
 "espanso/default.yml"               = "~/Library/Preferences/espanso/default.yml"
+"alacritty/alacritty.yml"           = "~/.config/alacritty/alacritty.yml"
