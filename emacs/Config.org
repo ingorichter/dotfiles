@@ -14,8 +14,23 @@
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Ingo Richter"
 	user-mail-address "ingo.richter@gmail.com")
+
+  (use-package try :ensure t)
+
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
 #+END_SRC
 
+* Shell Settings
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
+#+end_src
 * Flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
@@ -69,14 +84,29 @@
 
 * Fonts
 #+begin_src emacs-lisp
-  ;;;(set-frame-font "Fira Code 16" nil t)
+    ;;;(set-frame-font "Fira Code 16" nil t)
   (set-frame-font "JetBrains Mono Medium 16" nil t)
+  (defface propositum-agenda-heading
+    '((default
+	:font "JetBrains Mono Medium 28"
+	:overline t))
+    "custom face for the header-line in `org-ql-search' buffers"
+    :group 'org-super-agenda)
+
+  (defface propositum-agenda-header-line
+    '((default
+	:font "SF Mono Light 28"
+	:inherit header-line))
+    "custom face for the header-line in `org-ql-search' buffers"
+    :group 'org-super-agenda)
 #+end_src
 * Org-mode
 #+BEGIN_SRC emacs-lisp
   ;; (use-package org
   ;; 	     :ensure t
   ;; 	     :pin org)
+
+  (require 'org-protocol)
 
   (setq org-directory "~/Nextcloud/org"
 	org-agenda-files (list org-directory)
@@ -129,49 +159,75 @@
 	(quote (
 		(sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
 		(sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
-
+;; this was mentioned in http://howardism.org/Technical/Emacs/literate-programming-tutorial.html
+  (setq org-confirm-babel-evaluate nil
+	org-src-fontify-natively t
+	org-src-tab-acts-natively t)
 #+END_SRC
 * Org-Super-Agenda
 #+BEGIN_SRC emacs-lisp
   (use-package org-super-agenda
     :after org-agenda
+    :custom-face
+    (org-super-agenda-header ((default (:inherit propositum-agenda-heading))))
     :config
     (org-super-agenda-mode))
+
+  (setq
+   org-agenda-skip-scheduled-if-done t
+   org-agenda-skip-deadline-if-done t
+   org-agenda-include-deadlines t
+   org-agenda-include-diary nil
+   org-agenda-block-separator nil
+   org-agenda-compact-blocks t
+   org-agenda-start-with-log-mode t)
 
   (setq org-super-agenda-groups
 	'(
 	  (:name "Today"
 		 :time-grid t
+		 :date today
+		 :scheduled today
+		 :order 1
 		 :todo "TODAY")
-	  (:name "Important"
+	  (:name "Phone Calls"
+		 :time-grid t
+		 :tag "phone")
+	  (:name "EMails"
+		 :time-grid t
+		 :tag "mail")
+	  (:name "⭐ Important"
 		 :priority "A")
 	  (:name "In Progress"
 		 :time-grid t
 		 :todo "ACTIVE")
+	  (:name "Finance"
+		 :time-grid t
+		 :tag "finance")
 	  (:name "Deadlines"
-		:deadline today
-		:order 0)
+		 :deadline today
+		 :order 0)
 	  (:name "Buy"
 		 :time-grid t
-		 :category "buy")))
+		 :tag "buy")))
   (org-agenda nil "a")
 
-    ;; (let ((org-super-agenda-groups
-    ;; 	 '((:name "Today"
-    ;; 		  :time-grid t
-    ;; 		  :todo "TODAY")
-    ;; 	   (:name "High Priority"
-    ;; 		  :priority "A"
-    ;; 		  :order 1)
-    ;; 	   (:name "Work"
-    ;; 		  :category "work"
-    ;; 		  :tag "work"
-    ;; 		  :order 2)
-    ;; 	   (:name "Chores"
-    ;; 		  :category "chores"
-    ;; 		  :order 3)
-    ;; 	   )))
-    ;;   (org-agenda nil "a"))
+  ;; (let ((org-super-agenda-groups
+  ;; 	 '((:name "Today"
+  ;; 		  :time-grid t
+  ;; 		  :todo "TODAY")
+  ;; 	   (:name "High Priority"
+  ;; 		  :priority "A"
+  ;; 		  :order 1)
+  ;; 	   (:name "Work"
+  ;; 		  :category "work"
+  ;; 		  :tag "work"
+  ;; 		  :order 2)
+  ;; 	   (:name "Chores"
+  ;; 		  :category "chores"
+  ;; 		  :order 3)
+  ;; 	   )))
+  ;;   (org-agenda nil "a"))
 #+END_SRC
 * Org-Journal
 #+begin_src emacs-lisp
@@ -181,7 +237,7 @@
     (org-journal-dir "~/Nextcloud/org/journal/")
     (org-journal-date-format "%A, %d %B %Y"))
 
-  (defun org-journal-file-header-func ()
+  (defun org-journal-file-header-func (time)
     "Custom function to create journal header."
     (concat
      (pcase org-journal-file-type
@@ -193,6 +249,40 @@
 
 
 #+end_src
+* Org-Roam
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :hook
+    (after-init . org-roam-mode)
+    :custom
+    (org-roam-directory "~/Nextcloud/org/roam")
+    :bind (:map org-roam-mode-map
+		(("C-c n l" . org-roam)
+		 ("C-c n f" . org-roam-find-file)
+		 ("C-c n g" . org-roam-show-graph))
+		:map org-mode-map
+		(("C-c n i" . org-roam-insert)))
+    :config
+    (setq org-roam-capture-ref-templates
+	  '(("r" "ref" plain (function org-roam-capture--get-point)
+	     "%?"
+	     :file-name "websites/${slug}"
+	     :head "#+TITLE: ${title}\n#+roam_key: ${ref}\n#+HUGO_SLUG: ${slug}\n#+roam_tags: website\n#+title: ${title}\n\n- source :: ${ref}\n"
+	     :unnarrowed t)))
+    (require 'org-roam-protocol))
+#+end_src
+* Deft
+#+begin_src emacs-lisp
+  (use-package deft
+      :after org
+      :bind
+      ("C-c n d" . deft)
+      :custom
+      (deft-recursive t)
+      (deft-use-filter-string-for-filename t)
+      (deft-default-extension "org")
+      (deft-directory "~/Nextcloud/org/roam/"))
+#+end_src
 * pomodoro
   #+BEGIN_SRC emacs-lisp
     (use-package org-pomodoro
@@ -200,18 +290,20 @@
   #+END_SRC
 * CalDav
 #+BEGIN_SRC emacs-lisp
-  (use-package org-caldav
-    :ensure t
-    :config
-     (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/Ingo"
-       org-caldav-calendar-id "main"
-       org-caldav-inbox "~/Nextcloud/org/gcal.org"
-       org-caldav-files org-agenda-files
-       org-icalendar-timezone "America/Los_Angeles"
-       org-icalendar-date-time-format ";TZID=%Z:%Y%m%dT%H%M%S"))
+  ;; ;; https://github.com/dengste/org-caldav
+  ;;   (use-package org-caldav
+  ;;     :ensure t
+  ;;     :config
+  ;;      (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/Ingo"
+  ;;        org-caldav-calendar-id "main"
+  ;;        org-caldav-inbox "~/Nextcloud/org/gcal.org"
+  ;;        org-caldav-save-directory "~/Nextcloud/org"
+  ;;        org-caldav-files org-agenda-files
+  ;;        org-icalendar-timezone "America/Los_Angeles"
+  ;;        org-icalendar-date-time-format ";TZID=%Z:%Y%m%dT%H%M%S"))
 
-   (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
-   (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
+  ;;    (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
+  ;;    (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
 #+END_SRC
 * RSS Elfeed
 #+begin_src emacs-lisp
@@ -264,4 +356,23 @@
 
   (global-set-key (kbd "<f9>") 'org-pomodoro)
 
+#+end_src
+* Writeroom
+#+begin_src emacs-lisp
+  (use-package writeroom-mode)
+
+  (with-eval-after-load 'writeroom-mode
+    (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+    (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+    (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+
+#+end_src
+* Email
+#+begin_src emacs-lisp
+  (defun load-if-exists (f)
+    "load the elisp file is it exists and is readable"
+    (if (file-readable-p f)
+	(load-file f)))
+
+  (load-if-exists "~/.dotfiles/emacs/mu4econfig.el")
 #+end_src
