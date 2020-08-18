@@ -4,6 +4,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export KEYBASE_DIR="/Volumes/Keybase/"
+export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2020.journal"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -54,7 +56,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # thefuck
-plugins=(git npm brew docker go node osx tmux xcode yarn z.lua)
+plugins=(git npm brew docker golang node osx tmux xcode yarn z.lua pass react-native ripgrep)
 
 # User configuration
 source "$ZSH/oh-my-zsh.sh"

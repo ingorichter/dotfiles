@@ -2,22 +2,19 @@
 DEV_ROOT=${HOME}/develop
 
 # Setup dev environment
-DEV=${DEV_ROOT}
-TOOLS=${DEV}/tools
-GROOVYBIN=${TOOLS}/groovy/bin
-MAVENBIN=${TOOLS}/maven/bin
 GOPATH=${DEV_ROOT}/go-workspace
 GOBIN=$(export GOPATH; go env GOPATH)/bin
 
-# specify JAVA_HOME. Since Java 10 is available, I'm going with it
-JAVA_HOME=$(/usr/libexec/java_home -v 10)
+# specify JAVA_HOME. Since Java 14 is available, I'm going with it
+JAVA_HOME=$(/usr/libexec/java_home -v 14)
 
 # Modify the $PATH
-PATH=${PATH}:${GROOVYBIN}:${MAVENBIN}:$GOBIN
+PATH=${PATH}:$GOBIN
 
 # load machine specific configuration
-if [ -e "${HOME}/Dropbox/Dotfiles/$(hostname -s)" ]; then
-  source "${HOME}/Dropbox/Dotfiles/$(hostname -s)"
+MACHINE_CONFIG_FILE="${HOME}/Dropbox/Dotfiles/$(hostname -s)"
+if [ -e "${MACHINE_CONFIG_FILE}" ]; then
+  source "${MACHINE_CONFIG_FILE}"
 fi
 
 # Alias definition
