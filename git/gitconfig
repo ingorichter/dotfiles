@@ -1,5 +1,6 @@
 ## http://git-scm.com/book/en/Customizing-Git-Git-Configuration
 [user]
+	useConfigOnly = true
 	name = Ingo Richter
 	email = ingo.richter+github@gmail.com
 
@@ -55,6 +56,8 @@
 	visual = !gitk
 	ghcpr = "!git symbolic-ref HEAD | sed -e 's/^refs\\/heads\\///' | awk '{printf \"https://git.corp.adobe.com/webpa/sparkler-shell/compare/%s?expand=1\", $1}' | xargs open"
 	la = "!git config -l | grep alias | cut -c 7-"
+	blog = "!git log --graph --decorate --pretty=oneline --abbrev-commit --all"
+	identity = "! git config user.name \"$(git config user.$1.name)\"; git config user.email \"$(git config user.$1.email)\"; git config user.signingkey \"$(git config user.$1.signingkey)\"; :"
 
 [url "https://"]
 	insteadOf = git://
@@ -77,5 +80,18 @@
 	spellcheck = false
 [commit]
 	template = /Users/irichter/.stCommitMsg
+	gpgSign = true
 [fetch]
 	prune = true
+[user "gitcorp"]
+	name = Ingo Richter
+	email = irichter@adobe.com
+	signingkey = B2FC224B76A40BCC
+[user "github"]
+	name = Ingo Richter
+	email = ingo.richter+github@gmail.com
+	signingkey = 47179020517973BE
+[gpg]
+	program = gpg
+[pull]
+	rebase = false
