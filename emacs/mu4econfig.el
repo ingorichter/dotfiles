@@ -1,21 +1,51 @@
-(add-to-list 'load-path "/usr/local/Cellar/mu/1.4.13/share/emacs/site-lisp/mu/mu4e/")
-(require 'smtpmail)
+(add-to-list 'load-path "/usr/local/Cellar/mu/1.4.15/share/emacs/site-lisp/mu/mu4e/")
+;;(require 'smtpmail)
 
 ;; (use-package async
 ;;   :ensure t
 ;;   :config (require 'smtpmail-async))
+(use-package smtpmail-async)
 
 ;; smtp
-(setq message-send-mail-function 'smtpmail-send-it
-;;      smtpmail-starttls-credentials
-;;      '(("mx.ingo-richter.io" 587 nil nil))
+(setq
+ ;;send-mail-function 'smtpmail-send-it
+   ;;   message-send-mail-function 'smtpmail-send-it
+send-mail-function 'async-smtpmail-send-it
+      message-send-mail-function 'async-smtpmail-send-it
+      ;; message-send-mail-function 'smtpmail-send-it
+      ;;      smtpmail-starttls-credentials
+      ;;      '(("mx.ingo-richter.io" 587 nil nil))
       smtpmail-default-smtp-server "mx.ingo-richter.io"
       smtpmail-smtp-server "mx.ingo-richter.io"
       smtpmail-smtp-service 587
       smtpmail-stream-type  'starttls
+      smtpmail-queue-mail t
+      smtpmail-queue-dir (expand-file-name "~/Mail/queue/cur")
       smtpmail-debug-info t)
 
+(defun async-smtpmail-send-queued-mail (sync-func &rest args)
+  (message "Starting asynchronous smtpmail-send-queued-mail")
+  (async-start
+   `(lambda ()
+      (require 'smtpmail)
+      ;; see smtpmail-async.el - we inject the same variables
+      ,(async-inject-variables
+        "\\`\\(smtpmail\\|async-smtpmail\\|\\(user-\\)?mail\\)-\\|auth-sources\\|epg\\|nsm"
+        nil
+        "\\`\\(mail-header-format-function\\|smtpmail-address-buffer\\|mail-mode-abbrev-table\\)")
+      ;; if we don't use the above inject we can pass in specific variables like this:
+      ;; (setq smtpmail-queue-dir ,smtpmail-queue-dir)
+      ;; (setq smtpmail-smtp-server ,smtpmail-smtp-server)
+      (,sync-func))
+   (lambda (&optional _unused)
+     (message "Done sending queued mail in the background."))))
+
+;; https://emacs.stackexchange.com/a/14827/8743 has more, err, advice.
+;;(advice-add #'smtpmail-send-queued-mail :around #'async-smtpmail-send-queued-mail)
+
 (require 'mu4e)
+
+(require 'mu4e-org)
 
 (setq mu4e-mu-binary "/usr/local/bin/mu")
 (setq mu4e-maildir (expand-file-name "~/Mail"))
@@ -27,7 +57,7 @@
 
 (setq mail-user-agent 'mu4e-user-agent)
 
-; get mail
+;; get mail
 (setq mu4e-get-mail-command "mbsync -a"
       mu4e-html2text-command "w3m -T text/html"
       mu4e-update-interval 120
@@ -43,6 +73,13 @@
 ;; show images
 (setq mu4e-show-images t)
 
+(setq org-capture-templates
+      `(("m" "Email Workflow")
+	("mf" "Follow Up" entry (file+olp "~/Nextcloud/org/Mail.org" "Follow Up")
+	 "* TODO %a")
+	("mr" "Read Later" entry (file+olp "~/Nextcloud/org/Mai.org" "Read Later")
+	 "* TODO %a")))
+
 ;; mbsync avoid duplicate UIDs
 ;; https://www.tomica.net/blog/2020/03/replacing-offlineimap-with-mbsync-isync
 (setq mu4e-change-filenames-when-moving t)
@@ -56,7 +93,7 @@
 (setq mu4e-reply-to-address "ingo@ingo-richter.io"
       user-mail-address "ingo@ingo-richter.io"
       user-full-name "Ingo Richter")
-
+(setq mu4e-compose-signature (concat "Cheers,\n" "Ingo\n\n" "PGP Key: https://ingo-richter.io/pgp.key | Fingerprint"))
 ;; don't save message to SendMessages, IMAP takes care of this
                                         ; (setq mu4e-sent-messages-behavior 'delete)
 
@@ -66,4 +103,8 @@
             "My settings for message composition."
             (set-fill-column 72)
             (flyspell-mode)))
+
+;; don't keep message buffers around
+(setq message-kill-buffer-on-exit t)
+
 

@@ -9,6 +9,12 @@
 	'(("melpa" . 0)
 	  ("org" . 5)
 	  ("gnu" . 10)))
+
+  (quelpa
+   '(quelpa-use-package
+     :fetcher git
+     :url "https://github.com/quelpa/quelpa-use-package.git"))
+  (require 'quelpa-use-package)
 #+END_SRC
 * Global Stuff
 #+BEGIN_SRC emacs-lisp
@@ -21,6 +27,10 @@
     :ensure t
     :config
     (which-key-mode))
+
+  (setq completion-styles '(initials partial-completion flex))
+  (setq completion-cycle-threshold 10)
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 #+END_SRC
 
 * Shell Settings
@@ -64,7 +74,8 @@
   (use-package doom-modeline
 	       :ensure t)
   (doom-modeline-init)
-  (all-the-icons-install-fonts)
+(if (not (file-readable-p "~/Library/Fonts/all-the-icons.ttf"))
+  (all-the-icons-install-fonts))
 
   (use-package doom-themes)
   ;; Global settings (defaults)
@@ -134,11 +145,11 @@
 				("j" "Journal" entry (file+datetree org-journal-location)
 				 "* %U - %?\n  %i" :clock-in t :clock-resume t)))
 
-   ;; use org-bullets for nicer formatting
+  ;; use org-bullets for nicer formatting
   (use-package org-bullets
-	       :ensure t
-	       :config
-	       (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1))))
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1))))
 
   ;; Org-mode settings
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -159,10 +170,27 @@
 	(quote (
 		(sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
 		(sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
-;; this was mentioned in http://howardism.org/Technical/Emacs/literate-programming-tutorial.html
+  ;; this was mentioned in http://howardism.org/Technical/Emacs/literate-programming-tutorial.html
   (setq org-confirm-babel-evaluate nil
 	org-src-fontify-natively t
 	org-src-tab-acts-natively t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell      . t)
+     (js         . t)
+     (emacs-lisp . t)
+     (perl       . t)
+     (crystal    . t)
+     (clojure    . t)
+     (python     . t)
+     (ruby       . t)
+     (dot        . t)
+     (css        . t)
+     (plantuml   . t)))
+
+  (quelpa '(org-ql :fetcher github
+		   :repo "alphapapa/org-ql"
+		   :branch "master"))
 #+END_SRC
 * Org-Super-Agenda
 #+BEGIN_SRC emacs-lisp
@@ -188,25 +216,33 @@
 		 :time-grid t
 		 :date today
 		 :scheduled today
-		 :order 1
+		 :order 0
 		 :todo "TODAY")
+	  (:name "⭐ Important"
+		 :priority "A"
+		 :order 1)
+	  (:name "Habit"
+		 :habit t
+		 :order 2)
+	  (:name "Chores"
+		 :tag "chores")
 	  (:name "Phone Calls"
 		 :time-grid t
 		 :tag "phone")
 	  (:name "EMails"
 		 :time-grid t
 		 :tag "mail")
-	  (:name "⭐ Important"
-		 :priority "A")
 	  (:name "In Progress"
 		 :time-grid t
-		 :todo "ACTIVE")
+		 :todo "ACTIVE"
+		 :order 3)
 	  (:name "Finance"
 		 :time-grid t
-		 :tag "finance")
+		 :tag "finance"
+		 :tag "money")
 	  (:name "Deadlines"
 		 :deadline today
-		 :order 0)
+		 :order 1)
 	  (:name "Buy"
 		 :time-grid t
 		 :tag "buy")))
@@ -290,20 +326,20 @@
   #+END_SRC
 * CalDav
 #+BEGIN_SRC emacs-lisp
-  ;; ;; https://github.com/dengste/org-caldav
-  ;;   (use-package org-caldav
-  ;;     :ensure t
-  ;;     :config
-  ;;      (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/Ingo"
-  ;;        org-caldav-calendar-id "main"
-  ;;        org-caldav-inbox "~/Nextcloud/org/gcal.org"
-  ;;        org-caldav-save-directory "~/Nextcloud/org"
-  ;;        org-caldav-files org-agenda-files
-  ;;        org-icalendar-timezone "America/Los_Angeles"
-  ;;        org-icalendar-date-time-format ";TZID=%Z:%Y%m%dT%H%M%S"))
+  ;; https://github.com/dengste/org-caldav
+    (use-package org-caldav
+      :ensure t
+      :config
+       (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/Ingo"
+	 org-caldav-calendar-id "main"
+	 org-caldav-inbox "~/Nextcloud/org/gcal.org"
+	 org-caldav-save-directory "~/Nextcloud/org"
+	 org-caldav-files org-agenda-files
+	 org-icalendar-timezone "America/Los_Angeles"
+	 org-icalendar-date-time-format ";TZID=%Z:%Y%m%dT%H%M%S"))
 
-  ;;    (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
-  ;;    (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
+     (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
+     (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
 #+END_SRC
 * RSS Elfeed
 #+begin_src emacs-lisp
@@ -312,10 +348,10 @@
     (elfeed-set-max-connections 32)
     (setq elfeed-db-directory "~/Nextcloud/Emacs/elfeeddb"))
 
-  (use-package elfeed-org
-    :config
-    (elfeed-org)
-    (setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
+;;  (use-package elfeed-org
+;;    :config
+;;    (elfeed-org)
+;;    (setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
 
   (use-package elfeed-goodies
     :config
@@ -333,6 +369,15 @@
 	  (< (elfeed-entry-date b) (elfeed-entry-date a))) 
       (string< a-tags b-tags))) 
   (setf elfeed-search-sort-function #'my-elfeed-tag-sort)
+
+  (setq elfeed-use-curl t)
+  (elfeed-set-timeout 36000)
+  (setq elfeed-curl-extra-arguments '("--insecure")) ;necessary for https without a trust certificate)
+  (setq elfeed-feeds '(
+		       ;; format 1
+		       "owncloud+https://ingo:timanfaya@cloud.familie-richter.synology.me"))
+  ;; elfeed-protocol-enable
+  (elfeed-protocol-enable)
 #+end_src
 * Custom Functions
 #+begin_src emacs-lisp
@@ -376,3 +421,25 @@
 
   (load-if-exists "~/.dotfiles/emacs/mu4econfig.el")
 #+end_src
+
+* Burly and Bookmarks
+  #+begin_src emacs-lisp
+    (use-package burly
+      :quelpa (burly :fetcher github :repo "alphapapa/burly.el"))
+  #+end_src
+
+* Telegram
+  #+begin_src emacs-lisp
+    (quelpa '(telega :fetcher github
+		     :repo "zevlg/telega.el"
+		     :branch "master"
+		     :files (:defaults "etc" "server" "Makefile")))
+
+    (quelpa '(visual-fill-column :fetcher github
+				 :repo "joostkremers/visual-fill-column"
+				 :branch "master"))
+
+    (quelpa '(rainbow-identifiers :fetcher github
+				  :repo "Fanael/rainbow-identifiers"
+				  :branch "master"))
+  #+end_src
