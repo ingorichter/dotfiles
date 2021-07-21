@@ -1,4 +1,4 @@
-#+STARTUP: overview 
++STARTUP: overview 
 #+PROPERTY: header-args :comments yes :results silent
 
 * repos
@@ -18,21 +18,53 @@
 #+END_SRC
 * Global Stuff
 #+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Ingo Richter"
-	user-mail-address "ingo.richter@gmail.com")
-
-  (use-package try :ensure t)
-
-  (use-package which-key
-    :ensure t
-    :config
-    (which-key-mode))
-
-  (setq completion-styles '(initials partial-completion flex))
-  (setq completion-cycle-threshold 10)
-  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+    (setq user-full-name "Ingo Richter"
+	  user-mail-address "ingo.richter@gmail.com")
+  
+    (use-package try :ensure t)
+  
+    (use-package which-key
+      :ensure t
+      :config
+      (which-key-mode))
+  
+    (setq completion-styles '(initials partial-completion flex))
+    (setq completion-cycle-threshold 10)
+    (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+  
+    (defun ir/new-buffer ()
+      "Create a new frame with an empty buffer"
+      (interactive)
+      (let ((buffer (generate-new-buffer "untitled")))
+	(set-buffer-major-mode buffer)
+	(display-buffer buffer '(display-buffer-pop-up-frame . nil))))
+  (defun empty-frame ()
+    "Open a new frame with a buffer named Untitled<N>.
+  
+  The buffer is not associated with a file."
+    (interactive)
+    (switch-to-buffer-other-frame (generate-new-buffer "Untitled")))
+  
+  (setq backup-by-copying t
+	backup-directory-alist
+	'(("." . "~/.saves.d/"))
+	delete-old-versions t
+	kept-old-versions 2
+	kept-new-versions 6
+	version-control t
+	)
+  ;; tabs
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 2)
 #+END_SRC
-
+* Keymapping
+  #+begin_src emacs-lisp
+    ;; I've re-used this snippet from https://github.com/zamansky/dot-emacs/blob/master/README.org
+    ;; z-map is convenient since it's close to the ctrl key on the left side ...
+    (define-prefix-command 'z-map)
+    (global-set-key (kbd "C-Z") 'z-map)
+    (define-key z-map (kbd "n") #'empty-frame)
+  #+end_src
 * Shell Settings
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
@@ -67,6 +99,8 @@
   (global-set-key (kbd "<f5>") 'revert-buffer)
   (setenv "BROWSER" "firefox")
   (setq org-ellipsis "⤵")
+  (setq default-frame-alist
+	'((font . "JetBrains Mono Medium 24")))
 #+END_SRC
 * Doom Modeline and Themes
 #+BEGIN_SRC emacs-lisp
@@ -291,13 +325,14 @@
     :hook
     (after-init . org-roam-mode)
     :custom
-    (org-roam-directory "~/Nextcloud/org/roam")
+    (org-roam-directory (file-truename "~/Nextcloud/org/roam/"))
     :bind (:map org-roam-mode-map
 		(("C-c n l" . org-roam)
 		 ("C-c n f" . org-roam-find-file)
 		 ("C-c n g" . org-roam-show-graph))
 		:map org-mode-map
-		(("C-c n i" . org-roam-insert)))
+		(("C-c n i" . org-roam-insert))
+		(("C-c n I" . org-roam-insert-immediate)))
     :config
     (setq org-roam-capture-ref-templates
 	  '(("r" "ref" plain (function org-roam-capture--get-point)
@@ -442,4 +477,56 @@
     (quelpa '(rainbow-identifiers :fetcher github
 				  :repo "Fanael/rainbow-identifiers"
 				  :branch "master"))
+  #+end_src
+* MPV Media Player
+  #+begin_src emacs-lisp
+    (use-package empv
+      :ensure t
+      :quelpa (empv
+	       :fetcher github
+	       :repo "isamert/empv.el"))
+    (setq empv-invidious-instance "https://invidious.exonip.de/api/v1")
+  #+end_src
+* Org-Reveal
+  #+begin_src emacs-lisp
+    (use-package ox-reveal
+    :ensure t)
+  #+end_src
+
+* Magit
+  #+begin_src elisp
+    (use-package magit
+      :ensure t
+      :bind ("C-x g" . magit-status))
+  #+end_src
+
+* LSP
+  #+begin_src elisp
+    (use-package lsp-mode
+      :ensure t
+      :quelpa (lsp-mode
+	       :fetcher github
+	       :repo "emacs-lsp/lsp-mode")
+      ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+      (setq lsp-keymap-prefix "C-l")
+      :hook (;; replace XXX-mode with concrete major-mode (e.g. python-mode)
+	     (python-mode . lsp)
+	     ;; if you want which-key integration
+	     (lsp-mode . lsp-enable-which-key-integration))
+      :commands lsp)
+    
+    (use-package lsp-python-ms
+      :ensure t
+      :quelpa (lsp-python-ms
+	       :fetcher github
+	       :repo "emacs-lsp/lsp-python-ms")
+      :init (setq lsp-python-ms-auto-install-server t)
+      :hook (python-mode . (lambda ()
+			      (require 'lsp-python-ms)
+			      (lsp))))  ;; or lsp-deferred
+  #+end_src
+* Dired Tweaks
+  #+begin_src emacs-lisp
+    (use-package diredfl
+      :ensure t)
   #+end_src
