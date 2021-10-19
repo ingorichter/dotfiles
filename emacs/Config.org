@@ -1,4 +1,4 @@
-+STARTUP: overview 
+#+STARTUP: overview 
 #+PROPERTY: header-args :comments yes :results silent
 
 * repos
@@ -18,44 +18,58 @@
 #+END_SRC
 * Global Stuff
 #+BEGIN_SRC emacs-lisp
-    (setq user-full-name "Ingo Richter"
-	  user-mail-address "ingo.richter@gmail.com")
-  
-    (use-package try :ensure t)
-  
-    (use-package which-key
-      :ensure t
-      :config
-      (which-key-mode))
-  
-    (setq completion-styles '(initials partial-completion flex))
-    (setq completion-cycle-threshold 10)
-    (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-  
-    (defun ir/new-buffer ()
-      "Create a new frame with an empty buffer"
-      (interactive)
-      (let ((buffer (generate-new-buffer "untitled")))
-	(set-buffer-major-mode buffer)
-	(display-buffer buffer '(display-buffer-pop-up-frame . nil))))
+  (setq user-full-name "Ingo Richter"
+        user-mail-address "ingo.richter@gmail.com")
+
+  (use-package try :ensure t)
+
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
+
+  ;; (setq completion-styles '(initials partial-completion flex))
+  ;; (setq completion-cycle-threshold 10)
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+  (defun ir/new-buffer ()
+    "Create a new frame with an empty buffer"
+    (interactive)
+    (let ((buffer (generate-new-buffer "untitled")))
+      (set-buffer-major-mode buffer)
+      (display-buffer buffer '(display-buffer-pop-up-frame . nil))))
   (defun empty-frame ()
     "Open a new frame with a buffer named Untitled<N>.
-  
-  The buffer is not associated with a file."
+
+      The buffer is not associated with a file."
     (interactive)
     (switch-to-buffer-other-frame (generate-new-buffer "Untitled")))
-  
+
   (setq backup-by-copying t
-	backup-directory-alist
-	'(("." . "~/.saves.d/"))
-	delete-old-versions t
-	kept-old-versions 2
-	kept-new-versions 6
-	version-control t
-	)
+        backup-directory-alist
+        '(("." . "~/.saves.d/"))
+        delete-old-versions t
+        kept-old-versions 2
+        kept-new-versions 6
+        version-control t
+        )
   ;; tabs
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
+
+  ;; completion
+  (define-key minibuffer-local-completion-map (kbd "SPC") 'self-insert-command)
+
+  ;; enable ido-mode
+  ;; https://masteringemacs.org/article/introduction-to-ido-mode
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1)
+
+  (global-visual-line-mode t)
+
+  ;; fix some TLS issues
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+END_SRC
 * Keymapping
   #+begin_src emacs-lisp
@@ -92,15 +106,24 @@
 
   (show-paren-mode t)
 #+END_SRC
+* Syntax Highlight
+  #+begin_src elisp
+    (use-package prism
+      :quelpa (prism
+               :fetcher github
+               :repo "alphapapa/prism.el"))
+  #+end_src
 * User Interface Customization
 #+BEGIN_SRC emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (tool-bar-mode -1)
-  (global-set-key (kbd "<f5>") 'revert-buffer)
-  (setenv "BROWSER" "firefox")
-  (setq org-ellipsis "⤵")
-  (setq default-frame-alist
-	'((font . "JetBrains Mono Medium 24")))
+    (fset 'yes-or-no-p 'y-or-n-p)
+    (tool-bar-mode -1)
+    (global-set-key (kbd "<f5>") 'revert-buffer)
+    (setenv "BROWSER" "firefox")
+    (setq org-ellipsis "⤵")
+    (setq default-frame-alist
+        '((font . "-*-RobotoMono Nerd Font-normal-normal-normal-*-18-*-*-*-p-0-iso10646-1")))
+  ;;        '((font . "JetBrains Mono Medium 24")))
+    (global-display-line-numbers-mode t)
 #+END_SRC
 * Doom Modeline and Themes
 #+BEGIN_SRC emacs-lisp
@@ -145,39 +168,49 @@
     "custom face for the header-line in `org-ql-search' buffers"
     :group 'org-super-agenda)
 #+end_src
-* Org-mode
+* PlantUML
+  #+begin_src elisp
+    (use-package plantuml-mode
+      :ensure t)
+    
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+    (setq plantuml-jar-path
+          (expand-file-name "/usr/local/Cellar/plantuml/1.2021.9/libexec/plantuml.jar"))
+    (setq plantuml-default-exec-mode 'jar)
+  #+end_src
+* Org-Mode
 #+BEGIN_SRC emacs-lisp
   ;; (use-package org
   ;; 	     :ensure t
   ;; 	     :pin org)
 
+  (use-package ob-crystal)
   (require 'org-protocol)
 
   (setq org-directory "~/Nextcloud/org"
-	org-agenda-files (list org-directory)
-	org-archive-location (concat org-directory "/archive/%s_archive::")
-	org-default-notes-file (concat org-directory "/notes.org")
-	org-default-todo-file (concat org-directory "/mylife.org")
-	org-refile-location (concat org-directory "/refile.org")
-	org-gcal-location (concat org-directory "/gcal.org")
-	org-weekly-goals (concat org-directory "/weekly-goals.org")
-	org-goals (concat org-directory "/goals.org")
-	org-journal-location (concat org-directory "/journal/journal.org"))
-
+        org-agenda-files (list org-directory)
+        org-archive-location (concat org-directory "/archive/%s_archive::")
+        org-default-notes-file (concat org-directory "/notes.org")
+        org-default-todo-file (concat org-directory "/mylife.org")
+        org-refile-location (concat org-directory "/refile.org")
+        org-gcal-location (concat org-directory "/gcal.org")
+        org-weekly-goals (concat org-directory "/weekly-goals.org")
+        org-goals (concat org-directory "/goals.org")
+        org-journal-location (concat org-directory "/journal/journal.org"))
 
   (setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Todo")
-				 "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
-				("a" "Appointment" entry (file org-gcal-location)
-				 "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
-				("n" "Note" entry (file+headline org-default-notes-file "Notes")
-				 "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
-				("i" "Idee" entry (file+headline org-refile-location "Ideen")
-				 "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
-				("w" "Weekly Goals" entry
-				 (file+datetree org-weekly-goals (format-time-string "%Y"))
-				 "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
-				("j" "Journal" entry (file+datetree org-journal-location)
-				 "* %U - %?\n  %i" :clock-in t :clock-resume t)))
+                                 "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
+                                ("a" "Appointment" entry (file org-gcal-location)
+                                 "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+                                ("n" "Note" entry (file+headline org-default-notes-file "Notes")
+                                 "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
+                                ("i" "Idee" entry (file+headline org-refile-location "Ideen")
+                                 "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
+                                ("w" "Weekly Goals" entry
+                                 (file+datetree org-weekly-goals (format-time-string "%Y"))
+                                 "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
+                                ("j" "Journal" entry (file+datetree org-journal-location)
+                                 "* %U - %?\n  %i" :clock-in t :clock-resume t)))
 
   ;; use org-bullets for nicer formatting
   (use-package org-bullets
@@ -194,20 +227,20 @@
 
   ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
   (setq org-refile-targets (quote ((nil :maxlevel . 9)
-				   (org-agenda-files :maxlevel . 9))))
+                                   (org-agenda-files :maxlevel . 9))))
 
   ;; have a timestamp added to finished items
   (setq org-log-done 'time)
 
   ;; capture templates
   (setq org-todo-keywords
-	(quote (
-		(sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-		(sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+        (quote (
+                (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+                (sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
   ;; this was mentioned in http://howardism.org/Technical/Emacs/literate-programming-tutorial.html
   (setq org-confirm-babel-evaluate nil
-	org-src-fontify-natively t
-	org-src-tab-acts-natively t)
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell      . t)
@@ -223,8 +256,8 @@
      (plantuml   . t)))
 
   (quelpa '(org-ql :fetcher github
-		   :repo "alphapapa/org-ql"
-		   :branch "master"))
+                   :repo "alphapapa/org-ql"
+                   :branch "master"))
 #+END_SRC
 * Org-Super-Agenda
 #+BEGIN_SRC emacs-lisp
@@ -322,26 +355,70 @@
 * Org-Roam
 #+begin_src emacs-lisp
   (use-package org-roam
-    :hook
-    (after-init . org-roam-mode)
+    :ensure t
+    :init
+    (setq org-roam-v2-ack t)
     :custom
     (org-roam-directory (file-truename "~/Nextcloud/org/roam/"))
-    :bind (:map org-roam-mode-map
-		(("C-c n l" . org-roam)
-		 ("C-c n f" . org-roam-find-file)
-		 ("C-c n g" . org-roam-show-graph))
-		:map org-mode-map
-		(("C-c n i" . org-roam-insert))
-		(("C-c n I" . org-roam-insert-immediate)))
+    (setq org-roam-dailies-directory "daily/")
+    (org-roam-completion-everywhere t)
+    (org-roam-capture-templates
+     '(("d" "default" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("l" "programming language" plain
+        "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("b" "book notes" plain (file "~/Nextcloud/org/roam/templates/BookNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("p" "project" plain (file "~/Nextcloud/org/roam/templates/ProjectTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
+        :unnarrowed t)
+       ))
+    (org-roam-dailies-capture-templates
+     '(("d" "default" entry
+        "* %?"
+        :target (file+head "%<%Y-%m-%d>.org"
+                           "#+title: %<%Y-%m-%d>\n"))
+       ("m" "Five Minute Journal Morning" plain
+        "* Morning Questions\n** What am I grateful for?\n** What would make today great?\n** What Am I Worried About?\n** What Am I Thinking Of?\n"
+        :if-new (file+head "%<%Y-%m-%d>.org"
+                           "#+title: %<%Y-%m-%d>\n"))
+       ("e" "Five Minute Journal Evening" plain
+        "* Evening Questions\n** How Am I feeling?\n** What's Something Good That Happened Today?\n** What Did I Do Well?\n** What Could I Have Done Better?\n"
+        :if-new (file+head "%<%Y-%m-%d>.org"
+                           "#+title: %<%Y-%m-%d>\n"))
+       ))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n t" . org-roam-tag-add)
+           ("C-c n a" . org-roam-alias-add)
+           ;; Dailies
+           ("C-c n j" . org-roam-dailies-capture-today))
     :config
-    (setq org-roam-capture-ref-templates
-	  '(("r" "ref" plain (function org-roam-capture--get-point)
-	     "%?"
-	     :file-name "websites/${slug}"
-	     :head "#+TITLE: ${title}\n#+roam_key: ${ref}\n#+HUGO_SLUG: ${slug}\n#+roam_tags: website\n#+title: ${title}\n\n- source :: ${ref}\n"
-	     :unnarrowed t)))
+    (org-roam-setup)
+    ;; (setq org-roam-capture-ref-templates
+    ;;       '(("r" "ref" plain (function org-roam-capture--get-point)
+    ;;          "%?"
+    ;;          :file-name "websites/${slug}"
+    ;;          :head "#+TITLE: ${title}\n#+roam_key: ${ref}\n#+HUGO_SLUG: ${slug}\n#+roam_tags: website\n#+title: ${title}\n\n- source :: ${ref}\n"
+    ;;          :unnarrowed f)))
     (require 'org-roam-protocol))
 #+end_src
+* Mermaid
+  https://emacstil.com/til/2021/09/19/org-mermaid/
+  #+begin_src emacs-lisp
+    (use-package ob-mermaid
+      :ensure t
+      :custom
+      (ob-mermaid-cli-path "/usr/local/bin/mmdc"))
+  #+end_src
 * Deft
 #+begin_src emacs-lisp
   (use-package deft
@@ -362,31 +439,33 @@
 * CalDav
 #+BEGIN_SRC emacs-lisp
   ;; https://github.com/dengste/org-caldav
-    (use-package org-caldav
-      :ensure t
-      :config
-       (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/Ingo"
-	 org-caldav-calendar-id "main"
-	 org-caldav-inbox "~/Nextcloud/org/gcal.org"
-	 org-caldav-save-directory "~/Nextcloud/org"
-	 org-caldav-files org-agenda-files
-	 org-icalendar-timezone "America/Los_Angeles"
-	 org-icalendar-date-time-format ";TZID=%Z:%Y%m%dT%H%M%S"))
+  (use-package org-caldav
+    :ensure t
+    :config
+    (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/ingo"
+          org-caldav-calendar-id "F4F90979-075A-4128-934F-C709FF6C0112"
+          org-caldav-inbox "~/Nextcloud/org/gcal.org"
+          org-caldav-save-directory "~/Nextcloud/org"
+          org-caldav-files org-agenda-files
+          org-icalendar-timezone "America/Los_Angeles"
+          org-icalendar-date-time-format ";TZID=%Z:%Y%m%dT%H%M%S"))
 
-     (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
-     (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
+  (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
+  (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
 #+END_SRC
 * RSS Elfeed
 #+begin_src emacs-lisp
+  (use-package elfeed-protocol)
+
   (use-package elfeed
     :config
     (elfeed-set-max-connections 32)
     (setq elfeed-db-directory "~/Nextcloud/Emacs/elfeeddb"))
 
-;;  (use-package elfeed-org
-;;    :config
-;;    (elfeed-org)
-;;    (setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
+  ;;  (use-package elfeed-org
+  ;;    :config
+  ;;    (elfeed-org)
+  ;;    (setq rmh-elfeed-org-files (list "~/Nextcloud/Emacs/elfeed.org")))
 
   (use-package elfeed-goodies
     :config
@@ -399,9 +478,9 @@
   ;; https://github.com/skeeto/elfeed/issues/203
   (defun my-elfeed-tag-sort (a b)
     (let* ((a-tags (format "%s" (elfeed-entry-tags a)))
-	   (b-tags (format "%s" (elfeed-entry-tags b)))) 
+           (b-tags (format "%s" (elfeed-entry-tags b)))) 
       (if (string= a-tags b-tags) 
-	  (< (elfeed-entry-date b) (elfeed-entry-date a))) 
+          (< (elfeed-entry-date b) (elfeed-entry-date a))) 
       (string< a-tags b-tags))) 
   (setf elfeed-search-sort-function #'my-elfeed-tag-sort)
 
@@ -409,8 +488,8 @@
   (elfeed-set-timeout 36000)
   (setq elfeed-curl-extra-arguments '("--insecure")) ;necessary for https without a trust certificate)
   (setq elfeed-feeds '(
-		       ;; format 1
-		       "owncloud+https://ingo:timanfaya@cloud.familie-richter.synology.me"))
+                       ;; format 1
+                       "owncloud+https://ingo@cloud.familie-richter.synology.me"))
   ;; elfeed-protocol-enable
   (elfeed-protocol-enable)
 #+end_src
@@ -452,9 +531,14 @@
   (defun load-if-exists (f)
     "load the elisp file is it exists and is readable"
     (if (file-readable-p f)
-	(load-file f)))
-
+  (load-file f)))
+  
   (load-if-exists "~/.dotfiles/emacs/mu4econfig.el")
+  
+  (use-package mu4e-column-faces
+    :quelpa (mu4e-column-faces :fetcher url :file "https://github.com/Alexander-Miller/mu4e-column-faces/mu4e-column-faces.el")
+    :after mu4e
+    :config (mu4e-column-faces-mode))
 #+end_src
 
 * Burly and Bookmarks
@@ -499,34 +583,217 @@
       :ensure t
       :bind ("C-x g" . magit-status))
   #+end_src
-
 * LSP
   #+begin_src elisp
-    (use-package lsp-mode
-      :ensure t
-      :quelpa (lsp-mode
-	       :fetcher github
-	       :repo "emacs-lsp/lsp-mode")
-      ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-      (setq lsp-keymap-prefix "C-l")
-      :hook (;; replace XXX-mode with concrete major-mode (e.g. python-mode)
-	     (python-mode . lsp)
-	     ;; if you want which-key integration
-	     (lsp-mode . lsp-enable-which-key-integration))
-      :commands lsp)
-    
-    (use-package lsp-python-ms
-      :ensure t
-      :quelpa (lsp-python-ms
-	       :fetcher github
-	       :repo "emacs-lsp/lsp-python-ms")
-      :init (setq lsp-python-ms-auto-install-server t)
-      :hook (python-mode . (lambda ()
-			      (require 'lsp-python-ms)
-			      (lsp))))  ;; or lsp-deferred
+        (use-package lsp-mode
+          :ensure t
+          :quelpa (lsp-mode
+             :fetcher github
+             :repo "emacs-lsp/lsp-mode")
+          ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+          (setq lsp-keymap-prefix "C-l")
+          :hook (;; replace XXX-mode with concrete major-mode (e.g. python-mode)
+           (python-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+          :commands lsp)
+        
+        (use-package lsp-python-ms
+          :ensure t
+          :quelpa (lsp-python-ms
+             :fetcher github
+             :repo "emacs-lsp/lsp-python-ms")
+          :init (setq lsp-python-ms-auto-install-server t)
+          :hook (python-mode . (lambda ()
+                (require 'lsp-python-ms)
+                (lsp))))  ;; or lsp-deferred
+        
+        (use-package eglot
+          :ensure t
+          :quelpa (eglot
+                   :fetcher github
+                   :repo "joaotavora/eglot")
+          :hook (go-mode . eglot-ensure))
+        (use-package go-mode
+          :ensure t)
   #+end_src
 * Dired Tweaks
-  #+begin_src emacs-lisp
+  #+begin_src elisp
     (use-package diredfl
       :ensure t)
+  #+end_src
+
+* Perspectives
+  #+begin_src elisp
+    (use-package perspective
+      :ensure t
+      :quelpa (perspective
+               :fetcher github
+               :repo "nex3/perspective-el")
+      :bind
+      ("C-x C-b" . persp-list-buffers)
+      :config
+      (persp-mode))
+  #+end_src
+
+* Hydra
+  #+begin_src elisp
+    (use-package hydra
+      :ensure t
+      :quelpa (hydra
+               :fetcher github
+               :repo "abo-abo/hydra.el"))
+  #+end_src
+
+* Ement
+  #+begin_src elisp
+    ;; Install `plz' HTTP library (not on MELPA yet).
+    (use-package plz
+      :quelpa (plz :fetcher github :repo "alphapapa/plz.el"))
+    
+    ;; Install Ement.
+    (use-package ement
+      :quelpa (ement :fetcher github :repo "alphapapa/ement.el"))
+  #+end_src
+
+* GnuPlot
+  #+begin_example emacs_lisp
+    
+  #+end_example
+* hledger
+  #+begin_src emacs-lisp
+    (defun center-text-for-reading (&optional arg)
+      "Setup margins for reading long texts.
+            If ARG is supplied, reset margins and fringes to zero."
+      (interactive "P")
+      ;; Set the margin width to zero first so that the whole window is
+      ;; available for text area.
+      (set-window-margins (selected-window) 0)
+      (let* ((max-text-width (save-excursion
+                               (let ((w 0))
+                                 (goto-char (point-min))
+                                 (while (not (eobp))
+                                   (end-of-line)
+                                   (setq w (max w (current-column)))
+                                   (forward-line))
+                                 w)))
+             (margin-width (if arg
+                               0
+                             (/ (max (- (+ (window-width)
+                                           left-margin-width
+                                           right-margin-width)
+                                        max-text-width)
+                                     0)
+                                2))))
+        (setq left-margin-width margin-width)
+        (setq right-margin-width margin-width)
+        ;; `set-window-margings' does a similar thing but those changes do
+        ;; not persist across buffer switches.
+        (set-window-buffer nil (current-buffer))))
+
+    (use-package hledger-mode
+      :quelpa (hledger-mode :fetcher github :repo "narendraj9/hledger-mode")
+      :mode ("\\.journal\\'" "\\.hledger\\'")
+      :commands hledger-enable-reporting
+      :preface
+      (defun hledger/next-entry ()
+        "Move to next entry and pulse."
+        (interactive)
+        (hledger-next-or-new-entry)
+        (hledger-pulse-momentary-current-entry))
+
+      (defface hledger-warning-face
+        '((((background dark))
+           :background "Red" :foreground "White")
+          (((background light))
+           :background "Red" :foreground "White")
+          (t :inverse-video t))
+        "Face for warning"
+        :group 'hledger)
+
+      (defun hledger/prev-entry ()
+        "Move to last entry and pulse."
+        (interactive)
+        (hledger-backward-entry)
+        (hledger-pulse-momentary-current-entry))
+
+      :bind (("C-c j" . hledger-run-command)
+             :map hledger-mode-map
+             ("C-c e" . hledger-jentry)
+             ("M-p" . hledger/prev-entry)
+             ("M-n" . hledger/next-entry))
+      :init
+      (setq hledger-jfile
+            (expand-file-name "/Volumes/Keybase/private/ingorichter/Finance/2021.journal")
+            hledger-email-secrets-file (expand-file-name "secrets.el"
+                                                         emacs-assets-directory))
+      ;; Expanded account balances in the overall monthly report are
+      ;; mostly noise for me and do not convey any meaningful information.
+      (setq hledger-show-expanded-report nil)
+
+      (when (boundp 'my-hledger-service-fetch-url)
+        (setq hledger-service-fetch-url
+              my-hledger-service-fetch-url))
+      (add-to-list 'ac-modes 'hledger-mode)
+
+      :config
+      (add-hook 'hledger-view-mode-hook #'hl-line-mode)
+      (add-hook 'hledger-view-mode-hook #'center-text-for-reading)
+
+      (add-hook 'hledger-view-mode-hook
+                (lambda ()
+                  (run-with-timer 1
+                                  nil
+                                  (lambda ()
+                                    (when (equal hledger-last-run-command
+                                                 "balancesheet")
+                                      ;; highlight frequently changing accounts
+                                      (highlight-regexp "^.*\\(savings\\|cash\\).*$")
+                                      (highlight-regexp "^.*credit-card.*$"
+                                                        'hledger-warning-face))))))
+      ;; For auto-complete users,
+      (add-hook 'hledger-mode-hook
+                (lambda ()
+                  (setq-local ac-sources '(hledger-ac-source)))))
+
+      ;;          (add-hook 'hledger-mode-hook
+      ;;                    (lambda ()
+      ;;                      (make-local-variable 'company-backends)
+      ;;                      (add-to-list 'company-backends 'hledger-company))))
+
+      (use-package hledger-input
+        :ensure t
+        :pin manual
+        :load-path "quelpa/build/hledger-mode/"
+        :bind (("C-c e" . hledger-capture)
+               :map hledger-input-mode-map
+               ("C-c C-b" . popup-balance-at-point))
+        :preface
+        (defun popup-balance-at-point ()
+          "Show balance for account at point in a popup."
+          (interactive)
+          (if-let ((account (thing-at-point 'hledger-account)))
+              (message (hledger-shell-command-to-string (format " balance -N %s "
+                                                                account)))
+            (message "No account at point")))
+
+        :config
+        (setq hledger-input-buffer-height 20)
+        (add-hook 'hledger-input-post-commit-hook #'hledger-show-new-balances)
+        (add-hook 'hledger-input-mode-hook #'auto-fill-mode)
+        (add-hook 'hledger-input-mode-hook
+                  (lambda ()
+                    (make-local-variable 'company-idle-delay)
+                    (setq-local company-idle-delay 0.1))))
+
+  #+end_src
+
+* nano theme
+  #+begin_src emacs-lisp
+    (use-package nano-theme
+      :ensure nil
+      :defer t
+      :quelpa (nano-theme
+               :fetcher github
+               :repo "rougier/nano-theme"))
   #+end_src
