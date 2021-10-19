@@ -1,34 +1,51 @@
+;;; init.el --- Emacs configuration file. -*- lexical-binding: t; -*-
+;;; Commentary:
+;; TODO
+;; 36 code blocks tangled and written config.el 36x!!!
+
+(setq vc-follow-symlinks nil)
+
+(setq gc-cons-threshold (* 64 1000 1000))
+(add-hook 'after-init-hook #'(lambda ()
+                               (setq gc-cons-threshold (* 32 1000 1000))))
+(add-hook 'after-focus-change-function 'garbage-collect)
+(run-with-idle-timer 5 t 'garbage-collect)
+
 (add-hook 'emacs-startup-hook
-	  (lambda ()
+	        (lambda ()
             (message "Emacs ready in %s with %d garbage collections."
                      (format "%.2f seconds"
                              (float-time
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-(setq gc-cons-threshold (* 50 1000 1000))
+;; package management
+(require 'package)
+
+(add-to-list 'package-archives
+	           '("melpa" . "https://melpa.org/packages/"))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; Initialize use-package on non-Linux platforms
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+(setq package-enable-at-startup nil)
 
 (unless (package-installed-p 'quelpa)
   (with-temp-buffer
     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
     (eval-buffer)
+    (setq quelpa-update-melpa-p nil)
     (quelpa-self-upgrade)))
 
-(require 'package)
-
-(setq package-enable-at-startup nil)
-
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
-
-(package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 (unless (and (fboundp 'server-running-p)
-	     (server-running-p))
+	           (server-running-p))
   (server-start))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/Config.org"))
@@ -39,5 +56,4 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 ;; reset gc threshold
-(setq gc-cons-threshold (* 2 1000 1000))
-
+;; (setq gc-cons-threshold (* 2 1000 1000))
