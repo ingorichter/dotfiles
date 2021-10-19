@@ -1,4 +1,4 @@
-(add-to-list 'load-path "/usr/local/Cellar/mu/1.4.15/share/emacs/site-lisp/mu/mu4e/")
+(add-to-list 'load-path "/usr/local/Cellar/mu/1.6.6/share/emacs/site-lisp/mu/mu4e/")
 ;;(require 'smtpmail)
 
 ;; (use-package async
@@ -9,19 +9,19 @@
 ;; smtp
 (setq
  ;;send-mail-function 'smtpmail-send-it
-   ;;   message-send-mail-function 'smtpmail-send-it
-send-mail-function 'async-smtpmail-send-it
-      message-send-mail-function 'async-smtpmail-send-it
-      ;; message-send-mail-function 'smtpmail-send-it
-      ;;      smtpmail-starttls-credentials
-      ;;      '(("mx.ingo-richter.io" 587 nil nil))
-      smtpmail-default-smtp-server "mx.ingo-richter.io"
-      smtpmail-smtp-server "mx.ingo-richter.io"
-      smtpmail-smtp-service 587
-      smtpmail-stream-type  'starttls
-      smtpmail-queue-mail t
-      smtpmail-queue-dir (expand-file-name "~/Mail/queue/cur")
-      smtpmail-debug-info t)
+ ;;   message-send-mail-function 'smtpmail-send-it
+ send-mail-function 'async-smtpmail-send-it
+ message-send-mail-function 'async-smtpmail-send-it
+ ;; message-send-mail-function 'smtpmail-send-it
+ ;;      smtpmail-starttls-credentials
+ ;;      '(("mx.ingo-richter.io" 587 nil nil))
+ smtpmail-default-smtp-server "mail.ingo-richter.io"
+ smtpmail-smtp-server "mail.ingo-richter.io"
+ smtpmail-smtp-service 587
+ smtpmail-stream-type  'starttls
+ smtpmail-queue-mail t
+ smtpmail-queue-dir (expand-file-name "~/Mail/queue/cur")
+ smtpmail-debug-info t)
 
 (defun async-smtpmail-send-queued-mail (sync-func &rest args)
   (message "Starting asynchronous smtpmail-send-queued-mail")
@@ -71,14 +71,16 @@ send-mail-function 'async-smtpmail-send-it
          ("/Drafts" . ?d)))
 
 ;; show images
-(setq mu4e-show-images t)
+(setq mu4e-view-show-images t
+      mu4e-show-images t
+      mu4e-view-image-max-width 800)
 
 (setq org-capture-templates
       `(("m" "Email Workflow")
-	("mf" "Follow Up" entry (file+olp "~/Nextcloud/org/Mail.org" "Follow Up")
-	 "* TODO %a")
-	("mr" "Read Later" entry (file+olp "~/Nextcloud/org/Mai.org" "Read Later")
-	 "* TODO %a")))
+	      ("mf" "Follow Up" entry (file+olp "~/Nextcloud/org/Mail.org" "Follow Up")
+	       "* TODO %a")
+	      ("mr" "Read Later" entry (file+olp "~/Nextcloud/org/Mai.org" "Read Later")
+	       "* TODO %a")))
 
 ;; mbsync avoid duplicate UIDs
 ;; https://www.tomica.net/blog/2020/03/replacing-offlineimap-with-mbsync-isync
