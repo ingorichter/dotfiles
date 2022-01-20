@@ -15,4 +15,5 @@
 "gdb/gdbinit"                       = "~/.gdbinit"
 "espanso/default.yml"               = "~/Library/Preferences/espanso/default.yml"
 "alacritty/alacritty.yml"           = "~/.config/alacritty/alacritty.yml"
-"zplug/packages.zsh"                  = "~/.zplug/packages.zsh" 
+"zplug/packages.zsh"                = "~/.zplug/packages.zsh" 
+"mackup/mackup.cfg"                 = "~/.mackup.cfg"
