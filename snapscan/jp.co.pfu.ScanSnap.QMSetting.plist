@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Add Order</key>
+	<integer>1</integer>
+	<key>Customize</key>
+	<array>
+		<dict>
+			<key>Application Command</key>
+			<integer>100</integer>
+			<key>Application Type</key>
+			<integer>2</integer>
+			<key>Favorite</key>
+			<integer>1</integer>
+			<key>Launch Times</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>UI</key>
+	<dict>
+		<key>Favorite Mode</key>
+		<integer>1</integer>
+		<key>Icon Size</key>
+		<integer>48</integer>
+		<key>Selected AppBundleID</key>
+		<string></string>
+		<key>Selected AppCommand</key>
+		<integer>0</integer>
+		<key>Selected AppType</key>
+		<integer>0</integer>
+		<key>Selected View</key>
+		<integer>1</integer>
+		<key>Show Balloon</key>
+		<integer>1</integer>
+		<key>Show Description</key>
+		<integer>0</integer>
+		<key>Show Recommend</key>
+		<integer>1</integer>
+	</dict>
+</dict>
+</plist>
