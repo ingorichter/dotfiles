@@ -11,7 +11,7 @@ export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2021.journal"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="nick"
-ZSH_THEME="spaceship"
+#ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
