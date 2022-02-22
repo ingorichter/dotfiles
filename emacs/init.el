@@ -5,10 +5,10 @@
 
 (setq vc-follow-symlinks nil)
 
-(setq gc-cons-threshold (* 64 1000 1000))
+(setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'after-init-hook #'(lambda ()
                                (setq gc-cons-threshold (* 32 1000 1000))))
-(add-hook 'after-focus-change-function 'garbage-collect)
+;; (add-hook 'after-focus-change-function 'garbage-collect)
 (run-with-idle-timer 5 t 'garbage-collect)
 
 (add-hook 'emacs-startup-hook
@@ -41,7 +41,6 @@
   (with-temp-buffer
     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
     (eval-buffer)
-    (setq quelpa-update-melpa-p nil)
     (quelpa-self-upgrade)))
 
 (unless (and (fboundp 'server-running-p)
@@ -54,6 +53,7 @@
 ;; https://stackoverflow.com/questions/5052088/what-is-custom-set-variables-and-faces-in-my-emacs
 ;; (setq custom-file "~/.emacs.d/custom.el")
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
+(when (file-exists-p custom-file)
+(load custom-file))
 ;; reset gc threshold
 ;; (setq gc-cons-threshold (* 2 1000 1000))

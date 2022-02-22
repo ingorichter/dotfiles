@@ -76,22 +76,35 @@
     algorithm = minimal
     compactionHeuristic = true
     renames = true
+
 [cola]
 	spellcheck = false
+
 [commit]
 	template = /Users/irichter/.stCommitMsg
 	gpgSign = true
+
 [fetch]
 	prune = true
+
 [user "gitcorp"]
 	name = Ingo Richter
 	email = irichter@adobe.com
 	signingkey = B2FC224B76A40BCC
+
 [user "github"]
 	name = Ingo Richter
 	email = ingo.richter+github@gmail.com
 	signingkey = 47179020517973BE
+
 [gpg]
 	program = gpg
+
 [pull]
 	rebase = false
+
+[core]
+    whitespace = trailing-space,space-before-tab
+
+[apply]
+    whitespace = fix

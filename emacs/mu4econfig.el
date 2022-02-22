@@ -1,10 +1,11 @@
-(add-to-list 'load-path "/usr/local/Cellar/mu/1.6.6/share/emacs/site-lisp/mu/mu4e/")
+;; (add-to-list 'load-path "/usr/local/Cellar/mu/1.6.8/share/emacs/site-lisp/mu/mu4e/")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
 ;;(require 'smtpmail)
 
-;; (use-package async
-;;   :ensure t
-;;   :config (require 'smtpmail-async))
-(use-package smtpmail-async)
+(use-package async
+  :ensure t
+  :config (require 'smtpmail-async))
+;; (use-package smtpmail-async)
 
 ;; smtp
 (setq
@@ -75,12 +76,14 @@
       mu4e-show-images t
       mu4e-view-image-max-width 800)
 
-(setq org-capture-templates
-      `(("m" "Email Workflow")
-	      ("mf" "Follow Up" entry (file+olp "~/Nextcloud/org/Mail.org" "Follow Up")
-	       "* TODO %a")
-	      ("mr" "Read Later" entry (file+olp "~/Nextcloud/org/Mai.org" "Read Later")
-	       "* TODO %a")))
+(setq mail-capture-templates `(("m" "Email Workflow")
+	                             ("mf" "Follow Up" entry (file+olp "~/Nextcloud/org/Mail.org" "Follow Up")
+	                              "* TODO %a")
+	                             ("mr" "Read Later" entry (file+olp "~/Nextcloud/org/Mail.org" "Read Later")
+	                              "* TODO %a")))
+
+;; modify org-capture-templates
+(setq org-capture-templates (append org-capture-templates mail-capture-templates))
 
 ;; mbsync avoid duplicate UIDs
 ;; https://www.tomica.net/blog/2020/03/replacing-offlineimap-with-mbsync-isync
@@ -108,5 +111,4 @@
 
 ;; don't keep message buffers around
 (setq message-kill-buffer-on-exit t)
-
 
