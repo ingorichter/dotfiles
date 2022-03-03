@@ -11,6 +11,7 @@
 "emacs/ingo-config.el"                                              = "~/.emacs.d/ingo-config.el"
 "emacs/config.el"                                                   = "~/.rational-emacs/config.el"
 "emacs/rational-persistence.el"                                     = "~/.emacs.d/modules/rational-persistence.el"
+"emacs/rational-git.el"                                             = "~/.emacs.d/modules/rational-git.el"
 "tmux/tmux.conf"                                                    = "~/.tmux.conf"
 "tmux/tmux-powerlinerc"                                             = "~/.tmux-powerlinerc"
 "gdb/gdbinit"                                                       = "~/.gdbinit"
