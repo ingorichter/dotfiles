@@ -10,6 +10,7 @@
 "iterm/com.googlecode.iterm2.plist"                                 = "~/Library/Preferences/com.googlecode.iterm2.plist"
 "emacs/ingo-config.el"                                              = "~/.emacs.d/ingo-config.el"
 "emacs/config.el"                                                   = "~/.rational-emacs/config.el"
+"emacs/rational-persistence.el"                                     = "~/.emacs.d/modules/rational-persistence.el"
 "tmux/tmux.conf"                                                    = "~/.tmux.conf"
 "tmux/tmux-powerlinerc"                                             = "~/.tmux-powerlinerc"
 "gdb/gdbinit"                                                       = "~/.gdbinit"
