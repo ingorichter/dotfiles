@@ -7,6 +7,13 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
+;; Encoding
+(prefer-coding-system       'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (setenv "BROWSER" "firefox")
 (setq org-ellipsis "⤵")
@@ -122,6 +129,39 @@
 (setq org-confirm-babel-evaluate nil
       org-src-fontify-natively t
       org-src-tab-acts-natively t)
+
+(setq org-hide-emphasis-markers t
+      org-fontify-done-headline t
+      org-hide-leading-stars t
+      org-pretty-entities t
+      org-odd-levels-only t)
+
+(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+                                       ("#+END_SRC" . "†")
+                                       ("#+begin_src" . "†")
+                                       ("#+end_src" . "†")
+                                       (">=" . "≥")
+                                       ("=>" . "⇨")))
+(setq prettify-symbols-unprettify-at-point 'right-edge)
+(add-hook 'org-mode-hook 'prettify-symbols-mode)
+
+
+;; (custom-theme-set-faces
+ ;; 'user
+ ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight light))))
+ ;; '(fixed-pitch ((t ( :family "Consolas" :slant normal :weight normal :height 0.9 :width normal)))))
+(custom-theme-set-faces
+ 'user
+ '(org-code ((t (:inherit (shadow fixed-pitch))))))
+
+;; (custom-theme-set-faces
+ ;; 'user
+ ;; '(org-block                 ((t (:inherit fixed-pitch))))
+;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
+;;  '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;;  '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold))))
+;;  '(org-verbatim              ((t (:inherit (shadow fixed-pitch))))))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -252,3 +292,6 @@
 (i/load-keymap)
 
 (global-set-key (kbd "<f9>") 'org-pomodoro)
+
+;; undo-tree
+(straight-use-package '(undo-tree :type git :host gitlab :repo "tsc25/undo-tree"))

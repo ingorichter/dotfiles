@@ -1,2 +1,3 @@
 zplug "wfxr/forgit"
-zplug "denysdovhan/spaceship-zsh-theme", use:spaceship.zsh, from:github, as:theme
+zplug "Game4Move78/zsh-bitwarden"
+zplug "spaceship-prompt/spaceship-prompt", as:theme, use:spaceship.zsh, from:github
