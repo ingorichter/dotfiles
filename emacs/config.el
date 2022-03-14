@@ -1,18 +1,26 @@
-(require 'rational-defaults)
-(require 'rational-persistence)
-(require 'rational-ui)
-(require 'rational-screencast)
-(require 'rational-editing)
 (require 'rational-completion)
-(require 'rational-windows)
+(require 'rational-defaults)
+(require 'rational-editing)
+(require 'rational-persistence)
+(require 'rational-project)
+(require 'rational-screencast)
+(require 'rational-ui)
+(require 'rational-updates)
 (require 'rational-use-package)
+(require 'rational-windows)
+
+;; still my custom version
 (require 'rational-git)
 
+(custom-set-variables
+   '(rational-ui-default-font
+     '(:font "JetBrains Mono" :weight 'light :height 185)))
+
 ;; Set further font and theme customizations
-(set-face-attribute 'default nil
-                  :font "JetBrains Mono"
-                  :weight 'light
-                  :height 185)
+;; (set-face-attribute 'default nil
+;;                   :font "JetBrains Mono"
+;;                   :weight 'light
+;;                   :height 185)
 
 ;; load my customizations and stuff that I want to use
 (load-file (expand-file-name "ingo-config.el" user-emacs-directory))
