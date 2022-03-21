@@ -23,12 +23,15 @@
 
 ;; https://stackoverflow.com/questions/5052088/what-is-custom-set-variables-and-faces-in-my-emacs
 ;; (setq custom-file "~/.emacs.d/custom.el")
-(setq custom-file (locate-user-emacs-file "custom-vars.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
+;; (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+;; (when (file-exists-p custom-file)
+;; (load custom-file))
+;; this is now loaded at the end of this file
 
 (setq user-full-name "Ingo Richter"
       user-mail-address "ingo.richter@gmail.com")
+
+;; some custom funtions
 
 (defun ir/new-buffer ()
   "Create a new frame with an empty buffer"
@@ -36,28 +39,38 @@
   (let ((buffer (generate-new-buffer "untitled")))
     (set-buffer-major-mode buffer)
     (display-buffer buffer '(display-buffer-pop-up-frame . nil))))
-(defun empty-frame ()
+
+(defun ir/empty-frame ()
   "Open a new frame with a buffer named Untitled<N>.
 
         The buffer is not associated with a file."
   (interactive)
-  (switch-to-buffer-other-frame (generate-new-buffer "Untitled")))
+  (switch-to-buffer-other-frame (generate-new-buffer "untitled")))
 
+(defun ir/kill-all-buffer ()
+  "Kill all open buffer"
+  (interactive)
+  (mapcar 'kill-buffer (buffer-list))
+  (delete-other-windows))
+
+;;  backup settings
 (setq backup-by-copying t
       backup-directory-alist
       '(("." . "~/.saves.d/"))
       delete-old-versions t
       kept-old-versions 2
       kept-new-versions 6
-      version-control t
-      )
-;; tabs
+      version-control t)
 
-;; I've re-used this snippet from https://github.com/zamansky/dot-emacs/blob/master/README.org
 ;; z-map is convenient since it's close to the ctrl key on the left side ...
-(define-prefix-command 'z-map)
-(global-set-key (kbd "C-Z") 'z-map)
-(define-key z-map (kbd "n") #'empty-frame)
+(straight-use-package 'general)
+
+(general-define-key
+ :prefix-command 'z-map
+ :prefix "C-z"
+ "n" 'ir/empty-frame
+ "f" 'ir/new-buffer
+ "K" 'ir/kill-all-buffer)
 
 ;; Flycheck
 (straight-use-package 'flycheck)
@@ -147,16 +160,16 @@
 
 
 ;; (custom-theme-set-faces
- ;; 'user
- ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight light))))
- ;; '(fixed-pitch ((t ( :family "Consolas" :slant normal :weight normal :height 0.9 :width normal)))))
+;; 'user
+;; '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight light))))
+;; '(fixed-pitch ((t ( :family "Consolas" :slant normal :weight normal :height 0.9 :width normal)))))
 (custom-theme-set-faces
  'user
  '(org-code ((t (:inherit (shadow fixed-pitch))))))
 
 ;; (custom-theme-set-faces
- ;; 'user
- ;; '(org-block                 ((t (:inherit fixed-pitch))))
+;; 'user
+;; '(org-block                 ((t (:inherit fixed-pitch))))
 ;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
 ;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
 ;;  '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
@@ -306,10 +319,13 @@
   :init (setq markdown-command "multimarkdown"))
 
 (autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
+  "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist
              '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-mode))
 
 (autoload 'gfm-mode "markdown-mode"
-   "Major mode for editing GitHub Flavored Markdown files" t)
+  "Major mode for editing GitHub Flavored Markdown files" t)
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+;; load custom.el file
+(load "custom")

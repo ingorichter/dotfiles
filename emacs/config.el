@@ -8,13 +8,14 @@
 (require 'rational-updates)
 (require 'rational-use-package)
 (require 'rational-windows)
+(require 'rational-code-completion)
 
 ;; still my custom version
 (require 'rational-git)
 
 (custom-set-variables
    '(rational-ui-default-font
-     '(:font "JetBrains Mono" :weight 'light :height 185)))
+     '(:font "JetBrains Mono" :weight light :height 185)))
 
 ;; Set further font and theme customizations
 ;; (set-face-attribute 'default nil

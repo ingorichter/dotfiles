@@ -12,6 +12,7 @@
 "emacs/config.el"                                                   = "~/.rational-emacs/config.el"
 "emacs/rational-persistence.el"                                     = "~/.emacs.d/modules/rational-persistence.el"
 "emacs/rational-git.el"                                             = "~/.emacs.d/modules/rational-git.el"
+"emacs/rational-code-completion.el"                                 = "~/.emacs.d/modules/rational-code-completion.el"
 "tmux/tmux.conf"                                                    = "~/.tmux.conf"
 "tmux/tmux-powerlinerc"                                             = "~/.tmux-powerlinerc"
 "gdb/gdbinit"                                                       = "~/.gdbinit"
