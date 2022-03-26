@@ -5,8 +5,9 @@ DEV_ROOT=${HOME}/develop
 GOPATH=${DEV_ROOT}/go-workspace
 GOBIN=$(export GOPATH; go env GOPATH)/bin
 
-# specify JAVA_HOME. Since Java 14 is available, I'm going with it
-JAVA_HOME=$(/usr/libexec/java_home -v 14)
+# This is not working anymore!?
+# specify JAVA_HOME. Since Java 17 is available, I'm going with it
+# JAVA_HOME=$(/usr/libexec/java_home -v 17)
 
 # Modify the $PATH
 PATH=${PATH}:$GOBIN
