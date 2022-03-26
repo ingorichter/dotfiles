@@ -92,8 +92,8 @@ source "$ZSH/oh-my-zsh.sh"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Make n node version manager work
-export N_PREFIX=$HOME/n
-export PATH=$PATH:$N_PREFIX/bin
+export N_PREFIX=${HOME}/n
+export PATH=${PATH}:${N_PREFIX}/bin
 export N_PREFIX PATH
 
 # The following lines were added by compinstall
@@ -107,7 +107,7 @@ compinit
 # promptinit
 # prompt spaceship
 
-HISTFILE=~/.zsh-history
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 HISTSIZE=4000
 SAVEHIST=4000
 setopt appendhistory autocd extendedglob notify
@@ -139,12 +139,9 @@ if [ "$TERM" != "linux" ]; then
     install_powerline_precmd
 fi
 
-# pyenv
-eval "$(pyenv init -)"
-
 # setup zplug
 # shellcheck source=/usr/local/Cellar/zplug/2.4.2/base/init.zsh
-source /usr/local/Cellar/zplug/2.4.2/init.zsh
+source ${HOMEBREW_CELLAR}/zplug/2.4.2/init.zsh
 zplug load
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
