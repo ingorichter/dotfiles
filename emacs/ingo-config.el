@@ -331,47 +331,48 @@
 ;; https://protesilaos.com/emacs/pulsar
 (straight-use-package '(pulsar :type git :host gitlab :repo "protesilaos/pulsar"))
 
-(pulsar-setup)
-
-(customize-set-variable
- 'pulsar-pulse-functions ; Read the doc string for why not `setq'
- '(recenter-top-bottom
-   move-to-window-line-top-bottom
-   reposition-window
-   bookmark-jump
-   other-window
-   delete-window
-   delete-other-windows
-   forward-page
-   backward-page
-   scroll-up-command
-   scroll-down-command
-   windmove-right
-   windmove-left
-   windmove-up
-   windmove-down
-   windmove-swap-states-right
-   windmove-swap-states-left
-   windmove-swap-states-up
-   windmove-swap-states-down
-   tab-new
-   tab-close
-   tab-next
-   org-next-visible-heading
-   org-previous-visible-heading
-   org-forward-heading-same-level
-   org-backward-heading-same-level
-   outline-backward-same-level
-   outline-forward-same-level
-   outline-next-visible-heading
-   outline-previous-visible-heading
-   outline-up-heading))
+(setq pulsar-pulse-functions
+      '(isearch-repeat-forward
+        isearch-repeat-backward
+        recenter-top-bottom
+        move-to-window-line-top-bottom
+        reposition-window
+        bookmark-jump
+        other-window
+        delete-window
+        delete-other-windows
+        forward-page
+        backward-page
+        scroll-up-command
+        scroll-down-command
+        windmove-right
+        windmove-left
+        windmove-up
+        windmove-down
+        windmove-swap-states-right
+        windmove-swap-states-left
+        windmove-swap-states-up
+        windmove-swap-states-down
+        tab-new
+        tab-close
+        tab-next
+        org-next-visible-heading
+        org-previous-visible-heading
+        org-forward-heading-same-level
+        org-backward-heading-same-level
+        outline-backward-same-level
+        outline-forward-same-level
+        outline-next-visible-heading
+        outline-previous-visible-heading
+        outline-up-heading))
 
 (setq pulsar-pulse t)
 (setq pulsar-delay 0.055)
 (setq pulsar-iterations 10)
 (setq pulsar-face 'pulsar-magenta)
 (setq pulsar-highlight-face 'pulsar-yellow)
+
+(pulsar-global-mode 1)
 
 ;; pulsar does not define any key bindings.  This is just a sample that
 ;; respects the key binding conventions.  Evaluate:
@@ -385,4 +386,4 @@
   (define-key map (kbd "C-c h h") #'pulsar-highlight-line))
 
 ;; load custom.el file
-(load "custom")
+;;(load "custom")
