@@ -108,8 +108,8 @@ compinit
 # prompt spaceship
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-HISTSIZE=4000
-SAVEHIST=4000
+HISTSIZE=5000
+SAVEHIST=5000
 setopt appendhistory autocd extendedglob notify
 unsetopt beep
 bindkey -e
@@ -140,8 +140,4 @@ if [ "$TERM" != "linux" ]; then
 fi
 
 # setup zplug
-# shellcheck source=/usr/local/Cellar/zplug/2.4.2/base/init.zsh
-source ${HOMEBREW_CELLAR}/zplug/2.4.2/init.zsh
-zplug load
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source ~/.zplug.zsh
