@@ -5,18 +5,19 @@
 
 case "$(uname -m)" in
         "x86_64")
-                HOMEBREW=/usr/local/bin/brew
+                HOMEBREW_BIN=/usr/local/bin/brew
         ;;
         "arm64")
-                HOMEBREW=/opt/homebrew/bin/brew
+                HOMEBREW_BIN=/opt/homebrew/bin/brew
         ;;
         *)
                 echo "Unsupported architecture"
         ;;
 esac
 
-export HOMEBREW_CELLAR=$(${HOMEBREW} --cellar)
-export PATH=$(${HOMEBREW} --prefix)/bin:${PATH}
+export HOMEBREW_BIN
+export HOMEBREW_CELLAR=$(${HOMEBREW_BIN} --cellar)
+export PATH=$(${HOMEBREW_BIN} --prefix)/bin:${PATH}
 
 # Defaults
 DEV_ROOT=${HOME}/develop
