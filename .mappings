@@ -3,6 +3,7 @@
 "alias.d"                                                           = "~/.alias.d"
 "asciidoc"                                                          = "~/.asciidoc"
 "emacs/config.el"                                                   = "~/.rational-emacs/config.el"
+"emacs/early-config.el"                                             = "~/.rational-emacs/early-config.el"
 "emacs/ingo-config.el"                                              = "~/.emacs.d/ingo-config.el"
 "emacs/rational-code-completion.el"                                 = "~/.emacs.d/modules/rational-code-completion.el"
 "emacs/rational-git.el"                                             = "~/.emacs.d/modules/rational-git.el"

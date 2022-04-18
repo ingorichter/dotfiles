@@ -63,7 +63,7 @@
       version-control t)
 
 ;; z-map is convenient since it's close to the ctrl key on the left side ...
-(straight-use-package 'general)
+(rational-package-install-package 'general)
 
 (general-define-key
  :prefix-command 'z-map
@@ -73,13 +73,13 @@
  "K" 'ir/kill-all-buffer)
 
 ;; Flycheck
-(straight-use-package 'flycheck)
+(rational-package-install-package 'flycheck)
 
 ;; Org-Mode
-(straight-use-package 'ob-crystal)
-(straight-use-package 'org)
+(rational-package-install-package 'ob-crystal)
+(rational-package-install-package 'org)
 ;; https://github.com/awth13/org-appear
-(straight-use-package '(org-appear :type git :host github :repo "awth13/org-appear"))
+(rational-package-install-package '(org-appear :type git :host github :repo "awth13/org-appear"))
 (add-hook 'org-mode-hook 'org-appear-mode)
 (setq org-appear-autolinks t)
 
@@ -111,7 +111,7 @@
                                "* %U - %?\n  %i" :clock-in t :clock-resume t)))
 
 ;; use org-bullets for nicer formatting
-(straight-use-package 'org-bullets)
+(rational-package-install-package 'org-bullets)
 (setq org-bullets-bullet-list '("●" "◎" "○" "◆" "◇" "✸" "•"))
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 ;; (use-package org-bullets
@@ -190,10 +190,10 @@
    (css        . t)
    (plantuml   . t)))
 
-(straight-use-package 'org-ql)
+(rational-package-install-package 'org-ql)
 
 ;; org-journal
-(straight-use-package 'org-journal)
+(rational-package-install-package 'org-journal)
 (setq org-journal-dir "~/Nextcloud/org/journal/")
 (setq org-journal-date-format "%A, %d %B %Y")
 
@@ -307,10 +307,10 @@
 (global-set-key (kbd "<f9>") 'org-pomodoro)
 
 ;; undo-tree
-(straight-use-package '(undo-tree :type git :host gitlab :repo "tsc25/undo-tree"))
+(rational-package-install-package '(undo-tree :type git :host gitlab :repo "tsc25/undo-tree"))
 
 ;; hacker-news
-(straight-use-package '(hackernews :type git :repo "clarete/hackernews.el"))
+(rational-package-install-package '(hackernews :type git :repo "clarete/hackernews.el"))
 
 ;; markdown-mode
 (use-package markdown-mode
@@ -329,7 +329,7 @@
 
 ;; Pulsar - highlight lines
 ;; https://protesilaos.com/emacs/pulsar
-(straight-use-package '(pulsar :type git :host gitlab :repo "protesilaos/pulsar"))
+(rational-package-install-package '(pulsar :type git :host gitlab :repo "protesilaos/pulsar"))
 
 (setq pulsar-pulse-functions
       '(isearch-repeat-forward
