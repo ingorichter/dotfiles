@@ -9,6 +9,7 @@
 (require 'rational-use-package)
 (require 'rational-windows)
 (require 'rational-code-completion)
+(require 'rational-org)
 
 ;; still my custom version
 (require 'rational-git)
