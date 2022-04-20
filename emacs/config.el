@@ -19,18 +19,18 @@
 (require 'rational-completion)
 (require 'rational-defaults)
 (require 'rational-editing)
-(require 'rational-persistence)
 (require 'rational-project)
 (require 'rational-screencast)
 (require 'rational-ui)
 (require 'rational-updates)
-;;(require 'rational-use-package)
+(require 'rational-use-package)
 (require 'rational-windows)
-(require 'rational-code-completion)
 (require 'rational-org)
 
 ;; still my custom version
 (require 'rational-git)
+(require 'rational-code-completion)
+(require 'rational-persistence)
 
 (custom-set-variables
    '(rational-ui-default-font
