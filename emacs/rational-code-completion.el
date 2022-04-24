@@ -13,9 +13,9 @@
 
 ;;; Code:
 
-(straight-use-package 'corfu)
-(straight-use-package 'cape)
-(straight-use-package 'orderless)
+(rational-package-install-package 'corfu)
+(rational-package-install-package 'cape)
+(rational-package-install-package 'orderless)
 
 (require 'corfu)
 

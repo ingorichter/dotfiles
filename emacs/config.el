@@ -1,18 +1,37 @@
+;; Use rational-package-install-package
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(defmacro rational-package-install-package (package)
+  "Install PACKAGE using straight"
+  `(straight-use-package ,package))
+
 (require 'rational-completion)
 (require 'rational-defaults)
 (require 'rational-editing)
-(require 'rational-persistence)
 (require 'rational-project)
 (require 'rational-screencast)
 (require 'rational-ui)
 (require 'rational-updates)
 (require 'rational-use-package)
 (require 'rational-windows)
-(require 'rational-code-completion)
 (require 'rational-speedbar)
+(require 'rational-org)
 
 ;; still my custom version
 (require 'rational-git)
+(require 'rational-code-completion)
+(require 'rational-persistence)
 
 (custom-set-variables
    '(rational-ui-default-font
@@ -23,6 +42,7 @@
 
 ;; (load-theme 'modus-operandi t)
 (use-package modus-themes
+  :straight t
   :ensure
   :init
   ;; Add all your customizations prior to loading the themes
