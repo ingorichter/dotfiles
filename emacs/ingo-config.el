@@ -247,6 +247,7 @@
 ;; org-roam
 ;; (use-package org-roam
 (use-package org-roam
+  :straight t
   :ensure t
   :init
   (setq org-roam-v2-ack t)

@@ -48,6 +48,7 @@
 
 ;; (load-theme 'modus-operandi t)
 (use-package modus-themes
+  :straight t
   :ensure
   :init
   ;; Add all your customizations prior to loading the themes
