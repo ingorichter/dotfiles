@@ -16,7 +16,7 @@
   "Install PACKAGE using straight"
   `(straight-use-package ,package))
 
-(require 'rational-completion)
+::(require 'rational-completion)
 (require 'rational-defaults)
 (require 'rational-editing)
 (require 'rational-project)
