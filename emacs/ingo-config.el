@@ -347,8 +347,8 @@
 ;; ;; undo-tree
 ;; (straight-use-package '(undo-tree :type git :host gitlab :repo "tsc25/undo-tree"))
 
-;; ;; hacker-news
-;; (straight-use-package '(hackernews :type git :repo "clarete/hackernews.el"))
+;; hacker-news
+(rational-package-install-package '(hackernews :type git :repo "clarete/hackernews.el"))
 
 ;; ;; markdown-mode
 ;; (use-package markdown-mode
