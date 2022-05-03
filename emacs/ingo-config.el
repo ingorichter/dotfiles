@@ -19,7 +19,8 @@
 (setq org-ellipsis "⤵")
 (global-display-line-numbers-mode t)
 ;; monitor file changes and update buffers that haven't been modified
-(global-auto-revert-mode 1)
+;; this will be set by modules/rational-defaults.el
+;; (global-auto-revert-mode 1)
 
 ;; https://stackoverflow.com/questions/5052088/what-is-custom-set-variables-and-faces-in-my-emacs
 ;; (setq custom-file "~/.emacs.d/custom.el")
@@ -62,15 +63,24 @@
       kept-new-versions 6
       version-control t)
 
-;; z-map is convenient since it's close to the ctrl key on the left side ...
-;; (straight-use-package 'general)
+;; custom functions and key map
+ (defun ir/org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading))) "/DONE" 'tree))
 
-;; (general-define-key
-;;  :prefix-command 'z-map
-;;  :prefix "C-z"
-;;  "n" 'ir/empty-frame
-;;  "f" 'ir/new-buffer
-;;  "K" 'ir/kill-all-buffer)
+;; z-map is convenient since it's close to the ctrl key on the left side ...
+(rational-package-install-package 'general)
+
+(general-define-key
+ :prefix-command 'z-map
+ :prefix "C-z"
+ "n" 'ir/empty-frame
+ "f" 'ir/new-buffer
+ "K" 'ir/kill-all-buffer
+ "a" 'ir/org-archive-done-tasks)
 
 ;; ;; Flycheck
 ;; (straight-use-package 'flycheck)
@@ -78,6 +88,8 @@
 ;; ;; Org-Mode
 ;; basic settings are made from ~/.emacs.d/modules/rational-org.el
 (setq org-appear-autolinks t)
+
+(rational-package-install-package 'org-contrib)
 
 ;; (straight-use-package 'ob-crystal)
 ;; (straight-use-package 'org)
@@ -326,14 +338,6 @@
 
 ;; (add-hook 'org-agenda-mode-hook (lambda () (org-caldav-sync) ))
 ;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-caldav-sync) ))
-
-;; ;; custom functions and key map
-;; (defun org-archive-done-tasks ()
-;;   (interactive)
-;;   (org-map-entries
-;;    (lambda ()
-;;      (org-archive-subtree)
-;;      (setq org-map-continue-from (outline-previous-heading))) "/DONE" 'tree))
 
 ;; ;; Custom Keymap
 
