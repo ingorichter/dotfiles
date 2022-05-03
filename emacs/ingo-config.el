@@ -305,6 +305,10 @@
            :unnarrowed f)))
   (require 'org-roam-protocol))
 
+;; org-roam-timestamp
+(rational-package-install-package '(org-roam-timestamps :type git :repo "ThomasFKJorna/org-roam-timestamps"))
+(add-hook 'org-roam 'org-roam-timestamps-mode)
+
 ;; ;; Caldav
 ;; ;; password and username are stored in netrc
 ;; ;; https://github.com/dengste/org-caldav
