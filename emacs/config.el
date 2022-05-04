@@ -27,6 +27,7 @@
 (require 'rational-windows)
 (require 'rational-speedbar)
 (require 'rational-org)
+(require 'rational-compile)
 
 ;; still my custom version
 (require 'rational-git)
