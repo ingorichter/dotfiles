@@ -6,6 +6,7 @@ zplug "spaceship-prompt/spaceship-prompt", use:spaceship.zsh, from:github, as:th
 zplug "wfxr/forgit"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting"
+zplug "mattberther/zsh-pyenv"
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
