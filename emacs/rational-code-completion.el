@@ -36,7 +36,9 @@ folder, otherwise delete a word"
 ;;;; Vertico
 
 (require 'vertico)
-(require 'vertico-directory "extensions/vertico-directory.el")
+;;(require 'vertico-directory "extensions/vertico-directory.el")
+(rational-package-install-package '(vertico :files (:defaults "extensions/*")
+                                            :includes (vertico-directory)))
 
 (with-eval-after-load 'evil
   (define-key vertico-map (kbd "C-j") 'vertico-next)
