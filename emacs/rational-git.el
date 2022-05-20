@@ -1,15 +1,4 @@
-;;;; rational-git.el --- Git config                  -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2022
-;; SPDX-License-Identifier: MIT
-
-;; Author: System Crafters Community
-
-;; Commentary
-
-;;
-
-;;; Code:
+;;;; config-git.el --- Git config                  -*- lexical-binding: t; -*-
 
 (rational-package-install-package 'magit)
 (let ((map global-map))
@@ -24,5 +13,5 @@
 (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
 (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
 
-(provide 'rational-git)
-;;; rational-git.el ends here
+(provide 'config-git)
+;;; config-git.el ends here

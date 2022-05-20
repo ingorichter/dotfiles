@@ -1,26 +1,10 @@
-;;; rational-completion.el -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2022
-;; SPDX-License-Identifier: MIT
-
-;; Author: System Crafters Community
-
-;; Commentary
-
-;; Setup completion packages. Completion in this sense is more like
-;; narrowing, allowing the user to find matches based on minimal
-;; inputs and "complete" the commands, variables, etc from the
-;; narrowed list of possible choices.
-
-;;; Code:
+;;; config-completion.el -*- lexical-binding: t; -*-
 
 (rational-package-install-package 'vertico)
 (rational-package-install-package 'consult)
 (rational-package-install-package 'orderless)
 (rational-package-install-package 'marginalia)
 (rational-package-install-package 'embark)
-(rational-package-install-package 'corfu)
-(rational-package-install-package 'cape)
 
 (defun rational-completion/minibuffer-backward-kill (arg)
   "When minibuffer is completing a file name delete up to parent
@@ -36,9 +20,9 @@ folder, otherwise delete a word"
 ;;;; Vertico
 
 (require 'vertico)
-;;(require 'vertico-directory "extensions/vertico-directory.el")
+;;(require 'vertico-directory)
 (rational-package-install-package '(vertico :files (:defaults "extensions/*")
-                                            :includes (vertico-directory)))
+                                                    :includes (vertico-directory)))
 
 (with-eval-after-load 'evil
   (define-key vertico-map (kbd "C-j") 'vertico-next)
@@ -55,7 +39,7 @@ folder, otherwise delete a word"
 
 ;; Configure Marginalia
 (require 'marginalia)
-(setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+(customize-set-variable 'marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
 (marginalia-mode 1)
 
 ;; Set some consult bindings
@@ -80,57 +64,5 @@ folder, otherwise delete a word"
 ;; Use Embark to show bindings in a key prefix with `C-h`
 (setq prefix-help-command #'embark-prefix-help-command)
 
-;;;; Corfu
-
-;; Setup corfu for popup like completion
-(require 'corfu)
-
-(defcustom rational-code-completion-ycm-style nil
-  "Make corfu act closer to YouCompleteMe of Vim fame."
-  :type 'boolean)
-
-(when rational-code-completion-ycm-style
-  (setq corfu-quit-at-boundary nil
-        corfu-preselect-first nil)
-  (define-key corfu-map (kbd "RET") nil) ;; Don't overwrite the enter key
-  (define-key corfu-map (kbd "S-RET") 'corfu-insert))
-
-(setq
-  corfu-cycle t                    ; Allows cycling through candidates
-  corfu-auto t                     ; Enable auto completion
-  corfu-auto-prefix 2              ; Complete with less prefix keys
-  corfu-auto-delay 0.0             ; No delay for completion
-  corfu-echo-documentation 0.25    ; Echo docs for current completion option
-  )
-
-(define-key corfu-map (kbd "TAB") 'corfu-next)
-(define-key corfu-map [tab] 'corfu-next)
-(define-key corfu-map (kbd "S-TAB") 'corfu-previous)
-(define-key corfu-map [backtab] 'corfu-previous)
-
-(global-corfu-mode)
-
-;;;; Cape
-
-;; Setup Cape for better completion-at-point support and more
-(require 'cape)
-
-;; Add useful defaults completion sources from cape
-(add-to-list 'completion-at-point-functions #'cape-file)
-(add-to-list 'completion-at-point-functions #'cape-dabbrev)
-
-;; Silence the pcomplete capf, no errors or messages!
-;; Important for corfu
-(advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-
-;; Ensure that pcomplete does not write to the buffer
-;; and behaves as a pure `completion-at-point-function'.
-(advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
-(add-hook 'eshell-mode-hook
-          (lambda () (setq-local corfu-quit-at-boundary t
-                            corfu-quit-no-match t
-                            corfu-auto nil)
-            (corfu-mode)))
-
-(provide 'rational-code-completion)
-;;; rational-completion.el ends here
+(provide 'config-code-completion)
+;;; config-code-completion.el ends here

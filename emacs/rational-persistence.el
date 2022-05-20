@@ -1,15 +1,4 @@
-;;; rational-persistence.el -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2022
-;; SPDX-License-Identifier: MIT
-
-;; Author: System Crafters Community
-
-;; Commentary
-
-;; Some settings to make emacs more of a continous expierience.
-
-;;; Code:
+;;; config-persistence.el -*- lexical-binding: t; -*-
 
 ;; When you visit a file, point goes to the last place it was when file was previously visited.
 (save-place-mode 1)
@@ -30,6 +19,6 @@
 (setq desktop-restore-eager 5)
 (desktop-save-mode)
 
-(provide 'rational-persistence)
+(provide 'config-persistence)
 
-;;; rational-persistence.el ends here
+;;; config-persistence.el ends here
