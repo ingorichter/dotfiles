@@ -30,9 +30,10 @@
 (require 'rational-compile)
 
 ;; still my custom version
-(require 'rational-git)
-(require 'rational-code-completion)
-(require 'rational-persistence)
+(require 'config-git)
+(require 'config-code-completion)
+(require 'config-persistence)
+(require 'config-org)
 
 (custom-set-variables
    '(rational-ui-default-font
