@@ -6,35 +6,35 @@
 
 (rational-package-install-package 'org-contrib)
 
-;; (straight-use-package 'ob-crystal)
-;; (straight-use-package 'org)
+(straight-use-package 'ob-crystal)
+(straight-use-package 'org)
 
-;; (require 'org-protocol)
+(require 'org-protocol)
 
-;; (setq org-directory "~/Nextcloud/org"
-;;       org-agenda-files (list org-directory)
-;;       org-archive-location (concat org-directory "/archive/%s_archive::")
-;;       org-default-notes-file (concat org-directory "/notes.org")
-;;       org-default-todo-file (concat org-directory "/mylife.org")
-;;       org-refile-location (concat org-directory "/refile.org")
-;;       org-gcal-location (concat org-directory "/gcal.org")
-;;       org-weekly-goals (concat org-directory "/weekly-goals.org")
-;;       org-goals (concat org-directory "/goals.org")
-;;       org-journal-location (concat org-directory "/journal/journal.org"))
+(setq org-directory "~/Nextcloud/org"
+      org-agenda-files (list org-directory)
+      org-archive-location (concat org-directory "/archive/%s_archive::")
+      org-default-notes-file (concat org-directory "/notes.org")
+      org-default-todo-file (concat org-directory "/mylife.org")
+      org-refile-location (concat org-directory "/refile.org")
+      org-gcal-location (concat org-directory "/gcal.org")
+      org-weekly-goals (concat org-directory "/weekly-goals.org")
+      org-goals (concat org-directory "/goals.org")
+      org-journal-location (concat org-directory "/journal/journal.org"))
 
-;; (setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Todo")
-;;                                "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
-;;                               ("a" "Appointment" entry (file org-gcal-location)
-;;                                "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
-;;                               ("n" "Note" entry (file+headline org-default-notes-file "Notes")
-;;                                "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
-;;                               ("i" "Idee" entry (file+headline org-refile-location "Ideen")
-;;                                "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
-;;                               ("w" "Weekly Goals" entry
-;;                                (file+datetree org-weekly-goals (format-time-string "%Y"))
-;;                                "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
-;;                               ("j" "Journal" entry (file+datetree org-journal-location)
-;;                                "* %U - %?\n  %i" :clock-in t :clock-resume t)))
+(setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Todo")
+                               "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
+                              ("a" "Appointment" entry (file org-gcal-location)
+                               "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+                              ("n" "Note" entry (file+headline org-default-notes-file "Notes")
+                               "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
+                              ("i" "Idee" entry (file+headline org-refile-location "Ideen")
+                               "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
+                              ("w" "Weekly Goals" entry
+                               (file+datetree org-weekly-goals (format-time-string "%Y"))
+                               "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
+                              ("j" "Journal" entry (file+datetree org-journal-location)
+                               "* %U - %?\n  %i" :clock-in t :clock-resume t)))
 
 ;; ;; use org-bullets for nicer formatting
 ;; (straight-use-package 'org-bullets)
@@ -45,19 +45,19 @@
 ;; ;;   :config
 ;; ;;   (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1))))
 
-;; ;; Org-mode settings
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; (global-font-lock-mode 1)
-;; (global-set-key (kbd "C-c l") 'org-store-link)
-;; (global-set-key (kbd "C-c a") 'org-agenda)
-;; (global-set-key (kbd "C-c c") 'org-capture)
+;; Org-mode settings
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(global-font-lock-mode 1)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
 
 ;; ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-;; (setq org-refile-targets (quote ((nil :maxlevel . 9)
-;;                                  (org-agenda-files :maxlevel . 9))))
+(setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9))))
 
-;; ;; have a timestamp added to finished items
-;; (setq org-log-done 'time)
+;; have a timestamp added to finished items
+(setq org-log-done 'time)
 
 ;; ;; capture templates
 ;; (setq org-todo-keywords
@@ -96,6 +96,11 @@
 ;;   (face-spec-reset-face face)
 ;;   (set-face-foreground face (face-attribute 'default :background)))
 ;; (set-face-background 'fringe (face-attribute 'default :background))
+
+;; Choose some fonts
+(set-face-attribute 'default nil :family "Iosevka")
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
+(set-face-attribute 'org-modern-symbol nil :family "Iosevka")
 
 (setq
  ;; Edit settings
@@ -157,18 +162,18 @@
 ;; (straight-use-package 'org-ql)
 
 ;; ;; org-journal
-;; (straight-use-package 'org-journal)
-;; (setq org-journal-dir "~/Nextcloud/org/journal/")
-;; (setq org-journal-date-format "%A, %d %B %Y")
+(straight-use-package 'org-journal)
+(setq org-journal-dir "~/Nextcloud/org/journal/")
+(setq org-journal-date-format "%A, %d %B %Y")
 
-;; (defun org-journal-file-header-func (time)
-;;   "Custom function to create journal header."
-;;   (concat
-;;    (pcase org-journal-file-type
-;;      (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
-;;      (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
-;;      (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
-;;      (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
-;; (setq org-journal-file-header 'org-journal-file-header-func)
+(defun org-journal-file-header-func (time)
+  "Custom function to create journal header."
+  (concat
+   (pcase org-journal-file-type
+     (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+     (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+     (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+     (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
+(setq org-journal-file-header 'org-journal-file-header-func)
 
 (provide 'config-org)

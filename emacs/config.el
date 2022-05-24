@@ -34,6 +34,7 @@
 (require 'config-code-completion)
 (require 'config-persistence)
 (require 'config-org)
+(require 'config-org-roam)
 
 (custom-set-variables
    '(rational-ui-default-font
