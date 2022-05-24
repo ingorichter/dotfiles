@@ -19,22 +19,17 @@
 (setenv "BROWSER" "firefox")
 (setq org-ellipsis "⤵")
 (global-display-line-numbers-mode t)
+(global-visual-line-mode t)
 ;; monitor file changes and update buffers that haven't been modified
 ;; this will be set by modules/rational-defaults.el
 ;; (global-auto-revert-mode 1)
 
 ;; https://stackoverflow.com/questions/5052088/what-is-custom-set-variables-and-faces-in-my-emacs
-;; (setq custom-file "~/.emacs.d/custom.el")
-;; (setq custom-file (locate-user-emacs-file "custom-vars.el"))
-;; (when (file-exists-p custom-file)
-;; (load custom-file))
-;; this is now loaded at the end of this file
 
 (setq user-full-name "Ingo Richter"
       user-mail-address "ingo.richter@gmail.com")
 
 ;; some custom funtions
-
 (defun ir/new-buffer ()
   "Create a new frame with an empty buffer"
   (interactive)

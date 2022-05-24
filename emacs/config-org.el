@@ -55,6 +55,8 @@
 ;; ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
+(setq org-refile-allow-creating-parent-nodes 'confirm)
+;;(setq org-refile-use-outline-path 'file)
 
 ;; have a timestamp added to finished items
 (setq org-log-done 'time)
@@ -100,7 +102,7 @@
 ;; Choose some fonts
 (set-face-attribute 'default nil :family "Iosevka")
 (set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
-(set-face-attribute 'org-modern-symbol nil :family "Iosevka")
+;;(set-face-attribute 'org-modern-symbol nil :family "Iosevka")
 
 (setq
  ;; Edit settings
