@@ -161,7 +161,8 @@
 ;;    (css        . t)
 ;;    (plantuml   . t)))
 
-;; (straight-use-package 'org-ql)
+;;
+(straight-use-package 'org-ql)
 
 ;; ;; org-journal
 (straight-use-package 'org-journal)
