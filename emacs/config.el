@@ -38,7 +38,7 @@
 
 (custom-set-variables
    '(rational-ui-default-font
-     '(:font "Iosevka Fixed" :weight regular :height 185)))
+     '(:font "Iosevka Comfy Fixed" :weight regular :height 185)))
 
 ;; load my customizations and stuff that I want to use
 (load-file (expand-file-name "ingo-config.el" user-emacs-directory))
