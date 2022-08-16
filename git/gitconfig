@@ -8,7 +8,7 @@
 	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge $BASE $REMOTE $LOCAL $MERGED
 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 [difftool "sourcetree"]
@@ -39,7 +39,7 @@
         newHighlight = "green bold 22"
 
 [core]
-	excludesfile = /Users/irichter/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	editor = vim
 	pager = git-split-diffs --color | less -RFX
 
@@ -115,3 +115,5 @@
 
 [apply]
     whitespace = fix
+[init]
+	defaultBranch = main
