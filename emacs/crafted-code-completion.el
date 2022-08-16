@@ -1,10 +1,10 @@
-;;; config-completion.el -*- lexical-binding: t; -*-
+;;; crafted-code-completion.el -*- lexical-binding: t; -*-
 
-(rational-package-install-package 'vertico)
-(rational-package-install-package 'consult)
-(rational-package-install-package 'orderless)
-(rational-package-install-package 'marginalia)
-(rational-package-install-package 'embark)
+(crafted-package-install-package 'vertico)
+(crafted-package-install-package 'consult)
+(crafted-package-install-package 'orderless)
+(crafted-package-install-package 'marginalia)
+(crafted-package-install-package 'embark)
 
 (defun rational-completion/minibuffer-backward-kill (arg)
   "When minibuffer is completing a file name delete up to parent
@@ -21,7 +21,7 @@ folder, otherwise delete a word"
 
 (require 'vertico)
 ;;(require 'vertico-directory)
-(rational-package-install-package '(vertico :files (:defaults "extensions/*")
+(crafted-package-install-package '(vertico :files (:defaults "extensions/*")
                                                     :includes (vertico-directory)))
 
 (with-eval-after-load 'evil
@@ -64,5 +64,5 @@ folder, otherwise delete a word"
 ;; Use Embark to show bindings in a key prefix with `C-h`
 (setq prefix-help-command #'embark-prefix-help-command)
 
-(provide 'config-code-completion)
-;;; config-code-completion.el ends here
+(provide 'crafted-code-completion)
+;;; crafted-code-completion.el ends here

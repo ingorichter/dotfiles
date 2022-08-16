@@ -1,10 +1,10 @@
-;;; config-org.el -*- lexical-binding: t; -*-
+;;; crafted-org.el -*- lexical-binding: t; -*-
 
 ;; Org-Mode
 ;; basic settings are made from ~/.emacs.d/modules/rational-org.el
 (setq org-appear-autolinks t)
 
-(rational-package-install-package 'org-contrib)
+(crafted-package-install-package 'org-contrib)
 
 (straight-use-package 'ob-crystal)
 (straight-use-package 'org)
@@ -179,4 +179,4 @@
      (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
 (setq org-journal-file-header 'org-journal-file-header-func)
 
-(provide 'config-org)
+(provide 'crafted-org)

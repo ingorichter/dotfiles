@@ -1,4 +1,4 @@
-;;; config-persistence.el -*- lexical-binding: t; -*-
+;;; crafted-persistence.el -*- lexical-binding: t; -*-
 
 ;; When you visit a file, point goes to the last place it was when file was previously visited.
 (save-place-mode 1)
@@ -19,6 +19,6 @@
 (setq desktop-restore-eager 5)
 (desktop-save-mode)
 
-(provide 'config-persistence)
+(provide 'crafted-persistence)
 
-;;; config-persistence.el ends here
+;;; crafted-persistence.el ends here
