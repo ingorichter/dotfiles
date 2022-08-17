@@ -179,4 +179,10 @@
      (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
 (setq org-journal-file-header 'org-journal-file-header-func)
 
+;; ox-reveal
+(crafted-package-install-package 'ox-reveal)
+::(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.7.0/")
+(setq org-reveal-mathjax t)
+(crafted-package-install-package 'htmlize)
+
 (provide 'crafted-org)
