@@ -20,6 +20,7 @@
 (require 'crafted-persistence)
 (require 'crafted-org)
 (require 'crafted-org-roam)
+(require 'crafted-denote)
 
 (custom-set-variables
    '(crafted-ui-default-font
