@@ -8,9 +8,7 @@
     (exec-path-from-shell-initialize)))
 
 ;; Encoding
-;;  (load-file "")
 (prefer-coding-system       'utf-8)
-(set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
@@ -53,14 +51,14 @@
 ;;  backup settings
 (setq backup-by-copying t
       backup-directory-alist
-      '(("." . (concat crafted-config-var-directory "saved")))
+      `(("." . (concat crafted-config-var-directory "saved")))
       delete-old-versions t
       kept-old-versions 2
       kept-new-versions 6
       version-control t)
 
 ;; custom functions and key map
- (defun ir/org-archive-done-tasks ()
+(defun ir/org-archive-done-tasks ()
   (interactive)
   (org-map-entries
    (lambda ()
