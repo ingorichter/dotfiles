@@ -49,9 +49,10 @@
   (delete-other-windows))
 
 ;;  backup settings
+(setq backup-directory (concat crafted-config-var-directory "saved"))
 (setq backup-by-copying t
       backup-directory-alist
-      `(("." . (concat crafted-config-var-directory "saved")))
+      `(("." . ,backup-directory))
       delete-old-versions t
       kept-old-versions 2
       kept-new-versions 6
