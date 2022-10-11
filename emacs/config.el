@@ -13,10 +13,11 @@
 (require 'crafted-speedbar)
 (require 'crafted-org)
 (require 'crafted-compile)
+(require 'crafted-completion)
 
 ;; still my custom version
 (require 'crafted-git)
-(require 'crafted-code-completion)
+;;(require 'crafted-code-completion)
 (require 'crafted-persistence)
 (require 'crafted-org)
 (require 'crafted-org-roam)

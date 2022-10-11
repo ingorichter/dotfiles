@@ -12,7 +12,7 @@
 (run-with-idle-timer 5 t 'garbage-collect)
 
 (add-hook 'emacs-startup-hook
-	        (lambda ()
+                (lambda ()
             (message "Emacs ready in %s with %d garbage collections."
                      (format "%.2f seconds"
                              (float-time
@@ -23,7 +23,7 @@
 (require 'package)
 
 (add-to-list 'package-archives
-	           '("melpa" . "https://melpa.org/packages/"))
+                   '("melpa" . "https://melpa.org/packages/"))
 
 (package-initialize)
 (unless package-archive-contents
@@ -44,7 +44,7 @@
     (quelpa-self-upgrade)))
 
 (unless (and (fboundp 'server-running-p)
-	           (server-running-p))
+                   (server-running-p))
   (server-start))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/Config.org"))
