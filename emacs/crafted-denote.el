@@ -15,6 +15,9 @@
 (setq denote-file-type nil) ; Org is the default, set others here
 (setq denote-prompts '(title keywords))
 
+;; Pick dates, where relevant, with Org's advanced interface:
+(setq denote-date-prompt-use-org-read-date t)
+
 (setq denote-allow-multi-word-keywords t)
 
 (setq denote-date-format nil) ; read doc string
@@ -74,10 +77,10 @@
   (define-key map (kbd "C-c n R") #'denote-rename-file-using-front-matter))
 
 ;; Key bindings specifically for Dired.
-;;(let ((map dired-mode-map))
-;;  (define-key map (kbd "C-c C-d C-i") #'denote-link-dired-marked-notes)
-;;  (define-key map (kbd "C-c C-d C-r") #'denote-dired-rename-marked-files)
-;;  (define-key map (kbd "C-c C-d C-R") #'denote-dired-rename-marked-files-using-front-matter))
+(let ((map dired-mode-map))
+ (define-key map (kbd "C-c C-d C-i") #'denote-link-dired-marked-notes)
+ (define-key map (kbd "C-c C-d C-r") #'denote-dired-rename-marked-files)
+ (define-key map (kbd "C-c C-d C-R") #'denote-dired-rename-marked-files-using-front-matter))
 
 (with-eval-after-load 'org-capture
   (setq denote-org-capture-specifiers "%l\n%i\n%?")
