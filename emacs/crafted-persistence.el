@@ -18,7 +18,8 @@
 ;; Restore last opened buffers after closing emacs.
 (setq desktop-restore-eager 5)
 (desktop-save-mode)
-(setq desktop-path '(crafted-config-var-directory "~/.emacs.d/" "~"))
+(setq desktop-path '("~/.emacs.d/" "~"))
+(push crafted-config-var-directory desktop-path)
 (provide 'crafted-persistence)
 
 ;;; crafted-persistence.el ends here
