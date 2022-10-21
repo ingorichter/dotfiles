@@ -1,6 +1,5 @@
 ;; Use crafted-package-install-package
 
-;;(require 'crafted-completion)
 (require 'crafted-defaults)
 (require 'crafted-updates)
 (require 'crafted-osx)
@@ -17,7 +16,6 @@
 
 ;; still my custom version
 (require 'crafted-git)
-;;(require 'crafted-code-completion)
 (require 'crafted-persistence)
 (require 'crafted-org)
 (require 'crafted-org-roam)
