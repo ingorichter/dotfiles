@@ -32,3 +32,4 @@
 "zsh/zprofile"                                                      = "~/.zprofile"
 "zsh/zsh-aliases"                                                   = "~/.zsh-aliases"
 "zsh/zshrc"                                                         = "~/.zshrc"
+"zsh/p10k.zsh"                                                      = "~/.p10k.zsh"
