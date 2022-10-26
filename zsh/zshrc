@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="${HOME}/.oh-my-zsh"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export KEYBASE_DIR="/Volumes/Keybase"
 export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2021.journal"
@@ -66,7 +66,7 @@ plugins=(git npm brew docker golang node macos tmux xcode yarn pass react-native
 python web-search)
 
 # User configuration
-source "$ZSH/oh-my-zsh.sh"
+source "${ZSH}/oh-my-zsh.sh"
 
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
@@ -98,35 +98,36 @@ source "$ZSH/oh-my-zsh.sh"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# add site-functions added by brew packages
+BREW_PREFIX=$(brew --prefix)
+BREW_FPATH=${BREW_PREFIX}/share/zsh/site-functions
+fpath=($BREW_FPATH $fpath)
+
 # Make n node version manager work
 export N_PREFIX=${HOME}/n
 export PATH=${PATH}:${N_PREFIX}/bin
 export N_PREFIX PATH
 
 # The following lines were added by compinstall
-zstyle :compinstall filename "${HOME}/.zshrc"
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle :compinstall filename '${HOME}/.zshrc'
 
 autoload -Uz compinit
 compinit
-
-# TODO(Ingo): this doesn't work
-# autoload -U promptinit
-# promptinit
-# prompt spaceship
-
-HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-HISTSIZE=5000
-SAVEHIST=5000
-setopt appendhistory autocd extendedglob notify
-unsetopt beep
-bindkey -e
 # End of lines added by compinstall
 
-fpath=(/usr/local/share/zsh-completions $fpath)
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory autocd extendedglob notify
+setopt HIST_SAVE_NO_DUPS
+unsetopt beep
+bindkey -e
 
 # shellcheck source=/dev/null
 # asdf
-source /opt/homebrew/opt/asdf/libexec/asdf.sh
+source ${BREW_PREFIX}/opt/asdf/libexec/asdf.sh
 
 # setup zplug
 source ~/.zplug.zsh
