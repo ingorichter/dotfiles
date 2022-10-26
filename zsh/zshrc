@@ -75,13 +75,13 @@ HIST_STAMPS="yyyy-mm-dd"
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-zstyle :compinstall filename '/Users/ingorichter/.zshrc'
+zstyle :compinstall filename '${HOME}/.zshrc'
 
 autoload -Uz compinit
 # compinit
 
 # setup zplug
-source ~/.zplug.zsh
+source ${HOME}/.zplug.zsh
 
 # add site-functions added by brew packages
 fpath=($HOMEBREW_FPATH $fpath)
@@ -93,6 +93,8 @@ fpath=($HOMEBREW_FPATH $fpath)
 # thefuck
 plugins=(git npm brew docker golang node macos tmux xcode yarn pass react-native ripgrep fd virtualenv 
 python web-search)
+
+source "${ZSH}/oh-my-zsh.sh"
 
 # User configuration
 
