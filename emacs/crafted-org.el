@@ -36,10 +36,10 @@
                               ("j" "Journal" entry (file+datetree org-journal-location)
                                "* %U - %?\n  %i" :clock-in t :clock-resume t)))
 
-;; ;; use org-bullets for nicer formatting
-;; (straight-use-package 'org-bullets)
-;; (setq org-bullets-bullet-list '("●" "◎" "○" "◆" "◇" "✸" "•"))
-;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; use org-bullets for nicer formatting
+(straight-use-package 'org-bullets)
+(setq org-bullets-bullet-list '("●" "◎" "○" "◆" "◇" "✸" "•"))
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 ;; ;; (use-package org-bullets
 ;; ;;   :ensure t
 ;; ;;   :config
@@ -127,8 +127,8 @@
  "⭠ now ─────────────────────────────────────────────────")
 
 ;; Enable org-modern-mode
-(add-hook 'org-mode-hook #'org-modern-mode)
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+;; (add-hook 'org-mode-hook #'org-modern-mode)
+;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
 ;; ;; (custom-theme-set-faces
 ;; ;; 'user
