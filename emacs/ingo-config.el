@@ -7,6 +7,23 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
+;; Timer
+(crafted-package-install-package '(tmr :type git :repo "protesilaos/tmr"))
+(require 'tmr)
+(setq tmr-notification-urgency 'normal)
+(setq tmr-descriptions-list 'tmr-description-history)
+;; OPTIONALLY set global key bindings:
+(let ((map global-map))
+  (define-key map (kbd "C-c t t") #'tmr)
+  (define-key map (kbd "C-c t T") #'tmr-with-description)
+  (define-key map (kbd "C-c t l") #'tmr-tabulated-view) ; "list timers" mnemonic
+  (define-key map (kbd "C-c t c") #'tmr-clone)
+  (define-key map (kbd "C-c t k") #'tmr-cancel)
+  (define-key map (kbd "C-c t s") #'tmr-reschedule)
+  (define-key map (kbd "C-c t e") #'tmr-edit-description)
+  (define-key map (kbd "C-c t r") #'tmr-remove)
+  (define-key map (kbd "C-c t R") #'tmr-remove-finished))
+
 ;; Encoding
 (prefer-coding-system       'utf-8)
 (set-terminal-coding-system 'utf-8)

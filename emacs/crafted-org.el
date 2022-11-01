@@ -186,4 +186,8 @@
 (setq org-reveal-mathjax t)
 (crafted-package-install-package 'htmlize)
 
+;; rainbow tags
+(crafted-package-install-package '(org-rainbow-tags :type git :host github :repo "KaratasFurkan/org-rainbow-tags"))
+(add-hook 'org-mode-hook 'org-rainbow-tags-mode)
+
 (provide 'crafted-org)

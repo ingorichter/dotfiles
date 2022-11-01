@@ -5,7 +5,7 @@
 ;; Author: Ingo Richter <ingo.richter@gmail.com>
 ;; Keywords: hypermedia, convenience
 
-(crafted-package-install-package '(denote :type git :repo "protesilaos/denote"))
+(crafted-package-install-package '(denote :type git :host github :repo "protesilaos/denote"))
 
 ;; Remember to check the doc strings of those variables.
 (setq denote-directory (expand-file-name "~/Nextcloud/org/notes/"))
