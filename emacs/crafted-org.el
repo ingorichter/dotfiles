@@ -164,7 +164,7 @@
 ;;
 (straight-use-package 'org-ql)
 
-;; ;; org-journal
+;; org-journal
 (straight-use-package 'org-journal)
 (setq org-journal-dir "~/Nextcloud/org/journal/")
 (setq org-journal-date-format "%A, %d %B %Y")
