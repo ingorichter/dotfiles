@@ -9,7 +9,7 @@
 "emacs/crafted-git.el"                                              = "~/.crafted-emacs/custom-modules/crafted-git.el"
 "emacs/crafted-persistence.el"                                      = "~/.crafted-emacs/custom-modules/crafted-persistence.el"
 "emacs/crafted-denote.el"                                           = "~/.crafted-emacs/custom-modules/crafted-denote.el"
-"emacs/crafted-org.el"                                              = "~/.crafted-emacs/custom-modules/crafted-org.el"
+"emacs/crafted-org.el"                                              = "~/.crafted-emacs/custom-modules/crafted-custom-org.el"
 "emacs/crafted-org-roam.el"                                         = "~/.crafted-emacs/custom-modules/crafted-org-roam.el"
 "espanso/default.yml"                                               = "~/Library/Preferences/espanso/default.yml"
 "gdb/gdbinit"                                                       = "~/.gdbinit"
