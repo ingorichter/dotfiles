@@ -92,7 +92,7 @@ fpath=($HOMEBREW_FPATH $fpath)
 # Add wisely, as too many plugins slow down shell startup.
 # thefuck
 plugins=(git npm brew docker golang node macos tmux xcode yarn pass react-native ripgrep fd virtualenv 
-python web-search)
+python web-search swiftpm)
 
 source "${ZSH}/oh-my-zsh.sh"
 
