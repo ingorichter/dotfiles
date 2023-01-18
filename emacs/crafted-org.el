@@ -36,14 +36,21 @@
                               ("j" "Journal" entry (file+datetree org-journal-location)
                                "* %U - %?\n  %i" :clock-in t :clock-resume t)))
 
+;; https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
+(setq org-agenda-custom-commands
+      '(("l" "All except not-todo"
+         ;; show all items except anything from the not-todo.org file
+         ((agenda "" (
+                      ;; limit agenda to 3 days
+                      (org-agenda-span 3)
+                      ))
+          (todo "TODO"))
+         ((org-agenda-files (remove "~/Nextcloud/org/not-todo.org" org-agenda-files))))))
+
 ;; use org-bullets for nicer formatting
 (straight-use-package 'org-bullets)
 (setq org-bullets-bullet-list '("●" "◎" "○" "◆" "◇" "✸" "•"))
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-;; ;; (use-package org-bullets
-;; ;;   :ensure t
-;; ;;   :config
-;; ;;   (add-hook 'org-mode-hook (lambda() (org-bullets-mode 1))))
 
 ;; Org-mode settings
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -61,59 +68,59 @@
 ;; have a timestamp added to finished items
 (setq org-log-done 'time)
 
-;; ;; capture templates
-;; (setq org-todo-keywords
-;;       (quote (
-;;               (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-;;               (sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
-;; ;; this was mentioned in http://howardism.org/Technical/Emacs/literate-programming-tutorial.html
-;; (setq org-confirm-babel-evaluate nil
-;;       org-src-fontify-natively t
-;;       org-src-tab-acts-natively t)
+;; capture templates
+(setq org-todo-keywords
+      (quote (
+              (sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+              (sequence "WAITING(W@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
-;; (setq org-hide-emphasis-markers t
-;;       org-fontify-done-headline t
-;;       org-hide-leading-stars t
-;;       org-pretty-entities t
-;;       org-odd-levels-only t)
+;; ;; ;; this was mentioned in http://howardism.org/Technical/Emacs/literate-programming-tutorial.html
+;; ;; (setq org-confirm-babel-evaluate nil
+;; ;;       org-src-fontify-natively t
+;; ;;       org-src-tab-acts-natively t)
 
-;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-;;                                        ("#+END_SRC" . "†")
-;;                                        ("#+begin_src" . "†")
-;;                                        ("#+end_src" . "†")
-;;                                        (">=" . "≥")
-;;                                        ("=>" . "⇨")))
-;; (setq prettify-symbols-unprettify-at-point 'right-edge)
-;; (add-hook 'org-mode-hook 'prettify-symbols-mode)
+;; ;; (setq org-hide-emphasis-markers t
+;; ;;       org-fontify-done-headline t
+;; ;;       org-hide-leading-stars t
+;; ;;       org-pretty-entities t
+;; ;;       org-odd-levels-only t)
 
-;; minad/org-modern
-(straight-use-package '(org-modern :type git :host github :repo "minad/org-modern"))
-;; Add frame borders and window dividers
-;; (modify-all-frames-parameters
-;;  '((right-divider-width . 40)
-;;    (internal-border-width . 40)))
-;; (dolist (face '(window-divider
-;;                 window-divider-first-pixel
-;;                 window-divider-last-pixel))
-;;   (face-spec-reset-face face)
-;;   (set-face-foreground face (face-attribute 'default :background)))
-;; (set-face-background 'fringe (face-attribute 'default :background))
+;; ;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+;; ;;                                        ("#+END_SRC" . "†")
+;; ;;                                        ("#+begin_src" . "†")
+;; ;;                                        ("#+end_src" . "†")
+;; ;;                                        (">=" . "≥")
+;; ;;                                        ("=>" . "⇨")))
+;; ;; (setq prettify-symbols-unprettify-at-point 'right-edge)
+;; ;; (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
-;; Choose some fonts
-(set-face-attribute 'default nil :family "Iosevka")
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
-;;(set-face-attribute 'org-modern-symbol nil :family "Iosevka")
+;; ;; minad/org-modern
+;; ;;(straight-use-package '(org-modern :type git :host github :repo "minad/org-modern"))
+;; ;; Add frame borders and window dividers
+;; ;; (modify-all-frames-parameters
+;; ;;  '((right-divider-width . 40)
+;; ;;    (internal-border-width . 40)))
+;; ;; (dolist (face '(window-divider
+;; ;;                 window-divider-first-pixel
+;; ;;                 window-divider-last-pixel))
+;; ;;   (face-spec-reset-face face)
+;; ;;   (set-face-foreground face (face-attribute 'default :background)))
+;; ;; (set-face-background 'fringe (face-attribute 'default :background))
+
+;; ;; Choose some fonts
+;; (set-face-attribute 'default nil :family "Iosevka")
+;; (set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
+;; ;;(set-face-attribute 'org-modern-symbol nil :family "Iosevka")
 
 (setq
  ;; Edit settings
- org-auto-align-tags nil
- org-tags-column 0
+ org-auto-align-tags t
+;; org-tags-column 80
  org-catch-invisible-edits 'show-and-error
  org-special-ctrl-a/e t
  org-insert-heading-respect-content t
 
  ;; Org styling, hide markup etc.
- org-hide-emphasis-markers t
  org-pretty-entities t
  ;; org-ellipsis "…"
 
@@ -126,45 +133,45 @@
  org-agenda-current-time-string
  "⭠ now ─────────────────────────────────────────────────")
 
-;; Enable org-modern-mode
-;; (add-hook 'org-mode-hook #'org-modern-mode)
-;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+;; ;; Enable org-modern-mode
+;; ;; (add-hook 'org-mode-hook #'org-modern-mode)
+;; ;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
+;; ;; ;; (custom-theme-set-faces
+;; ;; ;; 'user
+;; ;; ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight light))))
+;; ;; ;; '(fixed-pitch ((t ( :family "Consolas" :slant normal :weight normal :height 0.9 :width normal)))))
 ;; ;; (custom-theme-set-faces
-;; ;; 'user
-;; ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight light))))
-;; ;; '(fixed-pitch ((t ( :family "Consolas" :slant normal :weight normal :height 0.9 :width normal)))))
-;; (custom-theme-set-faces
-;;  'user
-;;  '(org-code ((t (:inherit (shadow fixed-pitch))))))
+;; ;;  'user
+;; ;;  '(org-code ((t (:inherit (shadow fixed-pitch))))))
 
-;; ;; (custom-theme-set-faces
-;; ;; 'user
-;; ;; '(org-block                 ((t (:inherit fixed-pitch))))
-;; ;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-;; ;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
-;; ;;  '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-;; ;;  '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold))))
-;; ;;  '(org-verbatim              ((t (:inherit (shadow fixed-pitch))))))
+;; ;; ;; (custom-theme-set-faces
+;; ;; ;; 'user
+;; ;; ;; '(org-block                 ((t (:inherit fixed-pitch))))
+;; ;; ;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+;; ;; ;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
+;; ;; ;;  '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+;; ;; ;;  '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold))))
+;; ;; ;;  '(org-verbatim              ((t (:inherit (shadow fixed-pitch))))))
 
-;; (org-babel-do-load-languages
-;;  'org-babel-load-languages
-;;  '((shell      . t)
-;;    (js         . t)
-;;    (emacs-lisp . t)
-;;    (perl       . t)
-;;    (crystal    . t)
-;;    (clojure    . t)
-;;    (python     . t)
-;;    (ruby       . t)
-;;    (dot        . t)
-;;    (css        . t)
-;;    (plantuml   . t)))
+;; ;; (org-babel-do-load-languages
+;; ;;  'org-babel-load-languages
+;; ;;  '((shell      . t)
+;; ;;    (js         . t)
+;; ;;    (emacs-lisp . t)
+;; ;;    (perl       . t)
+;; ;;    (crystal    . t)
+;; ;;    (clojure    . t)
+;; ;;    (python     . t)
+;; ;;    (ruby       . t)
+;; ;;    (dot        . t)
+;; ;;    (css        . t)
+;; ;;    (plantuml   . t)))
 
-;;
-(straight-use-package 'org-ql)
+;; ;;
+;; (straight-use-package 'org-ql)
 
-;; org-journal
+;; ;; org-journal
 (straight-use-package 'org-journal)
 (setq org-journal-dir "~/Nextcloud/org/journal/")
 (setq org-journal-date-format "%A, %d %B %Y")
@@ -182,7 +189,7 @@
 ;; ox-reveal
 (crafted-package-install-package 'ox-reveal)
 (require 'ox-reveal)
-::(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.7.0/")
+;;(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.7.0/")
 (setq org-reveal-mathjax t)
 (crafted-package-install-package 'htmlize)
 
@@ -190,4 +197,19 @@
 (crafted-package-install-package '(org-rainbow-tags :type git :host github :repo "KaratasFurkan/org-rainbow-tags"))
 (add-hook 'org-mode-hook 'org-rainbow-tags-mode)
 
+<<<<<<< Updated upstream
 (provide 'crafted-custom-org)
+=======
+;; Mastodon
+(crafted-package-install-package '(mastodon :type git :host codeberg :repo "martianh/mastodon.el"))
+(setq mastodon-instance-url "https://mastodon.social"
+          mastodon-active-user "ingorichter")
+
+;; ;; Mastodon Org
+;; (crafted-package-install-package '(mastodon-dashboard :type git :host github :repo "rougier/mastodon-org"))
+;; (crafted-package-install-package '(sideframe :type git :host github :repo "rougier/sideframe"))
+;; (crafted-package-install-package '(nano-theme :type git :host github :repo "rougier/nano-theme"))
+;; (require 'mastodon-dashboard)
+
+(provide 'crafted-org)
+>>>>>>> Stashed changes
