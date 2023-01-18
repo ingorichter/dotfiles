@@ -103,7 +103,7 @@
 ;; (use-package org-caldav
 ;;   :ensure t
 ;;   :config
-;;   (setq org-caldav-url "https://cloud.familie-richter.synology.me/remote.php/dav/calendars/ingo"
+;;   (setq org-caldav-url "https://cloud.familie-richter.de/remote.php/dav/calendars/ingo"
 ;;         ;;          org-caldav-calendar-id "F4F90979-075A-4128-934F-C709FF6C0112"
 ;;         org-caldav-calendar-id "personal"
 ;;         org-caldav-inbox "~/Nextcloud/org/gcal.org"

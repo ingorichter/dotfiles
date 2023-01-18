@@ -1,6 +1,7 @@
 ;; Use crafted-package-install-package
 
 (require 'crafted-defaults)
+<<<<<<< HEAD
 (require 'crafted-package)
 (require 'crafted-updates)
 (require 'crafted-compile)
@@ -9,16 +10,30 @@
 (require 'crafted-editing)
 (require 'crafted-org)
 (require 'crafted-osx)
+=======
+(require 'crafted-compile)
+(require 'crafted-completion)
+(require 'crafted-editing)
+(require 'crafted-ide)
+;; (require 'crafted-mastering-emacs)
+(require 'crafted-org)
+(require 'crafted-osx)
+(require 'crafted-package)
+>>>>>>> e7d214bf02d852183706d0952dea5519ffd8e72b
 (require 'crafted-project)
 (require 'crafted-screencast)
 (require 'crafted-speedbar)
 (require 'crafted-ui)
+<<<<<<< HEAD
+=======
+(require 'crafted-updates)
+>>>>>>> e7d214bf02d852183706d0952dea5519ffd8e72b
 (require 'crafted-windows)
 
 ;; still my custom version
 (require 'crafted-git)
 (require 'crafted-persistence)
-(require 'crafted-org)
+(require 'crafted-org-ingo)
 (require 'crafted-org-roam)
 (require 'crafted-denote)
 
