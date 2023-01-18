@@ -13,7 +13,7 @@
 (setq denote-infer-keywords t)
 (setq denote-sort-keywords t)
 (setq denote-file-type nil) ; Org is the default, set others here
-(setq denote-prompts '(title keywords))
+(setq denote-prompts '(subdirectory title keywords))
 
 ;; Pick dates, where relevant, with Org's advanced interface:
 (setq denote-date-prompt-use-org-read-date t)
@@ -92,5 +92,12 @@
                  :immediate-finish nil
                  :kill-buffer t
                  :jump-to-captured t)))
+
+;; custom functions
+;; used this function from https://whhone.com/posts/denote-with-subdirectories/
+(defun ir/consult-denote-ripgrep ()
+    "Search with 'rg' for files in denote-directory where the content matches a regexp"
+  (interactive)
+  (consult-ripgrep denote-directory ""))
 
 (provide 'crafted-denote)

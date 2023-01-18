@@ -3,3 +3,5 @@
 (crafted-package-bootstrap crafted-package-system)
 
 (setq rational-load-custom-file t)
+
+;;(setq crafted-ui-use-doom-modeline nil)

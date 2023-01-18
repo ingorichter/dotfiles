@@ -226,3 +226,11 @@
 (if (file-readable-p "~/.quicklisp/slime-helper.el")
     (load (expand-file-name "~/.quicklisp/slime-helper.el"))
   (setq inferior-lisp-program "sbcl"))
+
+;; mu4e
+(defun load-if-exists (f)
+  "load the elisp file is it exists and is readable"
+  (if (file-readable-p f)
+      (load-file f)))
+
+(load-if-exists "~/.dotfiles/emacs/mu4econfig.el")

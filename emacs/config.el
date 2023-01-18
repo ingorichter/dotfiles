@@ -1,18 +1,19 @@
 ;; Use crafted-package-install-package
 
 (require 'crafted-defaults)
+(require 'crafted-package)
 (require 'crafted-updates)
+(require 'crafted-compile)
+(require 'crafted-ide)
 (require 'crafted-completion)
-(require 'crafted-ui)
-(require 'crafted-osx)
 (require 'crafted-editing)
+(require 'crafted-org)
+(require 'crafted-osx)
 (require 'crafted-project)
 (require 'crafted-screencast)
-(require 'crafted-package)
-(require 'crafted-windows)
 (require 'crafted-speedbar)
-(require 'crafted-org)
-(require 'crafted-compile)
+(require 'crafted-ui)
+(require 'crafted-windows)
 
 ;; still my custom version
 (require 'crafted-git)
