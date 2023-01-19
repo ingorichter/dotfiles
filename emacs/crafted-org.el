@@ -197,9 +197,6 @@
 (crafted-package-install-package '(org-rainbow-tags :type git :host github :repo "KaratasFurkan/org-rainbow-tags"))
 (add-hook 'org-mode-hook 'org-rainbow-tags-mode)
 
-<<<<<<< Updated upstream
-(provide 'crafted-custom-org)
-=======
 ;; Mastodon
 (crafted-package-install-package '(mastodon :type git :host codeberg :repo "martianh/mastodon.el"))
 (setq mastodon-instance-url "https://mastodon.social"
@@ -211,5 +208,4 @@
 ;; (crafted-package-install-package '(nano-theme :type git :host github :repo "rougier/nano-theme"))
 ;; (require 'mastodon-dashboard)
 
-(provide 'crafted-org)
->>>>>>> Stashed changes
+(provide 'crafted-custom-org)
