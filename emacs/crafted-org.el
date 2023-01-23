@@ -5,11 +5,16 @@
 (setq org-appear-autolinks t)
 
 (crafted-package-install-package 'org-contrib)
+(crafted-package-install-package 'ob-crystal)
+(crafted-package-install-package 'org)
 
-(straight-use-package 'ob-crystal)
-(straight-use-package 'org)
+;; (straight-use-package 'ob-crystal)
+;; (straight-use-package 'org)
 
 (require 'org-protocol)
+
+(crafted-package-install-package 'org-cliplink)
+(global-set-key (kbd "C-x p i") 'org-cliplink)
 
 (setq org-directory "~/Nextcloud/org"
       org-agenda-files (list org-directory)
@@ -20,9 +25,10 @@
       org-gcal-location (concat org-directory "/gcal.org")
       org-weekly-goals (concat org-directory "/weekly-goals.org")
       org-goals (concat org-directory "/goals.org")
-      org-journal-location (concat org-directory "/journal/journal.org"))
+      org-journal-location (concat org-directory "/journal/journal.org")
+      org-review-location (concat org-directory "/review.org"))
 
-(setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Todo")
+(setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Inbox")
                                "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
                               ("a" "Appointment" entry (file org-gcal-location)
                                "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
@@ -34,18 +40,34 @@
                                (file+datetree org-weekly-goals (format-time-string "%Y"))
                                "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
                               ("j" "Journal" entry (file+datetree org-journal-location)
-                               "* %U - %?\n  %i" :clock-in t :clock-resume t)))
+                               "* %U - %?\n  %i" :clock-in t :clock-resume t)
+                              ("d" "Review: Daily Review" entry
+                               (file+olp+datetree org-review-location)
+                               (file "~/Nextcloud/org/BASB/review/dailyreviewtemplate.org"))))
 
-;; https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
+;; https://gist.github.com/nicklanasa/dc5206f8b50526adf8802d44a9026859
 (setq org-agenda-custom-commands
-      '(("l" "All except not-todo"
+      '((" " "Agenda"
+         ((agenda ""
+                  ((org-agenda-span 'day)))
+          (todo "TODO"
+                ((org-agenda-overriding-header "Unscheduled tasks")
+                 (org-agenda-files '("~/Nextcloud/org/refile.org"))
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                 ))
+          (todo "TODO"
+                ((org-agenda-overriding-header "Unscheduled project tasks")
+                 (org-agenda-files '("~/Nextcloud/org/mylife.org"))
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))))))
+        ("l" "All except not-todo"
          ;; show all items except anything from the not-todo.org file
          ((agenda "" (
                       ;; limit agenda to 3 days
                       (org-agenda-span 3)
                       ))
           (todo "TODO"))
-         ((org-agenda-files (remove "~/Nextcloud/org/not-todo.org" org-agenda-files))))))
+         ((org-agenda-files (list org-default-todo-file org-refile-location))))
+        ))
 
 ;; use org-bullets for nicer formatting
 (straight-use-package 'org-bullets)
@@ -115,7 +137,7 @@
 (setq
  ;; Edit settings
  org-auto-align-tags t
-;; org-tags-column 80
+ org-tags-column 75
  org-catch-invisible-edits 'show-and-error
  org-special-ctrl-a/e t
  org-insert-heading-respect-content t
@@ -132,6 +154,30 @@
    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
  org-agenda-current-time-string
  "⭠ now ─────────────────────────────────────────────────")
+
+(setq org-agenda-start-day nil)
+(setq org-agenda-span 7)
+(setq org-agenda-start-on-weekday nil)
+(setq org-agenda-skip-deadline-prewarning-if-scheduled t)
+(setq org-agenda-todo-ignore-deadlines (quote all))
+(setq org-agenda-todo-ignore-scheduled (quote all))
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-deadline-warning-days 0)
+(setq org-habit-preceding-days 14)
+(setq org-habit-graph-column 189)
+(setq org-agenda-use-time-grid t)
+
+;; (setq org-agenda-span 2)
+;; (setq org-agenda-tags-column -100) ; take advantage of the screen width
+;; (setq org-agenda-sticky nil)
+;; (setq org-agenda-inhibit-startup t)
+;; (setq org-agenda-use-tag-inheritance t)
+;; (setq org-agenda-show-log t)
+;; (setq org-agenda-skip-scheduled-if-done t)
+;; (setq org-agenda-skip-deadline-if-done t)
+;; (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+;; (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
 
 ;; ;; Enable org-modern-mode
 ;; ;; (add-hook 'org-mode-hook #'org-modern-mode)
@@ -200,7 +246,7 @@
 ;; Mastodon
 (crafted-package-install-package '(mastodon :type git :host codeberg :repo "martianh/mastodon.el"))
 (setq mastodon-instance-url "https://mastodon.social"
-          mastodon-active-user "ingorichter")
+      mastodon-active-user "ingorichter")
 
 ;; ;; Mastodon Org
 ;; (crafted-package-install-package '(mastodon-dashboard :type git :host github :repo "rougier/mastodon-org"))

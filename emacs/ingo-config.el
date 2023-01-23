@@ -69,11 +69,15 @@
 (setq backup-directory (concat crafted-config-var-directory "saved"))
 (setq backup-by-copying t
       backup-directory-alist
-      `(("." . ,backup-directory))
+      `((".*" . ,backup-directory))
       delete-old-versions t
       kept-old-versions 2
       kept-new-versions 6
       version-control t)
+
+(setq auto-save-default t)
+(setq make-backup-files t)
+(setq auto-save-list-file-prefix nil)
 
 ;; custom functions and key map
 (defun ir/org-archive-done-tasks ()

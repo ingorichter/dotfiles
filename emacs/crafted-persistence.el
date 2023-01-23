@@ -20,6 +20,6 @@
 (desktop-save-mode)
 (setq desktop-path '("~/.emacs.d/" "~"))
 (push crafted-config-var-directory desktop-path)
-(provide 'crafted-persistence)
 
+(provide 'crafted-persistence)
 ;;; crafted-persistence.el ends here
