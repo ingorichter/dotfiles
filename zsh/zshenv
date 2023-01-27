@@ -51,5 +51,8 @@ export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2022.journal"
 export N_PREFIX=${HOME}/n
 export PATH=${PATH}:${N_PREFIX}/bin
 
+# setup fnm
+eval "$(fnm env --use-on-cd)"
+
 # Cargo
 . "$HOME/.cargo/env"

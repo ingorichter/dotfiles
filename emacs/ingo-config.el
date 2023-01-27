@@ -237,4 +237,5 @@
   (if (file-readable-p f)
       (load-file f)))
 
-(load-if-exists "~/.dotfiles/emacs/mu4econfig.el")
+(if (featurep 'mu4e)
+    (load-if-exists "~/.dotfiles/emacs/mu4econfig.el"))

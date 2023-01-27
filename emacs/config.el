@@ -22,6 +22,7 @@
 (require 'crafted-custom-org)
 (require 'crafted-org-roam)
 (require 'crafted-denote)
+(require 'crafted-webdev)
 
 (custom-set-variables
    '(crafted-ui-default-font
