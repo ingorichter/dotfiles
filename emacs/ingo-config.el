@@ -3,8 +3,13 @@
 ;; this is required to run gpg to decode the password to sync with nextcloud
 (crafted-package-install-package 'exec-path-from-shell)
 
+(defun is-mac-p()
+  (eq system-type 'darwin))
+
+(when (is-mac-p)
+  (require 'exec-path-from-shell))
 (with-eval-after-load "exec-path-from-shell"
-  (when (memq window-system '(mac ns x))
+  (when (is-mac-p)
     (exec-path-from-shell-initialize)))
 
 ;; Timer
@@ -237,5 +242,5 @@
   (if (file-readable-p f)
       (load-file f)))
 
-(if (featurep 'mu4e)
-    (load-if-exists "~/.dotfiles/emacs/mu4econfig.el"))
+;; (if (featurep 'mu4e)
+    (load-if-exists "~/.dotfiles/emacs/mu4econfig.el")

@@ -36,15 +36,17 @@
                                "* Note %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
                               ("i" "Idee" entry (file+headline org-refile-location "Ideen")
                                "* Idee %^{Titel} %^g\n  %?\n  :LOGBOOK:\n - Added: %U\n:END:")
-                              ("w" "Weekly Goals" entry
+                              ("g" "Weekly Goals" entry
                                (file+datetree org-weekly-goals (format-time-string "%Y"))
                                "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
                               ("j" "Journal" entry (file+datetree org-journal-location)
                                "* %U - %?\n  %i" :clock-in t :clock-resume t)
                               ("d" "Review: Daily Review" entry
                                (file+olp+datetree org-review-location)
-                               (file "~/Nextcloud/org/BASB/review/dailyreviewtemplate.org"))))
-
+                               (file "~/Nextcloud/org/BASB/review/dailyreviewtemplate.org"))
+                              ("w" "Review: Weekly Review" entry
+                               (file+olp+datetree org-review-location)
+                               (file "~/Nextcloud/org/BASB/review/weeklyreviewtemplate.org"))))
 ;; https://gist.github.com/nicklanasa/dc5206f8b50526adf8802d44a9026859
 (setq org-agenda-custom-commands
       '((" " "Agenda"
