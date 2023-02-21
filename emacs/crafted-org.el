@@ -16,6 +16,15 @@
 (crafted-package-install-package 'org-cliplink)
 (global-set-key (kbd "C-x p i") 'org-cliplink)
 
+;; org-web-tools
+(crafted-package-install-package '(dash.el :type git :host github :repo "magnars/dash.el"))
+(crafted-package-install-package '(esxml :type git :host github :repo "tali713/esxml"))
+(crafted-package-install-package '(request :type git :host github :repo "tkf/emacs-request"))
+(crafted-package-install-package '(s :type git :host github :repo "magnars/s.el"))
+
+(crafted-package-install-package '(org-web-tools :type git :host github :repo "alphapapa/org-web-tools"))
+(require 'org-web-tools)
+
 (setq org-directory "~/Nextcloud/org"
       org-agenda-files (list org-directory)
       org-archive-location (concat org-directory "/archive/%s_archive::")
@@ -42,8 +51,7 @@
                                "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
                               ("j" "Journal" entry (file+datetree org-journal-location)
                                "* %U - %?\n  %i" :clock-in t :clock-resume t)
-                              ("s" "Team Status Update" entry (file+olp+datetree org-cicada-daily-status-location)
-                               (file "~/Nextcloud/org/templates/cicada-daily-standup-status.org"))
+                              ("s" "Team Status Update" entry (file+olp+datetree org-cicada-daily-status-location) "* Daily Status\n")
                               ("d" "Review: Daily Review" entry
                                (file+olp+datetree org-review-location)
                                (file "~/Nextcloud/org/BASB/review/dailyreviewtemplate.org"))
@@ -85,6 +93,7 @@
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c w l") 'org-web-tools-insert-link-for-url)
 
 ;; ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
