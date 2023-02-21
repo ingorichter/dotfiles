@@ -12,6 +12,7 @@
 "emacs/crafted-org.el"                                              = "~/.crafted-emacs/custom-modules/crafted-custom-org.el"
 "emacs/crafted-org-roam.el"                                         = "~/.crafted-emacs/custom-modules/crafted-org-roam.el"
 "emacs/crafted-webdev.el"                                           = "~/.crafted-emacs/custom-modules/crafted-webdev.el"
+"emacs/crafted-yasnippet.el"                                        = "~/.crafted-emacs/custom-modules/crafted-yasnippet.el"
 "espanso/default.yml"                                               = "~/Library/Preferences/espanso/default.yml"
 "gdb/gdbinit"                                                       = "~/.gdbinit"
 "git/gitconfig"                                                     = "~/.gitconfig"

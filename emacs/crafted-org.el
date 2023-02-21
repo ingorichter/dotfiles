@@ -6,9 +6,9 @@
 
 (crafted-package-install-package 'org-contrib)
 (crafted-package-install-package 'ob-crystal)
-(crafted-package-install-package 'org)
+;;(crafted-package-install-package 'org)
 
-;; (straight-use-package 'ob-crystal)
+;;(straight-use-package 'ob-crystal)
 ;; (straight-use-package 'org)
 
 (require 'org-protocol)
@@ -26,7 +26,8 @@
       org-weekly-goals (concat org-directory "/weekly-goals.org")
       org-goals (concat org-directory "/goals.org")
       org-journal-location (concat org-directory "/journal/journal.org")
-      org-review-location (concat org-directory "/review.org"))
+      org-review-location (concat org-directory "/review.org")
+      org-cicada-daily-status-location (concat org-directory "/cicada-daily-standup-status.org"))
 
 (setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Inbox")
                                "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
@@ -41,6 +42,8 @@
                                "* %U\n\nHigh Level Ziele fuer die %(format-time-string "%W"). Woche\n - [ ] %(format-time-string "%W")$ x in die Spardose\n - [ ] Workout\n - [ ] Laufen")
                               ("j" "Journal" entry (file+datetree org-journal-location)
                                "* %U - %?\n  %i" :clock-in t :clock-resume t)
+                              ("s" "Team Status Update" entry (file+olp+datetree org-cicada-daily-status-location)
+                               (file "~/Nextcloud/org/templates/cicada-daily-standup-status.org"))
                               ("d" "Review: Daily Review" entry
                                (file+olp+datetree org-review-location)
                                (file "~/Nextcloud/org/BASB/review/dailyreviewtemplate.org"))
@@ -147,7 +150,6 @@
  ;; Org styling, hide markup etc.
  org-pretty-entities t
  ;; org-ellipsis "…"
-
  ;; Agenda styling
  org-agenda-block-separator ?─
  org-agenda-time-grid
@@ -157,103 +159,103 @@
  org-agenda-current-time-string
  "⭠ now ─────────────────────────────────────────────────")
 
-(setq org-agenda-start-day nil)
-(setq org-agenda-span 7)
-(setq org-agenda-start-on-weekday nil)
-(setq org-agenda-skip-deadline-prewarning-if-scheduled t)
-(setq org-agenda-todo-ignore-deadlines (quote all))
-(setq org-agenda-todo-ignore-scheduled (quote all))
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-deadline-warning-days 0)
-(setq org-habit-preceding-days 14)
-(setq org-habit-graph-column 189)
-(setq org-agenda-use-time-grid t)
+ (setq org-agenda-start-day nil)
+ (setq org-agenda-span 7)
+ (setq org-agenda-start-on-weekday nil)
+ (setq org-agenda-skip-deadline-prewarning-if-scheduled t)
+ (setq org-agenda-todo-ignore-deadlines (quote all))
+ (setq org-agenda-todo-ignore-scheduled (quote all))
+ (setq org-agenda-skip-scheduled-if-done t)
+ (setq org-agenda-skip-deadline-if-done t)
+ (setq org-deadline-warning-days 0)
+ (setq org-habit-preceding-days 14)
+ (setq org-habit-graph-column 189)
+ (setq org-agenda-use-time-grid t)
 
-;; (setq org-agenda-span 2)
-;; (setq org-agenda-tags-column -100) ; take advantage of the screen width
-;; (setq org-agenda-sticky nil)
-;; (setq org-agenda-inhibit-startup t)
-;; (setq org-agenda-use-tag-inheritance t)
-;; (setq org-agenda-show-log t)
-;; (setq org-agenda-skip-scheduled-if-done t)
-;; (setq org-agenda-skip-deadline-if-done t)
-;; (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
-;; (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
+ ;; (setq org-agenda-span 2)
+ ;; (setq org-agenda-tags-column -100) ; take advantage of the screen width
+ ;; (setq org-agenda-sticky nil)
+ ;; (setq org-agenda-inhibit-startup t)
+ ;; (setq org-agenda-use-tag-inheritance t)
+ ;; (setq org-agenda-show-log t)
+ ;; (setq org-agenda-skip-scheduled-if-done t)
+ ;; (setq org-agenda-skip-deadline-if-done t)
+ ;; (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+ ;; (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
 
-;; ;; Enable org-modern-mode
-;; ;; (add-hook 'org-mode-hook #'org-modern-mode)
-;; ;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+ ;; ;; Enable org-modern-mode
+ ;; ;; (add-hook 'org-mode-hook #'org-modern-mode)
+ ;; ;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
-;; ;; ;; (custom-theme-set-faces
-;; ;; ;; 'user
-;; ;; ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight light))))
-;; ;; ;; '(fixed-pitch ((t ( :family "Consolas" :slant normal :weight normal :height 0.9 :width normal)))))
-;; ;; (custom-theme-set-faces
-;; ;;  'user
-;; ;;  '(org-code ((t (:inherit (shadow fixed-pitch))))))
+ ;; ;; ;; (custom-theme-set-faces
+ ;; ;; ;; 'user
+ ;; ;; ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 120 :weight light))))
+ ;; ;; ;; '(fixed-pitch ((t ( :family "Consolas" :slant normal :weight normal :height 0.9 :width normal)))))
+ ;; ;; (custom-theme-set-faces
+ ;; ;;  'user
+ ;; ;;  '(org-code ((t (:inherit (shadow fixed-pitch))))))
 
-;; ;; ;; (custom-theme-set-faces
-;; ;; ;; 'user
-;; ;; ;; '(org-block                 ((t (:inherit fixed-pitch))))
-;; ;; ;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-;; ;; ;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
-;; ;; ;;  '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-;; ;; ;;  '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold))))
-;; ;; ;;  '(org-verbatim              ((t (:inherit (shadow fixed-pitch))))))
+ ;; ;; ;; (custom-theme-set-faces
+ ;; ;; ;; 'user
+ ;; ;; ;; '(org-block                 ((t (:inherit fixed-pitch))))
+ ;; ;; ;;  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+ ;; ;; ;;  '(org-property-value        ((t (:inherit fixed-pitch))) t)
+ ;; ;; ;;  '(org-special-keyword       ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ ;; ;; ;;  '(org-tag                   ((t (:inherit (shadow fixed-pitch) :weight bold))))
+ ;; ;; ;;  '(org-verbatim              ((t (:inherit (shadow fixed-pitch))))))
 
-;; ;; (org-babel-do-load-languages
-;; ;;  'org-babel-load-languages
-;; ;;  '((shell      . t)
-;; ;;    (js         . t)
-;; ;;    (emacs-lisp . t)
-;; ;;    (perl       . t)
-;; ;;    (crystal    . t)
-;; ;;    (clojure    . t)
-;; ;;    (python     . t)
-;; ;;    (ruby       . t)
-;; ;;    (dot        . t)
-;; ;;    (css        . t)
-;; ;;    (plantuml   . t)))
+ ;; ;; (org-babel-do-load-languages
+ ;; ;;  'org-babel-load-languages
+ ;; ;;  '((shell      . t)
+ ;; ;;    (js         . t)
+ ;; ;;    (emacs-lisp . t)
+ ;; ;;    (perl       . t)
+ ;; ;;    (crystal    . t)
+ ;; ;;    (clojure    . t)
+ ;; ;;    (python     . t)
+ ;; ;;    (ruby       . t)
+ ;; ;;    (dot        . t)
+ ;; ;;    (css        . t)
+ ;; ;;    (plantuml   . t)))
 
-;; ;;
-;; (straight-use-package 'org-ql)
+ ;; ;;
+ ;; (straight-use-package 'org-ql)
 
-;; ;; org-journal
-(straight-use-package 'org-journal)
-(setq org-journal-dir "~/Nextcloud/org/journal/")
-(setq org-journal-date-format "%A, %d %B %Y")
+ ;; ;; org-journal
+ (straight-use-package 'org-journal)
+ (setq org-journal-dir "~/Nextcloud/org/journal/")
+ (setq org-journal-date-format "%A, %d %B %Y")
 
-(defun org-journal-file-header-func (time)
-  "Custom function to create journal header."
-  (concat
-   (pcase org-journal-file-type
-     (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
-     (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
-     (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
-     (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
-(setq org-journal-file-header 'org-journal-file-header-func)
+ (defun org-journal-file-header-func (time)
+   "Custom function to create journal header."
+   (concat
+    (pcase org-journal-file-type
+      (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+      (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+      (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+      (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
+ (setq org-journal-file-header 'org-journal-file-header-func)
 
-;; ox-reveal
-(crafted-package-install-package 'ox-reveal)
-(require 'ox-reveal)
-;;(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.7.0/")
-(setq org-reveal-mathjax t)
-(crafted-package-install-package 'htmlize)
+ ;; ox-reveal
+ (crafted-package-install-package 'ox-reveal)
+ (require 'ox-reveal)
+ ;;(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.7.0/")
+ (setq org-reveal-mathjax t)
+ (crafted-package-install-package 'htmlize)
 
-;; rainbow tags
-(crafted-package-install-package '(org-rainbow-tags :type git :host github :repo "KaratasFurkan/org-rainbow-tags"))
-(add-hook 'org-mode-hook 'org-rainbow-tags-mode)
+ ;; rainbow tags
+ (crafted-package-install-package '(org-rainbow-tags :type git :host github :repo "KaratasFurkan/org-rainbow-tags"))
+ (add-hook 'org-mode-hook 'org-rainbow-tags-mode)
 
-;; Mastodon
-(crafted-package-install-package '(mastodon :type git :host codeberg :repo "martianh/mastodon.el"))
-(setq mastodon-instance-url "https://mastodon.social"
-      mastodon-active-user "ingorichter")
+ ;; Mastodon
+ (crafted-package-install-package '(mastodon :type git :host codeberg :repo "martianh/mastodon.el"))
+ (setq mastodon-instance-url "https://mastodon.social"
+       mastodon-active-user "ingorichter")
 
-;; ;; Mastodon Org
-;; (crafted-package-install-package '(mastodon-dashboard :type git :host github :repo "rougier/mastodon-org"))
-;; (crafted-package-install-package '(sideframe :type git :host github :repo "rougier/sideframe"))
-;; (crafted-package-install-package '(nano-theme :type git :host github :repo "rougier/nano-theme"))
-;; (require 'mastodon-dashboard)
+ ;; ;; Mastodon Org
+ ;; (crafted-package-install-package '(mastodon-dashboard :type git :host github :repo "rougier/mastodon-org"))
+ ;; (crafted-package-install-package '(sideframe :type git :host github :repo "rougier/sideframe"))
+ ;; (crafted-package-install-package '(nano-theme :type git :host github :repo "rougier/nano-theme"))
+ ;; (require 'mastodon-dashboard)
 
-(provide 'crafted-custom-org)
+ (provide 'crafted-custom-org)

@@ -23,6 +23,7 @@
 (require 'crafted-org-roam)
 (require 'crafted-denote)
 (require 'crafted-webdev)
+(require 'crafted-yasnippet)
 
 (custom-set-variables
    '(crafted-ui-default-font

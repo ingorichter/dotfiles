@@ -243,4 +243,5 @@
       (load-file f)))
 
 ;; (if (featurep 'mu4e)
-    (load-if-exists "~/.dotfiles/emacs/mu4econfig.el")
+(if (executable-find "mu")
+    (load-if-exists "~/.dotfiles/emacs/mu4econfig.el"))
