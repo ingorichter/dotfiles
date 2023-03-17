@@ -84,7 +84,9 @@ autoload -Uz compinit
 source ${HOME}/.zplug.zsh
 
 # add site-functions added by brew packages
-fpath=($HOMEBREW_FPATH $fpath)
+fpath=($HOMEBREW_FPATH $ZSH_FUNCTIONS $fpath)
+
+autoload -U $ZSH_FUNCTIONS/*(:t)
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -133,6 +135,11 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory autocd extendedglob notify
 setopt HIST_SAVE_NO_DUPS
+setopt APPEND_HISTORY # adds history
+setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
+setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
+setopt HIST_REDUCE_BLANKS
+
 unsetopt beep
 bindkey -e
 

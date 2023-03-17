@@ -47,6 +47,8 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export KEYBASE_DIR="/Volumes/Keybase"
 export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2022.journal"
 
+export ZSH_FUNCTIONS="$HOME/.zsh-functions"
+
 # Make n node version manager work
 #export N_PREFIX=${HOME}/n
 #export PATH=${PATH}:${N_PREFIX}/bin

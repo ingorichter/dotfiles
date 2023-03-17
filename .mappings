@@ -37,3 +37,4 @@
 "zsh/zshrc"                                                         = "~/.zshrc"
 "zsh/zshenv"                                                        = "~/.zshenv"
 "zsh/p10k.zsh"                                                      = "~/.p10k.zsh"
+"zsh/functions"                                                     = "~/.zsh-functions"
