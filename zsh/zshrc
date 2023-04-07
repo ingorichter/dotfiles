@@ -77,7 +77,7 @@ HIST_STAMPS="yyyy-mm-dd"
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle :compinstall filename '${HOME}/.zshrc'
 
-autoload -Uz compinit
+autoload -Uz compinit; compinit
 # compinit
 
 # setup zplug

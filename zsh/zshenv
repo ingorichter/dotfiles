@@ -31,8 +31,11 @@ export GOBIN=$(export GOPATH; go env GOPATH)/bin
 
 export MACHINE_CONFIG_FILE="${HOME}/Dropbox/Dotfiles/$(hostname -s)"
 
+export PATH="${HOMEBREW_PREFIX}/opt/openjdk/bin:$PATH"
+
 # Modify the $PATH
-export PATH="${GOBIN}:/usr/local/sbin:${PATH}:${HOME}/.fastlane/bin:${HOME}/.cargo/bin"
+export PATH="${PATH}:${GOBIN}:/usr/local/sbin:${HOME}/.fastlane/bin:"
+# ${HOME}/.cargo/bin"
 
 ###############################
 # EXPORT ENVIRONMENT VARIABLE #
@@ -48,10 +51,6 @@ export KEYBASE_DIR="/Volumes/Keybase"
 export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2022.journal"
 
 export ZSH_FUNCTIONS="$HOME/.zsh-functions"
-
-# Make n node version manager work
-#export N_PREFIX=${HOME}/n
-#export PATH=${PATH}:${N_PREFIX}/bin
 
 # setup fnm
 eval "$(fnm env --use-on-cd)"
