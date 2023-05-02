@@ -24,6 +24,7 @@
 (require 'crafted-denote)
 (require 'crafted-webdev)
 (require 'crafted-yasnippet)
+(require 'crafted-chatgpt-shell)
 
 (custom-set-variables
    '(crafted-ui-default-font

@@ -17,6 +17,6 @@ if ! zplug check --verbose; then
   fi
 fi
 
-zplug load --verbose
+zplug load # --verbose
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

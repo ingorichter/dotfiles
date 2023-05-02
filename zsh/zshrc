@@ -141,5 +141,14 @@ source ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
+function seecert () {
+  nslookup $1
+  (openssl s_client -showcerts -servername $1 -connect $1:443 <<< "Q" | openssl x509 -text | grep -iA2 
+"Validity")
+}
+
+# ensure that homebrew paths appear before system paths. Didn't work from .zshenv
+export PATH=${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
