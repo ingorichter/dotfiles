@@ -10,3 +10,5 @@
 alias updatedb='
     sudo /usr/libexec/locate.updatedb
 '
+
+alias dumpbrew='brew bundle dump --global --force --all --describe'
