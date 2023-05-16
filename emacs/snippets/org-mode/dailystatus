@@ -3,9 +3,10 @@
 # key: DailyStatus
 # --
 
+**** Daily Status
 ***** Working On
-   1. $1
+     - $1
 ***** Eyes Needed
-   2. $2
+     - $2
 ***** Blockers
-   3. $3
+     - $3
