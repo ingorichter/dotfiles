@@ -4,6 +4,8 @@
 ;; https://github.com/xenodium/chatgpt-shell/blob/main/README.org
 
 ;; https://github.com/xenodium/chatgpt-shell
+
+(crafted-package-install-package '(shell-maker :type git :host github :repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
 (crafted-package-install-package '(chatgpt-shell :type git :host github :repo "xenodium/chatgpt-shell"))
 
 (defun read-password-from-keychain (service account)
@@ -17,7 +19,7 @@
         (read-password-from-keychain "chatgpt" "ingo")))
 
 (setq shell-maker-logging t)
-;; (setq chatgpt-shell-streaming nil)
+;;(setq chatgpt-shell-streaming nil)
 
 (provide 'crafted-chatgpt-shell)
 ;;; crafted-chatgpt-shell.el ends here
