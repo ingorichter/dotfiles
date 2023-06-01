@@ -17,6 +17,7 @@
 (require 'tmr)
 (setq tmr-notification-urgency 'normal)
 (setq tmr-descriptions-list 'tmr-description-history)
+
 ;; OPTIONALLY set global key bindings:
 (let ((map global-map))
   (define-key map (kbd "C-c t t") #'tmr)
@@ -245,3 +246,7 @@
 ;; (if (featurep 'mu4e)
 (if (executable-find "mu")
     (load-if-exists "~/.dotfiles/emacs/mu4econfig.el"))
+
+;; tweak dired appearance
+(crafted-package-install-package '(nerd-icons-dired :type git :host github :repo "rainstormstudio/nerd-icons-dired"))
+(add-hook 'dired-mode-hook #'nerd-icons-dired-mode)
