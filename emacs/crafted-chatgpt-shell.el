@@ -17,7 +17,7 @@
         (read-password-from-keychain "chatgpt" "ingo")))
 
 (setq shell-maker-logging t)
-(setq chatgpt-shell-streaming nil)
+;; (setq chatgpt-shell-streaming nil)
 
 (provide 'crafted-chatgpt-shell)
 ;;; crafted-chatgpt-shell.el ends here

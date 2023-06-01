@@ -14,6 +14,7 @@
 "emacs/crafted-webdev.el"                                           = "~/.crafted-emacs/custom-modules/crafted-webdev.el"
 "emacs/crafted-yasnippet.el"                                        = "~/.crafted-emacs/custom-modules/crafted-yasnippet.el"
 "emacs/crafted-chatgpt-shell.el"                                    = "~/.crafted-emacs/custom-modules/crafted-chatgpt-shell.el"
+"emacs/crafted-writing.el"                                          = "~/.crafted-emacs/custom-modules/crafted-writing.el"
 "emacs/snippets"                                                    = "~/.emacs.d/snippets"
 "espanso/default.yml"                                               = "~/Library/Preferences/espanso/default.yml"
 "gdb/gdbinit"                                                       = "~/.gdbinit"
