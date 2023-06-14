@@ -13,3 +13,9 @@ FZF_SCRIPTS=$(${HOMEBREW_BIN} --prefix fzf)/shell
 # Key bindings
 # ------------
 source "${FZF_SCRIPTS}/key-bindings.zsh"
+
+# Default command
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# Previews
+export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'

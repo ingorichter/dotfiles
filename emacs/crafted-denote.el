@@ -9,7 +9,7 @@
 
 ;; Remember to check the doc strings of those variables.
 (setq denote-directory (expand-file-name "~/Nextcloud/org/notes/"))
-(setq denote-known-keywords '("emacs" "csdk" "read" "programming"))
+(setq denote-known-keywords '("emacs" "csdk" "read" "programming", "s4r"))
 (setq denote-infer-keywords t)
 (setq denote-sort-keywords t)
 (setq denote-file-type nil) ; Org is the default, set others here
@@ -44,20 +44,10 @@
 ;; OR if only want it in `denote-dired-directories':
 (add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
 
-;; Here is a custom, user-level command from one of the examples we
-;; showed in this manual.  We define it here and add it to a key binding
-;; below.
-(defun my-denote-journal ()
-  "Create an entry tagged 'journal', while prompting for a title."
-  (interactive)
-  (denote
-   (denote--title-prompt)
-   '("journal")))
-
 ;; Denote DOES NOT define any key bindings.  This is for the user to
 ;; decide.  For example:
 (let ((map global-map))
-  (define-key map (kbd "C-c n j") #'my-denote-journal) ; our custom command
+  (define-key map (kbd "C-c n j") #'ir/my-denote-journal) ; our custom command
   (define-key map (kbd "C-c n n") #'denote)
   (define-key map (kbd "C-c n N") #'denote-type)
   (define-key map (kbd "C-c n d") #'denote-date)
@@ -96,8 +86,45 @@
 ;; custom functions
 ;; used this function from https://whhone.com/posts/denote-with-subdirectories/
 (defun ir/consult-denote-ripgrep ()
-    "Search with 'rg' for files in denote-directory where the content matches a regexp"
+  "Search with 'rg' for files in denote-directory where the content matches a regexp"
   (interactive)
   (consult-ripgrep denote-directory ""))
+
+(defun ir/create-denote-journal-entry ()
+  (interactive)
+  (let* ((date (org-read-date))
+         (time (org-time-string-to-time date))
+         (title (format-time-string "%A %d %B %Y" time))
+         (initial (denote-sluggify title))
+         (target (read-file-name "Select note: " (denote-directory) nil nil initial
+                                 (lambda (f)
+                                   (or (denote-file-has-identifier-p f)
+                                       (file-directory-p f))))))
+    (if (file-exists-p target)
+        (find-file target)
+      (denote title '("journal") denote-file-type nil date))))
+
+(defun ir/insert-time-stamp ()
+  (interactive)
+  (insert (current-time-string)))
+
+(defun ir/my-denote-journal ()
+  "Create an entry tagged 'journal' with the date as its title.
+If a journal for the current day exists, visit it.  If multiple
+entries exist, prompt with completion for a choice between them.
+Else create a new file."
+  (interactive)
+  (let* ((today (format-time-string "%A %e %B %Y"))
+         (string (denote-sluggify today))
+         (files (denote-directory-files-matching-regexp string)))
+    (cond
+     ((> (length files) 1)
+      (find-file (completing-read "Select file: " files nil :require-match)))
+     (files
+      (find-file (car files)))
+     (t
+      (denote
+       today
+       '("journal"))))))
 
 (provide 'crafted-denote)

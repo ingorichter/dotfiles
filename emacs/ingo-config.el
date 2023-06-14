@@ -10,7 +10,8 @@
   (require 'exec-path-from-shell))
 (with-eval-after-load "exec-path-from-shell"
   (when (is-mac-p)
-    (exec-path-from-shell-initialize)))
+    (exec-path-from-shell-copy-env "PATH")))
+    ;; (exec-path-from-shell-initialize)))
 
 ;; Timer
 (crafted-package-install-package '(tmr :type git :repo "protesilaos/tmr"))
