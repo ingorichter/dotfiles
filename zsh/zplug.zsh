@@ -11,6 +11,7 @@ zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "DarrinTisdale/zsh-aliases-exa"
+zplug "pndurette/zsh-lux"
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
