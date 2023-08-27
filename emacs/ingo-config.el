@@ -72,6 +72,20 @@
   (mapcar 'kill-buffer (buffer-list))
   (delete-other-windows))
 
+(defun ir/list-all-buffers (name)
+       "Find all buffers whose title contains name"
+       (interactive "sEnter the buffer name: ")
+       (let ((matching-buffers (list)))
+              (dolist (buffer (buffer-list))
+                      (when (string-match-p name (buffer-name buffer))
+                            (push buffer matching-buffers)))
+              (if matching-buffers
+                  (progn
+                        (message "Matching buffers: %s" matching-buffers)
+                        (mapc #'kill-buffer matching-buffers)
+                        matching-buffers)
+                  (message "No matching buffers found."))))
+
 ;;  backup settings
 (setq backup-directory (concat crafted-config-var-directory "saved"))
 (setq backup-by-copying t

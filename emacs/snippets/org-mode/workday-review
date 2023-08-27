@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Workday Review
+# key: WorkdayReview
+# Questions takesn from [[https://www.inc.com/kat-boogaard/4-questions-to-ask-yourself-at-the-end-of-every-workday.html][inc.com]]
+# --
+
+1. What went well for me today?
+$1
+2. What can I improve tomorrow?
+$2
+3. What's the first thing I want to do tomorrow morning?
+$3
+4. What was muy favorite part of today?
+$4

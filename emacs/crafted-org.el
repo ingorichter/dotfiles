@@ -267,4 +267,10 @@
  ;; (crafted-package-install-package '(nano-theme :type git :host github :repo "rougier/nano-theme"))
  ;; (require 'mastodon-dashboard)
 
+;; verb
+(crafted-package-install-package '(verb :type git :host github :repo "federicotdn/verb"))
+
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+
  (provide 'crafted-custom-org)

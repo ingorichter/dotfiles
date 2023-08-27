@@ -96,7 +96,7 @@
          (time (org-time-string-to-time date))
          (title (format-time-string "%A %d %B %Y" time))
          (initial (denote-sluggify title))
-         (target (read-file-name "Select note: " (denote-directory) nil nil initial
+         (target (read-file-name "Select note: " (concat (denote-directory) "journal/") nil nil initial
                                  (lambda (f)
                                    (or (denote-file-has-identifier-p f)
                                        (file-directory-p f))))))
