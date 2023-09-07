@@ -1,0 +1,24 @@
+matches:
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild test playwright please"
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild run mutating tests please"
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild run parallel tests please"
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild test jest please"
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild test UXP please"
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild test CEP please"
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild test wrapper please"
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild test playwright please"

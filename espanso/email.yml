@@ -1,0 +1,6 @@
+matches:
+  - trigger: ":sig"
+    replace: "Best, Ingo"
+  
+  - trigger: ":sig"
+    replace: "All the best, Ingo"
