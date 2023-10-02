@@ -9,6 +9,12 @@ matches:
     replace: "@ccxbuild run parallel tests please"
 
   - trigger: ":ccxpw"
+    replace: "@ccxbuild run swc tests please"  
+
+  - trigger: ":ccxpw"
+    replace: "@ccxbuild run sanity tests please"  
+
+  - trigger: ":ccxpw"
     replace: "@ccxbuild test jest please"
 
   - trigger: ":ccxpw"
@@ -22,3 +28,14 @@ matches:
 
   - trigger: ":ccxpw"
     replace: "@ccxbuild test playwright please"
+
+  - trigger: ":rnotes"
+    replace: "[#{{form.pr}}](https://git.corp.adobe.com/CCX/ccx-sharing/pull/{{form.pr}}) [CCX-{{form.jira}}](https://jira.corp.adobe.com/browse/CCX-{{form.jira}}) - {{form.storytitle}}"
+    vars:
+    - name: form
+      type: form
+      params:
+        layout: |
+          PR# [[pr]]
+          JIRA# [[jira]]
+          StoryTitle [[storytitle]]
