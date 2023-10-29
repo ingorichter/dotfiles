@@ -35,7 +35,7 @@
 (load-file (expand-file-name "ingo-config.el" user-emacs-directory))
 
 (crafted-package-install-package 'ef-themes)
-(setq ef-themes-to-toggle '(ef-winter ef-frost))
+(setq ef-themes-to-toggle '(ef-winter ef-frost ))
 (setq ef-themes-mixed-fonts t
       ef-themes-variable-pitch-ui t)
 ;; Load the theme of choice:

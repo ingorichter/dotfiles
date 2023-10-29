@@ -64,5 +64,9 @@ folder, otherwise delete a word"
 ;; Use Embark to show bindings in a key prefix with `C-h`
 (setq prefix-help-command #'embark-prefix-help-command)
 
+;;use eros to inline display lisp eval results
+(crafted-package-install-package '(eros :type git :host github :repo "xiongtx/eros"))
+(eros-mode 1)
+
 (provide 'crafted-code-completion)
 ;;; crafted-code-completion.el ends here

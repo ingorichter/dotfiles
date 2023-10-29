@@ -10,9 +10,9 @@ zplug "zsh-users/zsh-syntax-highlighting"
 zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "MichaelAquilina/zsh-you-should-use"
-zplug "DarrinTisdale/zsh-aliases-exa"
 zplug "pndurette/zsh-lux"
 zplug "favware/zsh-lerna"
+zplug "TwoPizza9621536/zsh-eza"
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
@@ -21,6 +21,6 @@ if ! zplug check --verbose; then
   fi
 fi
 
-zplug load # --verbose
+zplug load #--verbose
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

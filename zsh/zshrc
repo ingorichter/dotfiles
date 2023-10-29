@@ -80,9 +80,6 @@ zstyle :compinstall filename '${HOME}/.zshrc'
 autoload -Uz compinit; compinit
 # compinit
 
-# setup zplug
-source ${HOME}/.zplug.zsh
-
 # add site-functions added by brew packages
 fpath=($HOMEBREW_FPATH $ZSH_FUNCTIONS $fpath)
 
@@ -93,10 +90,12 @@ autoload -U $ZSH_FUNCTIONS/*(:t)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # thefuck
-plugins=(git npm brew docker golang node macos tmux xcode yarn pass react-native ripgrep fd virtualenv 
-python web-search swiftpm)
+plugins=(git fzf npm sudo command-not-found z zsh-interactive-cd colorize brew docker golang node macos tmux xcode yarn pass react-native ripgrep fd virtualenv python web-search swiftpm)
 
 source "${ZSH}/oh-my-zsh.sh"
+
+# setup zplug
+source ${HOME}/.zplug.zsh
 
 # User configuration
 
