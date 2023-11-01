@@ -112,7 +112,21 @@ window:
 # Font configuration
 font:
   normal:
-    family: "MesloLGS NF"
+    family: MesloLGS NF
+    style: Regular
+  bold:
+    family: MesloLGS NF
+    style: Bold
+  italic:
+    family: MesloLGS NF
+    style: Italic
+  size: 17.0
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
 
 #font:
   # Normal (roman) font face
