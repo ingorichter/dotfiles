@@ -72,5 +72,16 @@
 (crafted-package-install-package '(org-roam-timestamps :type git :repo "ThomasFKJorna/org-roam-timestamps"))
 (add-hook 'org-roam 'org-roam-timestamps-mode)
 
+(crafted-package-install-package '(denote-menu :type git :repo "namilus/denote-menu"))
+(require 'denote-menu)
+
+(global-set-key (kbd "C-c z") #'list-denotes)
+
+(define-key denote-menu-mode-map (kbd "c") #'denote-menu-clear-filters)
+(define-key denote-menu-mode-map (kbd "/ r") #'denote-menu-filter)
+(define-key denote-menu-mode-map (kbd "/ k") #'denote-menu-filter-by-keyword)
+(define-key denote-menu-mode-map (kbd "/ o") #'denote-menu-filter-out-keyword)
+(define-key denote-menu-mode-map (kbd "e") #'denote-menu-export-to-dired)
+
 (provide 'crafted-org-roam)
 ;;; end crafted-org-roam
