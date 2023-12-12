@@ -24,7 +24,7 @@ matches:
     replace: "@ccxbuild test CEP please"
 
   - trigger: ":ccxpw"
-    replace: "@ccxbuild test wrapper please"
+    replace: "@ccxbuild test the wrapper please"
 
   - trigger: ":ccxpw"
     replace: "@ccxbuild test playwright please"
