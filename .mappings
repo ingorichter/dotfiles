@@ -1,5 +1,5 @@
 [general]
-"alacritty/alacritty.yml"                                           = "~/.config/alacritty/alacritty.yml"
+"alacritty/alacritty.toml"                                          = "~/.config/alacritty/alacritty.toml"
 "alias.d"                                                           = "~/.alias.d"
 "asciidoc"                                                          = "~/.asciidoc"
 "emacs/config.el"                                                   = "~/.crafted-emacs/config.el"
