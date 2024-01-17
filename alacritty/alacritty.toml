@@ -1,0 +1,41 @@
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 17.0
+
+[font.bold]
+family = "MesloLGS NF"
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "MesloLGS NF"
+style = "Italic"
+
+[font.normal]
+family = "MesloLGS NF"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[window]
+dynamic_padding = false
+opacity = 1.0
+
+[window.dimensions]
+columns = 0
+lines = 0
+
+[window.padding]
+x = 2
+y = 2
