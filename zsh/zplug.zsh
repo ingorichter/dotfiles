@@ -13,6 +13,7 @@ zplug "MichaelAquilina/zsh-you-should-use"
 zplug "pndurette/zsh-lux"
 zplug "favware/zsh-lerna"
 zplug "TwoPizza9621536/zsh-eza"
+zplug "marlonrichert/zsh-autocomplete"
 
 if ! zplug check --verbose; then
   printf "Install? [y/N]: "
