@@ -1,19 +1,13 @@
 ## http://git-scm.com/book/en/Customizing-Git-Git-Configuration
+## default user
 [user]
 	useConfigOnly = true
 	name = Ingo Richter
 	email = ingo.richter+github@gmail.com
 
-[mergetool "p4merge"]
-	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge $BASE $REMOTE $LOCAL $MERGED
-
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
 
 [color "branch"]
 	current = yellow bold
@@ -90,19 +84,16 @@
 [commit]
 	# template = /Users/irichter/.stCommitMsg
 	gpgSign = true
+	template = /Users/ingorichter/.stCommitMsg
 
 [fetch]
 	prune = true
 
-[user "gitcorp"]
-	name = Ingo Richter
-	email = irichter@adobe.com
-	signingkey = B2FC224B76A40BCC
+[includeIf "gitdir:~/develop/work/"]
+	path = ~/.dotfiles/gitcorp.gitconfig
 
-[user "github"]
-	name = Ingo Richter
-	email = ingo.richter+github@gmail.com
-	signingkey = 47179020517973BE
+[includeIf "gitdir:~/develop/fun/"]
+	path = ~/.dotfiles/gitcorp.gitconfig
 
 [gpg]
 	program = gpg
@@ -117,3 +108,24 @@
     whitespace = fix
 [init]
 	defaultBranch = main
+
+# Delta
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[add.interactive]
+    useBuiltin = false # required for git 2.37.0
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+	side-by-side = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
