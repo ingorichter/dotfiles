@@ -3,7 +3,6 @@
 [user]
 	useConfigOnly = true
 	name = Ingo Richter
-	email = ingo.richter+github@gmail.com
 
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
@@ -90,10 +89,10 @@
 	prune = true
 
 [includeIf "gitdir:~/develop/work/"]
-	path = ~/.dotfiles/gitcorp.gitconfig
+	path = ~/.dotfiles/git/gitcorp.gitconfig
 
 [includeIf "gitdir:~/develop/fun/"]
-	path = ~/.dotfiles/gitcorp.gitconfig
+	path = ~/.dotfiles/git/github.gitconfig
 
 [gpg]
 	program = gpg

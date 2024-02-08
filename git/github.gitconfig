@@ -1,3 +1,4 @@
-name = Ingo Richter
-email = ingo.richter+github@gmail.com
-signingkey = 47179020517973BE
+[user]
+    name = Ingo Richter
+    email = ingo.richter+github@gmail.com
+    signingkey = 47179020517973BE
