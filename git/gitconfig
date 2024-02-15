@@ -94,6 +94,9 @@
 [includeIf "gitdir:~/develop/fun/"]
 	path = ~/.dotfiles/git/github.gitconfig
 
+[includeIf "gitdir:~/Documents/develop/"]
+	path = ~/.dotfiles/git/github.gitconfig
+
 [gpg]
 	program = gpg
 
@@ -105,6 +108,7 @@
 
 [apply]
     whitespace = fix
+
 [init]
 	defaultBranch = main
 

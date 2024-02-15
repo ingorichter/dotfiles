@@ -34,7 +34,7 @@ export MACHINE_CONFIG_FILE="${HOME}/Dropbox/Dotfiles/$(hostname -s)"
 export PATH="${HOMEBREW_PREFIX}/opt/openjdk/bin:$PATH"
 
 # Modify the $PATH
-export PATH="${PATH}:${GOBIN}:/usr/local/sbin:${HOME}/.fastlane/bin:"
+export PATH="${PATH}:${GOBIN}:/usr/local/sbin:${HOME}/.fastlane/bin:${HOME}/.local/bin"
 # ${HOME}/.cargo/bin"
 
 ###############################
