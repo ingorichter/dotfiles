@@ -3,7 +3,8 @@
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
 ;;(require 'smtpmail)
 
-(crafted-package-install-package 'async)
+;; (crafted-package-install-package 'async)
+(add-to-list 'package-selected-packages 'async)
 (require 'smtpmail-async)
 ;; (use-package async
 ;;   :ensure t
