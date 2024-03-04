@@ -34,7 +34,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = vim
-	pager = git-split-diffs --color | less -RFX
+	# pager = git-split-diffs --color | less -RFX
 
 [push]
 	default = current
@@ -65,17 +65,11 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 
-[diff]
-    algorithm = minimal
-    compactionHeuristic = true
-    renames = true
-    tool = difftastic
-
-[difftool]
-    prompt = false
-
-[difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
+# [diff]
+#     algorithm = minimal
+#     compactionHeuristic = true
+#     renames = true
+#     tool = difftastic
 
 [cola]
 	spellcheck = false
@@ -135,3 +129,6 @@
 
 [diff]
     colorMoved = default
+
+[maintenance]
+	repo = /Users/ingorichter/develop/work/repos/ace-analytics
