@@ -1,0 +1,5 @@
+# save password in macOS keychain
+# security add-generic-password -a "$USER" -s 'CORP_ARTIFACTORY_PASSWORD' -w 'XXXXXXXXXXXXXXXXXXXXX' <- replace with your password. The password is stored in bitwarden
+export ARTIFACTORY_USER=irichter
+HOMEBREW_ARTIFACTORY_TOKEN=$(security find-generic-password -a "$USER" -s 'CORP_ARTIFACTORY_PASSWORD' -w)
+export HOMEBREW_ARTIFACTORY_TOKEN

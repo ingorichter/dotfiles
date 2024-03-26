@@ -22,7 +22,7 @@
 (require 'crafted-custom-org)
 (require 'crafted-org-roam)
 (require 'crafted-denote)
-(require 'crafted-webdev)
+;; (require 'crafted-webdev)
 (require 'crafted-yasnippet)
 (require 'crafted-chatgpt-shell)
 (require 'crafted-writing)
