@@ -17,5 +17,7 @@
          "* %:description\n%u\n\n%c\n\n%i"
          :empty-lines 1)))
 
+(org-reload)
+
 (provide 'crafted-org-config)
 ;;; crafted-org-packages.el ends here

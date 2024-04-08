@@ -7,7 +7,8 @@
 ;; before adding more packages.  The value of the `custom-file'
 ;; variable must be set appropriately, by default the value is nil.
 ;; This can be done here, or in the early-init.el file.
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq custom-file (locate-user-emacs-file "custom.el"))
 (when (and custom-file
            (file-exists-p custom-file))
   (load custom-file nil 'nomessage))
@@ -16,7 +17,7 @@
 ;; writing template, sets the `crafted-emacs-home' variable.
 (load "~/Documents/develop/crafted-emacs/modules/crafted-init-config")
 
-(server-start)
+;; (server-start)
 
 ;;; Packages phase
 
@@ -46,7 +47,6 @@
 (require 'crafted-startup-config)
 (require 'crafted-ui-packages)
 (require 'crafted-ide-packages)
-(require 'crafted-completion-packages)
 (require 'crafted-org-packages)
 
 ;;; Optional configuration

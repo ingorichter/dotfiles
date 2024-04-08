@@ -8,7 +8,7 @@
 ;;; Code:
 
 (add-to-list 'package-selected-packages 'org-web-tools)
-(add-to-list 'package-selected-packages 'org-protocol)
+;; (add-to-list 'package-selected-packages 'org-protocol)
 
 (provide 'crafted-org-packages)
 ;;; crafted-org-packages.el ends here

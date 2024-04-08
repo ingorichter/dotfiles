@@ -127,4 +127,15 @@ Else create a new file."
        today
        '("journal"))))))
 
+
+(require 'denote-menu)
+
+(global-set-key (kbd "C-c z") #'list-denotes)
+
+(define-key denote-menu-mode-map (kbd "c") #'denote-menu-clear-filters)
+(define-key denote-menu-mode-map (kbd "/ r") #'denote-menu-filter)
+(define-key denote-menu-mode-map (kbd "/ k") #'denote-menu-filter-by-keyword)
+(define-key denote-menu-mode-map (kbd "/ o") #'denote-menu-filter-out-keyword)
+(define-key denote-menu-mode-map (kbd "e") #'denote-menu-export-to-dired)
+
 (provide 'crafted-denote-config)

@@ -11,6 +11,10 @@
 (require 'crafted-completion-config)
 (require 'crafted-ide-config)
 
+;; Automatically register `eglot-ensure' hooks for relevant major
+;; modes (notably `rust-ts-mode').
+(crafted-ide-eglot-auto-ensure-all)
+
 ;; The first time you run Emacs with this enabled, the Rust tree
 ;; sitter parser will be installed for you automatically.
 (crafted-ide-configure-tree-sitter)

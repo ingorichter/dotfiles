@@ -11,7 +11,6 @@
 (require 'crafted-ide-packages)
 
 (add-to-list 'package-selected-packages 'rust-mode)
-(package-install-selected-packages :noconfirm)
 
 (provide 'crafted-rust-packages)
 ;;; crafted-rust-packages.el ends here

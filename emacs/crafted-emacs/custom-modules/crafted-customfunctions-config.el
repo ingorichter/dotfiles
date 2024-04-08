@@ -1,4 +1,4 @@
-;;; crafted-custom-functions.el --- My custom functions  -*- lexical-binding: t; -*-
+;;; crafted-customfunctions-config.el --- My custom functions  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024  Ingo Richter
 
@@ -49,7 +49,6 @@
      (setq org-map-continue-from (outline-previous-heading))) "/DONE" 'tree))
 
 ;; z-map is convenient since it's close to the ctrl key on the left side ...
-(add-to-list 'package-selected-packages 'general)
 
 (general-define-key
  :prefix-command 'z-map
@@ -59,4 +58,4 @@
  "K" 'ir/kill-all-buffer
  "a" 'ir/org-archive-done-tasks)
 
-(provide 'crafted-custom-functions)
+(provide 'crafted-customfunctions-config)
