@@ -51,6 +51,7 @@
 	la = "!git config -l | grep alias | cut -c 7-"
 	blog = "!git log --graph --decorate --pretty=oneline --abbrev-commit --all"
 	identity = "! git config user.name \"$(git config user.$1.name)\"; git config user.email \"$(git config user.$1.email)\"; git config user.signingkey \"$(git config user.$1.signingkey)\"; :"
+	dlog = "!f() { : git log ; GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
 
 [url "https://"]
 	insteadOf = git://
@@ -132,3 +133,16 @@
 
 [maintenance]
 	repo = /Users/ingorichter/develop/work/repos/ace-analytics
+
+# difftastic
+[diff]
+    tool = difftastic
+
+[difftool]
+    prompt = false
+
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+    difftool = true
