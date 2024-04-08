@@ -91,7 +91,7 @@ autoload -U $ZSH_FUNCTIONS/*(:t)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # thefuck
-plugins=(brew colorize command-not-found docker fd fzf git golang kubectl macos minikube node npm pass python react-native ripgrep rust sudo swiftpm tmux virtualenv web-search xcode yarn z)
+plugins=(brew colorize command-not-found docker fd fzf git golang kubectl macos minikube node npm pass python react-native ripgrep rust sudo swiftpm tmux pyenv poetry web-search xcode yarn z)
 
 source "${ZSH}/oh-my-zsh.sh"
 
