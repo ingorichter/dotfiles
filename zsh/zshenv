@@ -52,6 +52,10 @@ export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2022.journal"
 
 export ZSH_FUNCTIONS="$HOME/.zsh-functions"
 
+# zplug
+export ZPLUG_HOME=${HOMEBREW_PREFIX}/opt/zplug
+export ZPLUG_FPATH=${ZPLUG_HOME}/repos
+
 # setup fnm
 eval "$(fnm env --use-on-cd)"
 
