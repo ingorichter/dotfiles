@@ -92,6 +92,9 @@
 [includeIf "gitdir:~/Documents/develop/"]
 	path = ~/.dotfiles/git/github.gitconfig
 
+[includeIf "gitdir:~/.dotfiles/"]
+	path = ~/.dotfiles/git/github.gitconfig
+
 [gpg]
 	program = gpg
 
