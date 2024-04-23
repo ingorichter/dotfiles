@@ -5,24 +5,46 @@
 ;; Author: Ingo Richter <ingo.richter+github@gmail.com>
 ;; Keywords: lisp, local, configuration
 
+;; remove janet from list of supported ts languages
+;; (setq mylist (seq-copy treesit-auto-recipe-list))
+(defun ir/remove-janet-from-treesit()
+    "Workaround to remove janet from automatically installed languages"
+  (setq newlist (seq-remove (lambda(e) (equal (treesit-auto-recipe-lang e) 'janet)) treesit-auto-recipe-list))
+  (setq treesit-auto-recipe-list (seq-copy newlist)))
+
+(defun ir/treesit-message()
+  (message "Install all grammars"))
+(advice-add 'treesit-auto-install-all :before #'ir/remove-janet-from-treesit)
+;; (advice-remove 'treesit-auto-install-all #'ir/treesit-message)
+
 ;; packages
 ;; denote is part of crafted emacs
+(require 'crafted-appearance-packages)
 (require 'crafted-denote-packages)
 (require 'crafted-org-packages)
 (require 'crafted-rust-packages)
 (require 'crafted-customfunctions-packages)
 (require 'crafted-mu4e-packages)
 (require 'crafted-org-roam-packages)
+(require 'crafted-markdown-packages)
+;; (require 'crafted-writer-packages)
 
 (crafted-package-install-selected-packages)
 
+
 ;; configs
+(require 'crafted-appearance-config)
 (require 'crafted-denote-config)
 (require 'crafted-org-config)
 (require 'crafted-rust-config)
 (require 'crafted-customfunctions-config)
 (require 'crafted-mu4e-config)
 (require 'crafted-org-roam-config)
+(require 'crafted-markdown-config)
+;; (require 'crafted-writer-config)
+
+;; ;; install all language grammars, except janet
+;; (crafted-ide-configure-tree-sitter '(janet))
 
 (provide 'custom-module-config)
 ;;; crafted-module-config.el ends here
