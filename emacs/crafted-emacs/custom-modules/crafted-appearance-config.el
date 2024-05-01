@@ -97,5 +97,7 @@
 ;;     (info "(elisp) Key Binding Conventions")
 (define-key global-map (kbd "C-c f") #'fontaine-set-preset)
 
+(load-theme 'ef-kassio)
+
 (provide 'crafted-appearance-config)
 ;;; crafted-appearance-config.el ends here

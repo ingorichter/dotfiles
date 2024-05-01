@@ -48,11 +48,18 @@
      (org-archive-subtree)
      (setq org-map-continue-from (outline-previous-heading))) "/DONE" 'tree))
 
+;; open random denote to refine
+(defun ir/denote-open-random-note ()
+  "Open a random note from denote-directory-files. This will exclude journal notes"
+  (interactive)
+  (denote-open-or-create (seq-random-elt (denote-directory-files))))
+
 ;; z-map is convenient since it's close to the ctrl key on the left side ...
 
 (general-define-key
  :prefix-command 'z-map
  :prefix "C-z"
+ "r" 'ir/open-random-note
  "n" 'ir/empty-frame
  "f" 'ir/new-buffer
  "K" 'ir/kill-all-buffer

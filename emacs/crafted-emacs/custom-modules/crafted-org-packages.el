@@ -8,6 +8,8 @@
 ;;; Code:
 
 (add-to-list 'package-selected-packages 'org-web-tools)
+(add-to-list 'package-selected-packages 'org-bullets)
+(add-to-list 'package-selected-packages 'org-appear)
 ;; (add-to-list 'package-selected-packages 'org-protocol)
 
 (provide 'crafted-org-packages)

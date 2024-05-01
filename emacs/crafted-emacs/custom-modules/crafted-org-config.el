@@ -9,7 +9,11 @@
 
 (require 'org-web-tools)
 (require 'org-protocol)
+(require 'org-bullets)
 (global-set-key (kbd "C-c w l") 'org-web-tools-insert-link-for-url)
+
+(setq org-bullets-bullet-list '("●" "◎" "○" "◆" "◇" "✸" "•"))
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 (setq org-capture-templates
       '(("l" "A link, for reading later." entry

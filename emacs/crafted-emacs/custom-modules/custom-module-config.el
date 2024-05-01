@@ -31,7 +31,6 @@
 
 (crafted-package-install-selected-packages)
 
-
 ;; configs
 (require 'crafted-appearance-config)
 (require 'crafted-denote-config)
@@ -42,9 +41,6 @@
 (require 'crafted-org-roam-config)
 (require 'crafted-markdown-config)
 ;; (require 'crafted-writer-config)
-
-;; ;; install all language grammars, except janet
-;; (crafted-ide-configure-tree-sitter '(janet))
 
 (provide 'custom-module-config)
 ;;; crafted-module-config.el ends here
