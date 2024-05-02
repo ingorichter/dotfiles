@@ -48,11 +48,20 @@
      (org-archive-subtree)
      (setq org-map-continue-from (outline-previous-heading))) "/DONE" 'tree))
 
-;; open random denote to refine
+;; open random denote for refinement
+(defun ir/denote-file-is-journal-p (file)
+  "Take a denote file and extract the keywords. Return true
+if the keywords contain the string 'journal'"
+  (string-match "journal" (denote-retrieve-filename-keywords file)))
+
 (defun ir/denote-open-random-note ()
   "Open a random note from denote-directory-files. This will exclude journal notes"
   (interactive)
-  (denote-open-or-create (seq-random-elt (denote-directory-files))))
+  (denote-open-or-create
+   (seq-random-elt
+    (seq-filter (lambda (file)
+                  (not (ir/denote-file-is-journal-p file)))
+                (denote--directory-get-files)))))
 
 ;; z-map is convenient since it's close to the ctrl key on the left side ...
 
