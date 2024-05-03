@@ -68,7 +68,7 @@ if the keywords contain the string 'journal'"
 (general-define-key
  :prefix-command 'z-map
  :prefix "C-z"
- "r" 'ir/open-random-note
+ "r" 'ir/denote-open-random-note
  "n" 'ir/empty-frame
  "f" 'ir/new-buffer
  "K" 'ir/kill-all-buffer
