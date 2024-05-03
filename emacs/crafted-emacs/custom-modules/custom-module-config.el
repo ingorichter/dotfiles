@@ -27,6 +27,8 @@
 (require 'crafted-mu4e-packages)
 (require 'crafted-org-roam-packages)
 (require 'crafted-markdown-packages)
+(require 'crafted-gptel-packages)
+(require 'crafted-math-packages)
 ;; (require 'crafted-writer-packages)
 
 (crafted-package-install-selected-packages)
@@ -40,6 +42,8 @@
 (require 'crafted-mu4e-config)
 (require 'crafted-org-roam-config)
 (require 'crafted-markdown-config)
+(require 'crafted-gptel-config)
+(require 'crafted-math-config)
 ;; (require 'crafted-writer-config)
 
 (provide 'custom-module-config)
