@@ -14,6 +14,10 @@
 
 ;;; Code:
 
+(setq craftedEmacsInitConfig (concat
+			      (getenv "CRAFTED_EMACS_HOME")
+			      "/modules/crafted-init-config"))
+
 ;;; Bootstrap straight.el
 (setq package-enable-at-startup nil)
 
@@ -37,7 +41,7 @@
 ;; See `(info "(crafted-emacs)Using alternate package managers")'
 ;; (load (expand-file-name "../../modules/crafted-package-config"
                         ;; user-emacs-directory))
-(load "~/Documents/develop/crafted-emacs/modules/crafted-package-config")
+(load (concat (getenv "CRAFTED_EMACS_HOME") "/modules/crafted-package-config"))
 
 (setq crafted-package-system 'straight)
 (setq crafted-package-installer #'straight-use-package)

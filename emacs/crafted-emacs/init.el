@@ -19,7 +19,7 @@
   (load custom-file nil :nomessage))
 
 ;; loading this file will also define the 'crafted-emacs-home' variable 
-(load (expand-file-name "~/Documents/develop/crafted-emacs/modules/crafted-init-config"
+(load (expand-file-name craftedEmacsInitConfig
                         user-emacs-directory))
 
 ;; add my custom modules and load the
