@@ -30,7 +30,8 @@ mouse = "Middle"
 
 [window]
 dynamic_padding = false
-opacity = 1.0
+opacity = 0.7
+blur = true
 
 [window.dimensions]
 columns = 0
