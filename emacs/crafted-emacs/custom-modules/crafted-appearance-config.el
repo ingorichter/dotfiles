@@ -29,8 +29,11 @@
         (large
          :inherit medium
          :default-height 200)
+        (xlarge
+         :inherit large 
+         :default-height 250)
         (presentation
-         :default-height 240)
+         :default-height 300)
         (t
          ;; I keep all properties for didactic purposes, but most can be
          ;; omitted.  See the fontaine manual for the technicalities:
