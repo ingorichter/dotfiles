@@ -1,5 +1,6 @@
 [general]
 "alacritty/alacritty.toml"                                          = "~/.config/alacritty/alacritty.toml"
+"yazi/keymap.toml"                                                  = "~/.config/yazi/keymap.toml"
 "alias.d"                                                           = "~/.alias.d"
 "asciidoc"                                                          = "~/.asciidoc"
 "emacs/crafted-emacs/custom-modules"                                = "~/.emacs.d/custom-modules"
