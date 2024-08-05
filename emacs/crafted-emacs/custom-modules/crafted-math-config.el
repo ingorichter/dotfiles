@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(require 'casual)
+(require 'casual-calc)
 (define-key calc-mode-map (kbd "C-o") 'casual-main-menu)
 
 (provide 'crafted-math-config)
