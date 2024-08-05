@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(add-to-list 'package-selected-packages 'casual)
+(add-to-list 'package-selected-packages 'casual-calc)
 
 (provide 'crafted-math-packages)
 ;;; crafted-math-packages.el ends here
