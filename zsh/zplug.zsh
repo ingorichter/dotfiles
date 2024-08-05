@@ -6,10 +6,11 @@ zplug "favware/zsh-lerna"
 # zplug "mattberther/zsh-pyenv"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "pndurette/zsh-lux"
-zplug "romkatv/powerlevel10k", as:theme, depth:1
+# zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "TwoPizza9621536/zsh-eza"
 # zplug "wfxr/forgit"
 zplug "zsh-users/zsh-autosuggestions"
+
 # zplug "zsh-users/zsh-history-substring-search"
 # zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
