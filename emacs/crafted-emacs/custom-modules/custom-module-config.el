@@ -29,6 +29,7 @@
 (require 'crafted-markdown-packages)
 (require 'crafted-gptel-packages)
 (require 'crafted-math-packages)
+(require 'crafted-magit-packages)
 ;; (require 'crafted-writer-packages)
 
 (crafted-package-install-selected-packages)
