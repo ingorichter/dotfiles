@@ -90,7 +90,7 @@ autoload -U $ZSH_FUNCTIONS/*(:t)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # thefuck
-plugins=(brew colorize command-not-found docker fd fzf git golang kubectl macos minikube node npm pass python react-native ripgrep rust sudo swiftpm tmux virtualenv web-search xcode yarn z)
+plugins=(brew colorize command-not-found docker fzf git golang kubectl macos minikube node npm pass python react-native rust sudo swiftpm tmux virtualenv web-search xcode yarn z)
 source "${ZSH}/oh-my-zsh.sh"
 
 # setup zplug
@@ -164,6 +164,16 @@ function seecert () {
 "Validity")
 }
 
+function yy() {
+	local tmp
+	tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd" || exit
+	fi
+	rm -f -- "$tmp"
+}
+                                                 
 # ensure that homebrew paths appear before system paths. Didn't work from .zshenv
 export PATH=${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}
 
