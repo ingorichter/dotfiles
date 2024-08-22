@@ -30,6 +30,7 @@
 (require 'crafted-gptel-packages)
 (require 'crafted-math-packages)
 (require 'crafted-magit-packages)
+(require 'crafted-mastodon-packages)
 ;; (require 'crafted-writer-packages)
 
 (crafted-package-install-selected-packages)
@@ -45,6 +46,8 @@
 (require 'crafted-markdown-config)
 (require 'crafted-gptel-config)
 (require 'crafted-math-config)
+(require 'crafted-magit-config)
+(require 'crafted-mastodon-config)
 ;; (require 'crafted-writer-config)
 
 (provide 'custom-module-config)

@@ -8,7 +8,6 @@
 (add-to-list 'package-selected-packages 'magit)
 (add-to-list 'package-selected-packages 'git-gutter)
 (add-to-list 'package-selected-packages 'git-gutter-fringe)
-
  
 (provide 'crafted-magit-packages)
 
