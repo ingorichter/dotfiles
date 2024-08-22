@@ -10,6 +10,7 @@ zplug "pndurette/zsh-lux"
 zplug "TwoPizza9621536/zsh-eza"
 # zplug "wfxr/forgit"
 zplug "zsh-users/zsh-autosuggestions"
+zplug "agkozak/zhooks"
 
 # zplug "zsh-users/zsh-history-substring-search"
 # zplug "zsh-users/zsh-syntax-highlighting", defer:2

@@ -101,6 +101,15 @@ source ${HOME}/.zplug.zsh
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
 
+# Source hooks
+if [ -d ~/.zsh-hooks ]; then
+  for file in ~/.zsh-hooks/*; do
+    if [[ -f $file ]]; then
+      source "$file"
+    fi
+  done
+fi
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -162,16 +171,6 @@ function seecert () {
   nslookup $1
   (openssl s_client -showcerts -servername $1 -connect $1:443 <<< "Q" | openssl x509 -text | grep -iA2 
 "Validity")
-}
-
-function yy() {
-	local tmp
-	tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd" || exit
-	fi
-	rm -f -- "$tmp"
 }
                                                  
 # ensure that homebrew paths appear before system paths. Didn't work from .zshenv
