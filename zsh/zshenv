@@ -15,6 +15,7 @@ case "$(uname -m)" in
     ;;
 esac
 
+# homebrew
 export HOMEBREW_BIN
 export HOMEBREW_CELLAR=$(${HOMEBREW_BIN} --cellar)
 export HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
@@ -26,6 +27,7 @@ PATH=${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${PATH}
 export DEV_ROOT=${HOME}/develop
 
 # Setup dev environment
+export GOROOT=$(${HOMEBREW_BIN} --prefix go) 
 export GOPATH=${DEV_ROOT}/go-workspace
 export GOBIN=$(export GOPATH; go env GOPATH)/bin
 
@@ -34,13 +36,14 @@ export MACHINE_CONFIG_FILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs
 export PATH="${HOMEBREW_PREFIX}/opt/openjdk/bin:$PATH"
 
 # Modify the $PATH
-export PATH="${PATH}:${GOBIN}:/usr/local/sbin:${HOME}/.fastlane/bin:${HOME}/.local/bin"
+export PATH="${PATH}:${GOPATH}/bin:${GOROOT}/bin:${GOBIN}:/usr/local/sbin:${HOME}/.fastlane/bin:${HOME}/.local/bin"
 # ${HOME}/.cargo/bin"
 
 ###############################
 # EXPORT ENVIRONMENT VARIABLE #
 ###############################
 
+export EDITOR='nvim'
 export TERM='rxvt-256color'
 export DOTFILES="$HOME/.dotfiles"
 export WORKSPACE="$HOME/workspace"
