@@ -1,5 +1,5 @@
 ## Platform Switch
-## the install location of brew on Intel and M1 is different
+## The install location of Homebrew on Intel and M1 is different
 ## Intel= /usr/local/bin/brew
 ## M1= /opt/homebrew/bin/brew
 
@@ -12,59 +12,58 @@ case "$(uname -m)" in
     ;;
     *)
         echo "Unsupported architecture"
+        exit 1
     ;;
 esac
 
-# homebrew
+# Homebrew setup
 export HOMEBREW_BIN
-export HOMEBREW_CELLAR=$(${HOMEBREW_BIN} --cellar)
-export HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
-export HOMEBREW_FPATH=${HOMEBREW_PREFIX}/share/zsh/site-functions
+HOMEBREW_CELLAR=$(${HOMEBREW_BIN} --cellar)
+HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
+HOMEBREW_FPATH=${HOMEBREW_PREFIX}/share/zsh/site-functions
+export HOMEBREW_CELLAR HOMEBREW_PREFIX HOMEBREW_FPATH
 
-# some tools like fnm wouldn't work without this
-export PATH=${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${PATH}
+# Ensure PATH includes Homebrew bin and sbin
+export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${PATH}"
 
-# Defaults
-export DEV_ROOT=${HOME}/develop
+# Development environment defaults
+export DEV_ROOT="${HOME}/develop"
+export GOPATH="${DEV_ROOT}/go-workspace"
+export GOPROXY="https://proxy.golang.org"
+export PATH="${PATH}:${GOPATH}/bin"
 
-# Setup dev environment
-export GOVERSION=go@1.22
-export GOROOT=$(${HOMEBREW_BIN} --prefix go@1.22) 
-export GOPATH=${DEV_ROOT}/go-workspace
-# export GOBIN=$(export GOPATH; go env GOPATH)/bin
-export GOPROXY=https://proxy.golang.org
-export PATH=${PATH}:$GOPATH/bin:$GOROOT/bin
-
+# Machine specific config file
 export MACHINE_CONFIG_FILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/MachineEnvs/$(hostname -s)"
 
-export PATH="${${HOMEBREW_PREFIX} --prefix openjdk)/bin:$PATH"
+# Add OpenJDK to PATH
+export PATH="$(${HOMEBREW_BIN} --prefix openjdk)/bin:${PATH}"
 
-# Modify the $PATH
+# Modify the $PATH for other binaries
 export PATH="${PATH}:/usr/local/sbin:${HOME}/.fastlane/bin:${HOME}/.local/bin"
-# ${HOME}/.cargo/bin"
 
 ###############################
-# EXPORT ENVIRONMENT VARIABLE #
+# Export additional variables #
 ###############################
 
 export EDITOR='nvim'
 export TERM='rxvt-256color'
 export DOTFILES="$HOME/.dotfiles"
 export WORKSPACE="$HOME/workspace"
-
-# Path to your oh-my-zsh installation.
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export KEYBASE_DIR="/Volumes/Keybase"
 export LEDGER_FILE="${KEYBASE_DIR}/private/ingorichter/Finance/2022.journal"
-
 export ZSH_FUNCTIONS="$HOME/.zsh-functions"
 
-# zplug
+# Zplug setup
 export ZPLUG_HOME=${HOMEBREW_PREFIX}/opt/zplug
 export ZPLUG_FPATH=${ZPLUG_HOME}/repos
 
-# setup fnm
-eval "$(fnm env --use-on-cd)"
+# Setup fnm (ensure fnm exists before running)
+if command -v fnm &> /dev/null; then
+    eval "$(fnm env --use-on-cd)"
+fi
 
-# Cargo
-. "$HOME/.cargo/env"
+# Cargo setup
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
