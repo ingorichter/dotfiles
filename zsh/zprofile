@@ -1,7 +1,3 @@
-# This is not working anymore!?
-# specify JAVA_HOME. Since Java 17 is available, I'm going with it
-# JAVA_HOME=$(/usr/libexec/java_home -v 17)
-
 # load machine specific configuration
 if [ -e "${MACHINE_CONFIG_FILE}" ]; then
   source "${MACHINE_CONFIG_FILE}"
@@ -12,12 +8,3 @@ for alias in $(find ~/.alias.d/ -type f -not -name .DS_Store)
 do
     source "$alias"
 done
-
-# Ingo
-# setup rbenv
-eval "$(rbenv init -)"
-
-# setup pyenv
-eval "$(pyenv init --path)"
-
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi

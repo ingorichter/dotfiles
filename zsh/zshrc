@@ -64,5 +64,14 @@ function seecert () {
 # Load oh-my-posh theme
 eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/night-owl.omp.json)"
 
+# Ingo
+# setup rbenv
+eval "$(rbenv init -)"
+
+# setup pyenv
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
 # Load fabric-bootstrap if available
 [[ -f ~/.config/fabric/fabric-bootstrap.inc ]] && source ~/.config/fabric/fabric-bootstrap.inc
