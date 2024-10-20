@@ -39,3 +39,4 @@
 "zsh/zsh-aliases"                                                   = "~/.zsh-aliases"
 "zsh/zshenv"                                                        = "~/.zshenv"
 "zsh/zshrc"                                                         = "~/.zshrc"
+"zellij"                                                            = "~/.config/zellij"
