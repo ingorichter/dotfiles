@@ -58,6 +58,10 @@ export ZSH_FUNCTIONS="$HOME/.zsh-functions"
 export ZPLUG_HOME=${HOMEBREW_PREFIX}/opt/zplug
 export ZPLUG_FPATH=${ZPLUG_HOME}/repos
 
+if [ -f "${MACHINE_CONFIG_FILE}" ]; then
+    source "${MACHINE_CONFIG_FILE}"
+fi
+
 # Setup fnm (ensure fnm exists before running)
 if command -v fnm &> /dev/null; then
     eval "$(fnm env --use-on-cd)"
