@@ -74,6 +74,10 @@
 ;;                                (file+olp+datetree org-review-location)
 ;;                                (file "~/Nextcloud/org/BASB/review/weeklyreviewtemplate.org"))))
 
+;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+(setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9))))
+(setq org-refile-allow-creating-parent-nodes 'confirm)
 
 (org-reload)
 

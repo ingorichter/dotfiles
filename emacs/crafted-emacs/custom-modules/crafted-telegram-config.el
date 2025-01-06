@@ -10,4 +10,4 @@
 (require 'telega)
 
 (provide 'crafted-telegram-config)
-;;; crafted-telegram-packages.el ends here
+;;; crafted-telegram-config.el ends here
