@@ -31,6 +31,11 @@
 
 (global-set-key (kbd "C-c w l") 'org-web-tools-insert-link-for-url)
 
+(setq org-log-done 'time)
+(setq org-log-into-drawer t)
+(setq org-insert-heading-respect-content t)
+(setq org-M-RET-may-split-line '((default . nil)))
+
 (setq org-agenda-custom-commands
       '(("p" "Planning"
          ((tags-todo "+@planning"

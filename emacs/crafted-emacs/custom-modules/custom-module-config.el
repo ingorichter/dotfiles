@@ -8,7 +8,7 @@
 ;; remove janet from list of supported ts languages
 ;; (setq mylist (seq-copy treesit-auto-recipe-list))
 (defun ir/remove-janet-from-treesit()
-    "Workaround to remove janet from automatically installed languages"
+  "Workaround to remove janet from automatically installed languages"
   (setq newlist (seq-remove (lambda(e) (equal (treesit-auto-recipe-lang e) 'janet)) treesit-auto-recipe-list))
   (setq treesit-auto-recipe-list (seq-copy newlist)))
 

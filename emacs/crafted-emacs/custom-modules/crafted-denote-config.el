@@ -9,7 +9,7 @@
 
 ;; Remember to check the doc strings of those variables.
 (setq denote-directory (expand-file-name "~/Nextcloud/org/notes/"))
-(setq denote-known-keywords '("emacs" "csdk" "read" "programming", "s4r"))
+(setq denote-known-keywords '("emacs" "csdk" "read" "programming", "s4r", "adobe"))
 (setq denote-infer-keywords t)
 (setq denote-sort-keywords t)
 (setq denote-file-type nil) ; Org is the default, set others here
@@ -109,6 +109,11 @@
   (insert (current-time-string)))
 
 (defun ir/my-denote-journal ()
+  "An alias for denote-journal-extras-new-or-existing-entry"
+  (interactive)
+  (denote-journal-extras-new-or-existing-entry))
+
+(defun ir/my-denote-journal-old ()
   "Create an entry tagged 'journal' with the date as its title.
 If a journal for the current day exists, visit it.  If multiple
 entries exist, prompt with completion for a choice between them.
