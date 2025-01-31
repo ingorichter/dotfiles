@@ -33,7 +33,7 @@ export GOPROXY="https://proxy.golang.org"
 export PATH="${PATH}:${GOPATH}/bin"
 
 # Machine specific config file
-export MACHINE_CONFIG_FILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/MachineEnvs/$(hostname -s)"
+export MACHINE_CONFIG_FILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/MachineEnvs/$(scutil --get LocalHostName)"
 
 # Add OpenJDK to PATH
 export PATH="$(${HOMEBREW_BIN} --prefix openjdk)/bin:${PATH}"

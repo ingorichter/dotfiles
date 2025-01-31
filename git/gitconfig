@@ -84,13 +84,13 @@
 [fetch]
 	prune = true
 
+[includeIf "gitdir:~/develop/"]
+	path = ~/.dotfiles/git/github.gitconfig
+
 [includeIf "gitdir:~/develop/work/"]
 	path = ~/.dotfiles/git/gitcorp.gitconfig
 
 [includeIf "gitdir:~/develop/fun/"]
-	path = ~/.dotfiles/git/github.gitconfig
-
-[includeIf "gitdir:~/develop/"]
 	path = ~/.dotfiles/git/github.gitconfig
 
 [includeIf "gitdir:~/.dotfiles/"]
