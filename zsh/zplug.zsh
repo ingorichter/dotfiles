@@ -7,7 +7,7 @@ zplug "favware/zsh-lerna"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "pndurette/zsh-lux"
 # zplug "romkatv/powerlevel10k", as:theme, depth:1
-zplug "TwoPizza9621536/zsh-eza"
+zplug "wushenrong/zsh-eza"
 # zplug "wfxr/forgit"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "agkozak/zhooks"
