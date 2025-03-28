@@ -11,6 +11,8 @@
 (require 'org-protocol)
 (require 'org-bullets)
 (require 'ob-plantuml)
+(require 'org-contrib)
+(require 'org-checklist)
 
 (setq org-directory "~/Nextcloud/org"
       org-agenda-files (list org-directory)

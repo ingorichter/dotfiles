@@ -5,7 +5,7 @@
 ;; Author: Ingo Richter <ingorichter@Ingos-Adobe-MB-Pro.local>
 ;; Keywords: socialmedia
 
-(add-to-list 'package-selected-packages 'mastodon)
+(add-to-list 'package-selected-packages '(mastodon :type git :host codeberg :repo "martianh/mastodon.el"))
 (add-to-list 'package-selected-packages '(mastodon-alt :type git :host github :repo "rougier/mastodon-alt"))
  
 (provide 'crafted-mastodon-packages)

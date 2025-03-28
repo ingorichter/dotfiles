@@ -10,8 +10,8 @@
 (setq mastodon-instance-url "https://mastodon.social")
 (setq mastodon-active-user "ingorichter")
 
-(require 'mastodon-alt)
-(mastodon-alt-tl-activate)
+;; (require 'mastodon-alt)
+;; (mastodon-alt-tl-activate)
 
 (provide 'crafted-mastodon-config)
 ;;; crafted-mastodon-config.el ends here
