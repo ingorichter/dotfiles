@@ -5,6 +5,7 @@
 ;; Author: Ingo Richter <ingo.richter@gmail.com>
 ;; Keywords: hypermedia, convenience
 
+
 ;; (crafted-package-install-package '(denote :type git :host github :repo "protesilaos/denote"))
 
 ;; Remember to check the doc strings of those variables.
@@ -111,7 +112,7 @@
 (defun ir/my-denote-journal ()
   "An alias for denote-journal-extras-new-or-existing-entry"
   (interactive)
-  (denote-journal-extras-new-or-existing-entry))
+  (denote-journal-new-entry))
 
 (defun ir/my-denote-journal-old ()
   "Create an entry tagged 'journal' with the date as its title.

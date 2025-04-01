@@ -8,6 +8,7 @@
 ;;; Code:
 
 (add-to-list 'package-selected-packages 'denote)
+(add-to-list 'package-selected-packages 'denote-journal)
 (add-to-list 'package-selected-packages '(denote-menu :type git :repo "namilus/denote-menu"))
 
 (provide 'crafted-denote-packages)
