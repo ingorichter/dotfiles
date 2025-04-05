@@ -34,6 +34,7 @@
 (require 'crafted-telegram-packages)
 (require 'crafted-casual-packages)
 ;; (require 'crafted-writer-packages)
+(require 'crafted-llm-packages)
 
 (crafted-package-install-selected-packages)
 
@@ -53,6 +54,6 @@
 (require 'crafted-telegram-config)
 (require 'crafted-casual-config)
 ;; (require 'crafted-writer-config)
-
+(require 'crafted-llm-config)
 (provide 'custom-module-config)
 ;;; crafted-module-config.el ends here
