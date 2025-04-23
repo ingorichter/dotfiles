@@ -1,18 +1,8 @@
 #!/usr/bin/env bash
 
-set -e
-# Change default shell to zsh
-# chsh -s /bin/zsh
+set -eu
 
-# Link all dotfiles from $(pwd) into their respective location inside $HOME
-DOTFILES=$(pwd -P)
-
-# TODO:
-# - copy fonts into proper location
-# - adjust iterm to use that font
-
-# Use colors, but only if connected to a terminal, and that terminal
-# supports them.
+# Colors for output
 if which tput >/dev/null 2>&1; then
 	ncolors=$(tput colors)
 fi
@@ -32,66 +22,128 @@ else
 	NORMAL=""
 fi
 
+printMessage() {
+	local message="$1"
+	local extra="${2:-}" # Use empty string if $2 is not provided
+	printf "%s  [*] %s %s %s\\n" "${BLUE}" "${message}" "${extra}" "${NORMAL}"
+}
+
 printErrorMessage() {
-	printf "%s  [✖] %s %s %s\\n" ${RED} "$1" "$2" ${NORMAL}
+	local message="$1"
+	local extra="${2:-}" # Use empty string if $2 is not provided
+	printf "%s  [✖] %s %s %s\\n" "${RED}" "${message}" "${extra}" "${NORMAL}"
 }
 
-link_file() {
-	printf "Create link from %s%s%s to %s%s%s\\n" ${GREEN} "$2" ${NORMAL} ${GREEN} "$1" ${NORMAL}
-	ln -sf "$1" "$2"
+printSuccessMessage() {
+	local message="$1"
+	local extra="${2:-}" # Use empty string if $2 is not provided
+	printf "%s  [✓] %s %s %s\\n" "${GREEN}" "${message}" "${extra}" "${NORMAL}"
 }
 
-unlink_file() {
-	printf "Remove %s%s%s\\n" ${RED} "$1" ${NORMAL}
-	rm "$1"
+# Check if dot is installed
+check_dot_installed() {
+    if ! command -v dot &> /dev/null && ! [ -f "$HOME/.cargo/bin/dot" ]; then
+        printMessage "dot command not found, attempting to install it"
+        
+        # Check if cargo is installed
+        if ! command -v cargo &> /dev/null; then
+            printErrorMessage "cargo is not installed. Please install Rust and Cargo first."
+            printMessage "Visit https://rustup.rs/ for installation instructions"
+            exit 1
+        fi
+        
+        # Install dot using cargo
+        printMessage "Installing dot using cargo..."
+        cargo install --git https://github.com/ubnt-intrepid/dot.git
+        
+        if ! [ -f "$HOME/.cargo/bin/dot" ]; then
+            printErrorMessage "Failed to install dot. Please try to install it manually."
+            exit 1
+        fi
+        
+        printSuccessMessage "dot successfully installed"
+    else
+        printSuccessMessage "dot is already installed"
+    fi
 }
 
-linkDotFiles() {
-	link_file "${DOTFILES}/zsh/zshrc" "${HOME}/.zshrc"
-	link_file "${DOTFILES}/zsh/zprofile" "${HOME}/.zprofile"
-	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
-	link_file "${DOTFILES}/git/gitignore_global" "${HOME}/.gitignore_global"
-	link_file "${DOTFILES}/git/gitconfig" "${HOME}/.gitconfig"
-	link_file "${DOTFILES}/asciidoc" "${HOME}/.asciidoc"
-	link_file "${DOTFILES}/iterm/com.googlecode.iterm2.plist" "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
-	link_file "${DOTFILES}/alias.d" "${HOME}/.alias.d"
-	link_file "${DOTFILES}/emacs/emacs" "${HOME}/.emacs"
+# Install oh-my-zsh if not already installed
+install_oh_my_zsh() {
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        printMessage "Installing Oh My Zsh..."
+        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        printSuccessMessage "Oh My Zsh installed"
+    else
+        printSuccessMessage "Oh My Zsh is already installed"
+    fi
+}
 
-	# ln -s "${DOTFILES}/Gdbinit/gdbinit" "${HOME}/.gdbinit"
-	# ln -s "${DOTFILES}/ssh-keys-macpro" "${HOME}/.ssh"
-	# ln -s "${DOTFILES}/tmux.conf" "${HOME}/.tmux.conf"
-
-	# ln -s "${HOME}/.spf13-vim-3/.vimrc" "${HOME}/.vimrc"
-	# ln -s "${DOTFILES}/vim-config/vimrc.local.mbpro" "${HOME}/.vimrc.local"
+# Setup dotfiles using dot
+setup_dotfiles() {
+    printMessage "Setting up dotfiles using dot..."
     
-    # Setup Fonts
-    # cp -a "${HOME}/Dropbox/Fonts/" "${HOME}/Library/Fonts"
-
-	link_file "${DOTFILES}/zsh/themes/nick.zsh-theme" "${HOME}/.oh-my-zsh/themes/nick.zsh-theme"
+    # Link dotfiles
+    "$HOME/.cargo/bin/dot" link
+    
+    printSuccessMessage "Dotfiles setup complete"
 }
 
-unlinkDotFiles() {
-	rm "${HOME}/.zshrc"
-	rm "${HOME}/.zprofile"
-	rm "${HOME}/.oh-my-zsh/themes/nick.zsh-theme"
-
-	unlink_file "${HOME}/.gitconfig"
-	unlink_file "${HOME}/.gitignore_global"
-	unlink_file "${HOME}/.asciidoc"
-	unlink_file "${HOME}/.alias.d"
-	unlink_file "${HOME}/Library/Preferences/com.googlecode.iterm2.plist"
-	unlink_file "${HOME}/.emacs"
-
-	# setup all mvim related stuff
-	# rm "${HOME}/.vimrc"
+# Setup macOS specific configurations
+setup_macos() {
+    if [[ "$(uname)" == "Darwin" ]]; then
+        printMessage "Setting up macOS specific configurations..."
+        
+        # Run macOS configuration script if it exists
+        if [ -f "$DOTFILES/macos/system-config.sh" ]; then
+            printMessage "Running macOS system configuration script..."
+            bash "$DOTFILES/macos/system-config.sh"
+            printSuccessMessage "macOS configuration applied"
+        fi
+    fi
 }
 
-case "$1" in
-	"link" )
-		linkDotFiles;;
-	"unlink" )
-		unlinkDotFiles;;
-	""|"*" )
-		printErrorMessage "Provide either link or unlink to specify the action";;
-esac
+# Unlink dotfiles using dot
+unlink_dotfiles() {
+    printMessage "Unlinking dotfiles using dot..."
+    
+    # Unlink dotfiles
+    "$HOME/.cargo/bin/dot" unlink
+    
+    printSuccessMessage "Dotfiles unlinked"
+}
+
+# Main function
+main() {
+    DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    
+    # Check if an argument was provided
+    if [ $# -eq 0 ]; then
+        printErrorMessage "No action specified"
+        echo "Usage: $0 {link|unlink}"
+        exit 1
+    fi
+    
+    case "$1" in
+        "link" )
+            check_dot_installed
+            install_oh_my_zsh
+            setup_dotfiles
+            setup_macos
+            ;;
+        "unlink" )
+            check_dot_installed
+            unlink_dotfiles
+            ;;
+        * )
+            printErrorMessage "Invalid action: $1"
+            echo "Usage: $0 {link|unlink}"
+            exit 1
+            ;;
+    esac
+    
+    printSuccessMessage "Operation complete! You may need to restart your terminal."
+}
+
+# Run main function
+main "$@"
 

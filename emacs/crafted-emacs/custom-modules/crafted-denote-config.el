@@ -32,6 +32,8 @@
 ;; If you use Markdown or plain text files (Org renders links as buttons
 ;; right away)
 (add-hook 'find-file-hook #'denote-fontify-links-mode)
+(add-hook 'text-mode #'denote-fontify-links-mode-maybe)
+(add-hook 'dired-mode #'denote-dired-mode)
 
 ;; We use different ways to specify a path for demo purposes.
 (setq denote-dired-directories
@@ -51,9 +53,11 @@
   (define-key map (kbd "C-c n j") #'ir/my-denote-journal) ; our custom command
   (define-key map (kbd "C-c n n") #'denote)
   (define-key map (kbd "C-c n N") #'denote-type)
-  (define-key map (kbd "C-c n d") #'denote-date)
+  (define-key map (kbd "C-c n d") #'denote-dired)
   (define-key map (kbd "C-c n s") #'denote-subdirectory)
   (define-key map (kbd "C-c n t") #'denote-template)
+  (define-key map (kbd "C-c n g") #'denote-grep)
+  (define-key map (kbd "C-c n o") #'denote-open-or-create)
   ;; If you intend to use Denote with a variety of file types, it is
   ;; easier to bind the link-related commands to the `global-map', as
   ;; shown here.  Otherwise follow the same pattern for `org-mode-map',
