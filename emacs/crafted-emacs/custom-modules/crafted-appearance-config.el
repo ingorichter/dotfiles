@@ -18,9 +18,9 @@
 ;; <https://github.com/protesilaos/iosevka-comfy>.
 (setq fontaine-presets
       '((small
-         :default-family "Iosevka Comfy Motion"
+         :default-family "Aporetic Sans Mono"
          :default-height 80
-         :variable-pitch-family "Iosevka Comfy Duo")
+         :variable-pitch-family "Aporetic Sans")
         (regular) ; like this it uses all the fallback values and is named `regular'
         (medium
          :default-weight semilight
@@ -38,7 +38,7 @@
          ;; I keep all properties for didactic purposes, but most can be
          ;; omitted.  See the fontaine manual for the technicalities:
          ;; <https://protesilaos.com/emacs/fontaine>.
-         :default-family "Iosevka Comfy"
+         :default-family "Aporetic Sans Mono"
          :default-weight regular
          :default-height 100
 
@@ -50,7 +50,7 @@
          :fixed-pitch-serif-weight nil ; falls back to :default-weight
          :fixed-pitch-serif-height 1.0
 
-         :variable-pitch-family "Iosevka Comfy Motion Duo"
+         :variable-pitch-family "Aporetic Sans"
          :variable-pitch-weight nil
          :variable-pitch-height 1.0
 
