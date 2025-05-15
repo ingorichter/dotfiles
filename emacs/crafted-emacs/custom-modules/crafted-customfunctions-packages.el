@@ -11,7 +11,3 @@
 
 (provide 'crafted-customfunctions-packages)
 ;;; crafted-customfunctions-packages.el ends here
-
-
-
-

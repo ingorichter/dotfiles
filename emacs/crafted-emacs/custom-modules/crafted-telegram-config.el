@@ -9,5 +9,7 @@
 
 (require 'telega)
 
+(setq telega-server-libs-prefix "/opt/homebrew/Cellar/tdlib/HEAD-51743df")
+
 (provide 'crafted-telegram-config)
 ;;; crafted-telegram-config.el ends here

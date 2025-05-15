@@ -7,6 +7,9 @@
 
 ;;; Code:
 
+;; -----------------------------------------------------------------------------
+;; Package Requirements
+;; -----------------------------------------------------------------------------
 (require 'org-web-tools)
 (require 'org-protocol)
 (require 'org-bullets)
@@ -14,30 +17,49 @@
 (require 'org-contrib)
 (require 'org-checklist)
 
-(setq org-directory "~/Nextcloud/org"
-      org-agenda-files (list org-directory)
-      org-archive-location (concat org-directory "/archive/%s_archive::")
-      org-default-notes-file (concat org-directory "/notes.org")
-      org-default-todo-file (concat org-directory "/mylife.org")
-      org-refile-location (concat org-directory "/refile.org")
-      org-gcal-location (concat org-directory "/gcal.org")
-      org-weekly-goals (concat org-directory "/weekly-goals.org")
-      org-goals (concat org-directory "/goals.org")
-      org-journal-location (concat org-directory "/journal/journal.org")
-      org-review-location (concat org-directory "/review.org")
-      org-cicada-daily-status-location (concat org-directory "/cicada-daily-standup-status.org"))
+;; -----------------------------------------------------------------------------
+;; Org Directory and File Locations
+;; -----------------------------------------------------------------------------
+(defcustom crafted/org-directory (expand-file-name "~/Nextcloud/org")
+  "Base directory for all Org files."
+  :type 'directory
+  :group 'crafted-org)
 
+(setq org-directory crafted/org-directory
+      org-agenda-files (list org-directory)
+      org-archive-location (expand-file-name "archive/%s_archive::" org-directory)
+      org-default-notes-file (expand-file-name "notes.org" org-directory)
+      org-default-todo-file (expand-file-name "mylife.org" org-directory)
+      org-refile-location (expand-file-name "refile.org" org-directory)
+      org-gcal-location (expand-file-name "gcal.org" org-directory)
+      org-weekly-goals (expand-file-name "weekly-goals.org" org-directory)
+      org-goals (expand-file-name "goals.org" org-directory)
+      org-journal-location (expand-file-name "journal/journal.org" org-directory)
+      org-review-location (expand-file-name "review.org" org-directory)
+      org-cicada-daily-status-location (expand-file-name "cicada-daily-standup-status.org" org-directory))
+
+;; -----------------------------------------------------------------------------
+;; Keybindings
+;; -----------------------------------------------------------------------------
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
-
 (global-set-key (kbd "C-c w l") 'org-web-tools-insert-link-for-url)
 
+;; -----------------------------------------------------------------------------
+;; Org Appearance and Behavior
+;; -----------------------------------------------------------------------------
 (setq org-log-done 'time)
 (setq org-log-into-drawer t)
 (setq org-insert-heading-respect-content t)
 (setq org-M-RET-may-split-line '((default . nil)))
 
+(setq org-bullets-bullet-list '("●" "◎" "○" "◆" "◇" "✸" "•"))
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+;; -----------------------------------------------------------------------------
+;; Custom Agenda Commands
+;; -----------------------------------------------------------------------------
 (setq org-agenda-custom-commands
       '(("p" "Planning"
          ((tags-todo "+@planning"
@@ -48,9 +70,9 @@
        ((todo ".*" ((org-agenda-files `(,org-refile-location)))
               (org-agenda-overriding-header "Unprocessed Inbox Items"))))))
 
-(setq org-bullets-bullet-list '("●" "◎" "○" "◆" "◇" "✸" "•"))
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-
+;; -----------------------------------------------------------------------------
+;; Org Capture Templates
+;; -----------------------------------------------------------------------------
 (setq org-capture-templates
       '(("l" "A link, for reading later." entry
          (file+headline "notes-new.org" "Reading List")
@@ -58,7 +80,6 @@
          :empty-lines 1)
         ("i" "Idea" entry (file+headline org-refile-location "Ideas")
          "* Idea %^{Title} %^g\n  :LOGBOOK:\n - Added: %U\n:END:")))
-
 
 ;; (setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Inbox")
 ;;                                "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")
@@ -81,24 +102,27 @@
 ;;                                (file+olp+datetree org-review-location)
 ;;                                (file "~/Nextcloud/org/BASB/review/weeklyreviewtemplate.org"))))
 
-;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+;; -----------------------------------------------------------------------------
+;; Refile Settings
+;; -----------------------------------------------------------------------------
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 
 (org-reload)
 
-(setq org-plantuml-executable-path "/opt/homebrew/bin/plantuml")
-(setq org-plantuml-exec-mode 'plantuml)
-(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-(add-to-list 'org-babel-load-languages '(plantuml . t))
-
-;; (with-eval-after-load 'org
-;; (org-babel-do-load-languages
-;;  'org-babel-load-languages
-;;  '(other Babel languages
-;;    (plantuml . t)
-;;    )))
+;; -----------------------------------------------------------------------------
+;; PlantUML Integration
+;; -----------------------------------------------------------------------------
+(let ((plantuml-exec (or (executable-find "plantuml")
+                         "/opt/homebrew/bin/plantuml")))
+  (if (and plantuml-exec (file-exists-p plantuml-exec))
+      (progn
+        (setq org-plantuml-executable-path plantuml-exec)
+        (setq org-plantuml-exec-mode 'plantuml)
+        (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+        (add-to-list 'org-babel-load-languages '(plantuml . t)))
+    (warn "PlantUML executable not found. PlantUML support in org-babel will be disabled.")))
 
 (provide 'crafted-org-config)
 ;;; crafted-org-packages.el ends here
