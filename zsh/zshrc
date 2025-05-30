@@ -1,3 +1,21 @@
+# Timing functions (silent by default)
+function _zsh_timing_start() {
+  local start_time=$SECONDS
+  echo $start_time
+}
+
+function _zsh_timing_end() {
+  local start_time=$1
+  local name=$2
+  local end_time=$SECONDS
+  local duration=$((end_time - start_time))
+  # Only print timing if ZSH_DEBUG is set
+  [[ -n "$ZSH_DEBUG" ]] && printf "⏱️  %s took %.3fs\n" "$name" "$duration"
+}
+
+# Start overall timing
+overall_start=$(_zsh_timing_start)
+
 # Path to your oh-my-zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -5,36 +23,203 @@ export ZSH="$HOME/.oh-my-zsh"
 # ZSH_THEME="nick"
 
 # Speed up compinit by only checking cached .zcompdump once a day
+compinit_start=$(_zsh_timing_start)
 autoload -Uz compinit
 for dump in ~/.zcompdump(N.mh+24); do
   compinit
 done
 compinit -C
+_zsh_timing_end $compinit_start "compinit"
 
 # Plugin setup (group related plugins)
-plugins=(asdf brew colorize command-not-found docker fzf git golang kubectl macos minikube node npm pass python react-native rust sudo swiftpm tmux virtualenv web-search xcode yarn z)
+plugin_start=$(_zsh_timing_start)
+# Core plugins that are needed immediately
+plugins=(git git-extras colorize command-not-found)
 
-# Load oh-my-zsh
+# Lazy load other plugins
+function load_plugin() {
+    local plugin=$1
+    plugins+=($plugin)
+    source "${ZSH}/oh-my-zsh.sh"
+}
+
+# Define lazy loading functions for heavy plugins
+function kubectl() {
+    unfunction kubectl
+    load_plugin kubectl
+    kubectl "$@"
+}
+
+function docker() {
+    unfunction docker
+    load_plugin docker
+    docker "$@"
+}
+
+function npm() {
+    unfunction npm
+    load_plugin npm
+    npm "$@"
+}
+
+function yarn() {
+    unfunction yarn
+    load_plugin yarn
+    yarn "$@"
+}
+
+# Lazy load asdf
+function asdf() {
+  unfunction "asdf"
+  if [[ -f ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh ]]; then
+    source ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh
+    # Load asdf completions
+    if [[ -f ${HOMEBREW_PREFIX}/opt/asdf/etc/bash_completion.d/asdf.bash ]]; then
+      source ${HOMEBREW_PREFIX}/opt/asdf/etc/bash_completion.d/asdf.bash
+    fi
+    asdf "$@"
+  else
+    echo "asdf is not installed" >&2
+    echo "Install with: brew install asdf" >&2
+    return 1
+  fi
+}
+
+# Lazy load development tools
+function node() {
+    unfunction node
+    load_plugin node
+    node "$@"
+}
+
+function python() {
+    unfunction python
+    load_plugin python
+    python "$@"
+}
+
+function rust() {
+    unfunction rust
+    load_plugin rust
+    rust "$@"
+}
+
+# Lazy load system tools
+function brew() {
+    unfunction brew
+    load_plugin brew
+    brew "$@"
+}
+
+function sudo() {
+    unfunction sudo
+    load_plugin sudo
+    sudo "$@"
+}
+
+# Lazy load additional development tools
+function go() {
+    unfunction go
+    load_plugin golang
+    go "$@"
+}
+
+function react-native() {
+    unfunction react-native
+    load_plugin react-native
+    react-native "$@"
+}
+
+function swift() {
+    unfunction swift
+    load_plugin swiftpm
+    swift "$@"
+}
+
+# Lazy load system and utility tools
+function tmux() {
+    unfunction tmux
+    load_plugin tmux
+    tmux "$@"
+}
+
+function virtualenv() {
+    unfunction virtualenv
+    load_plugin virtualenv
+    virtualenv "$@"
+}
+
+function web-search() {
+    unfunction web-search
+    load_plugin web-search
+    web-search "$@"
+}
+
+function xcode() {
+    unfunction xcode
+    load_plugin xcode
+    xcode "$@"
+}
+
+# Lazy load utility plugins
+function z() {
+    unfunction z
+    load_plugin z
+    z "$@"
+}
+
+function fzf() {
+    unfunction fzf
+    load_plugin fzf
+    fzf "$@"
+}
+
+function minikube() {
+    unfunction minikube
+    load_plugin minikube
+    minikube "$@"
+}
+
+function pass() {
+    unfunction pass
+    load_plugin pass
+    pass "$@"
+}
+
+# Load oh-my-zsh with minimal plugins
 source "${ZSH}/oh-my-zsh.sh"
+_zsh_timing_end $plugin_start "plugin list setup"
 
 # Autoload custom functions
+func_start=$(_zsh_timing_start)
 fpath=($HOMEBREW_FPATH $ZSH_FUNCTIONS $ZPLUG_FPATH $fpath)
 autoload -U $ZSH_FUNCTIONS/*(:t)
+_zsh_timing_end $func_start "custom functions"
 
 # Setup zplug (check if file exists)
-[[ -f ~/.zplug.zsh ]] && source ~/.zplug.zsh
+zplug_start=$(_zsh_timing_start)
+function zplug() {
+    unfunction zplug
+    [[ -f ~/.zplug.zsh ]] && source ~/.zplug.zsh
+    zplug "$@"
+}
+_zsh_timing_end $zplug_start "zplug"
 
 # User custom settings
 
 # Source local machine-specific settings if available
+local_start=$(_zsh_timing_start)
 [[ -f ~/.zsh.local ]] && source ~/.zsh.local
+_zsh_timing_end $local_start "local settings"
 
 # Source hooks if directory exists
+hooks_start=$(_zsh_timing_start)
 if [[ -d ~/.zsh-hooks ]]; then
   for file in ~/.zsh-hooks/*; do
     [[ -f $file ]] && source "$file"
   done
 fi
+_zsh_timing_end $hooks_start "zsh-hooks"
 
 # History tweaks
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
@@ -59,28 +244,20 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 # Add Homebrew paths before system paths
 export PATH=$HOME/bin:/usr/local/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}
 
-# Version management with asdf
-# ----------------------------------------------------
-
-# Setup asdf lazy loading
-asdf() {
-  unfunction "asdf"
-  if [[ -f ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh ]]; then
-    source ${HOMEBREW_PREFIX}/opt/asdf/libexec/asdf.sh
-    # Load asdf completions
-    if [[ -f ${HOMEBREW_PREFIX}/opt/asdf/etc/bash_completion.d/asdf.bash ]]; then
-      source ${HOMEBREW_PREFIX}/opt/asdf/etc/bash_completion.d/asdf.bash
-    fi
-    asdf "$@"
-  else
-    echo "asdf is not installed" >&2
-    echo "Install with: brew install asdf" >&2
-    return 1
-  fi
-}
+# Load fabric-bootstrap if available
+fabric_start=$(_zsh_timing_start)
+[[ -f ~/.config/fabric/fabric-bootstrap.inc ]] && source ~/.config/fabric/fabric-bootstrap.inc
+_zsh_timing_end $fabric_start "fabric-bootstrap"
 
 # Load oh-my-posh theme
-eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/night-owl.omp.json)"
+posh_start=$(_zsh_timing_start)
+# Cache oh-my-posh theme if it doesn't exist or is older than 1 day
+if [[ ! -f ~/.cache/oh-my-posh.zsh ]] || [[ $(find ~/.cache/oh-my-posh.zsh -mtime +1 2>/dev/null) ]]; then
+    mkdir -p ~/.cache
+    oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/night-owl.omp.json > ~/.cache/oh-my-posh.zsh
+fi
+source ~/.cache/oh-my-posh.zsh
+_zsh_timing_end $posh_start "oh-my-posh"
 
-# Load fabric-bootstrap if available
-[[ -f ~/.config/fabric/fabric-bootstrap.inc ]] && source ~/.config/fabric/fabric-bootstrap.inc
+# End overall timing
+_zsh_timing_end $overall_start "Total zsh initialization"

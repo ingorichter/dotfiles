@@ -195,6 +195,13 @@ keybinds {
                 ignore_case true
             }
         }
+        bind "Ctrl d" {
+            LaunchPlugin "filepicker" {
+                cwd "/Users/ingorichter/develop/work/repos"
+                floating true
+                close_on_selection true
+            }
+        }
     }
 }
 
