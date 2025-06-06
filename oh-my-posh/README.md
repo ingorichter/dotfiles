@@ -5,7 +5,7 @@ This directory contains a custom Oh My Posh theme based on the Night Owl theme, 
 ## Features
 
 - **Git Config Display**: Shows the current git user email when inside a git repository
-- **Visual Indicators**: 
+- **Visual Indicators**:
   - 🏠 Home icon for personal repositories (green background)
   - 🏢 Building icon for work repositories (red background)
 - **Smart Display**: Only shows git config when actually inside a git repository
@@ -14,23 +14,30 @@ This directory contains a custom Oh My Posh theme based on the Night Owl theme, 
 ## Available Theme Variants
 
 ### 1. Domain Display (`night-owl-custom.omp.json`) - **Currently Active**
+
 Shows just the domain part of your email:
+
 - `@gmail.com` (personal - green with 🏠)
 - `@adobe.com` (work - red with 🏢)
 
 ### 2. Username Display (`night-owl-username.omp.json`)
+
 Shows just the username part of your email:
+
 - `ingo.richter+github` (personal - green with 🏠)
 - `irichter` (work - red with 🏢)
 
 ### 3. Simple Labels (`night-owl-simple.omp.json`)
+
 Shows simple work/personal labels:
+
 - `PERSONAL` (green with 🏠)
 - `WORK` (red with 🏢)
 
 ## How It Works
 
 The theme includes a custom command segment that:
+
 1. Checks if you're inside a git repository
 2. If yes, displays git config information in your chosen format
 3. Uses different colors and icons based on email patterns:
@@ -90,6 +97,7 @@ The git config segment will automatically appear in your prompt when you're insi
 ```
 
 Examples (depending on chosen theme):
+
 - Domain: `🏠 @gmail.com` vs `🏢 @adobe.com`
 - Username: `🏠 ingo.richter+github` vs `🏢 irichter`
 - Simple: `🏠 PERSONAL` vs `🏢 WORK`
@@ -97,6 +105,7 @@ Examples (depending on chosen theme):
 ## Troubleshooting
 
 If the git config doesn't appear:
+
 1. Make sure you're inside a git repository: `git status`
 2. Check your git config: `git config user.email`
 3. Regenerate the oh-my-posh cache: `rm ~/.cache/oh-my-posh.zsh && source ~/.zshrc`
@@ -104,4 +113,4 @@ If the git config doesn't appear:
 ## File Structure
 
 - `night-owl-custom.omp.json`: The main theme configuration
-- `README.md`: This documentation file 
+- `README.md`: This documentation file
