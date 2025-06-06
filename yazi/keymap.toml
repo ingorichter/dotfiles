@@ -1,4 +1,4 @@
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = "<C-m>"
 run  = "plugin max-preview"
 desc = "Maximize or restore preview"

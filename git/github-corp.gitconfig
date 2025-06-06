@@ -1,0 +1,8 @@
+[user]
+	name = Ingo Richter
+	email = irichter@adobe.com
+	signingkey = DA67F86E8421C7A5
+
+# Corporate GitHub Enterprise Cloud settings
+[url "https://github.com/"]
+	insteadOf = git://github.com/ 

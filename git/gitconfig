@@ -1,45 +1,176 @@
-## http://git-scm.com/book/en/Customizing-Git-Git-Configuration
+# https://blog.gitbutler.com/how-git-core-devs-configure-git/
+# clearly makes git better
+
 ## default user
 [user]
 	useConfigOnly = true
 	name = Ingo Richter
 	email = ingo.richter@gmail.com
 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+[column]
+	ui = auto
 
-[color "branch"]
-	current = yellow bold
-	local = green bold
-	remote = cyan bold
+[branch]
+	sort = -committerdate
 
-[color "status"]
-	added = "green bold 22"
-	changed = "yellow bold"
-	untracked = "red bold"
+[tag]
+	sort = version:refname
 
-[color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+[init]
+	defaultBranch = main
 
-[color "diff-highlight"]
-        oldNormal = red bold
-        oldHighlight = "red bold 52"
-        newNormal = "green bold"
-        newHighlight = "green bold 22"
-
-[core]
-	excludesfile = ~/.gitignore_global
-	editor = vim
-	# pager = git-split-diffs --color | less -RFX
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 
 [push]
-	default = current
+	default = simple
+	autoSetupRemote = true
+	followTags = true
 
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+
+# why the hell not?
+[help]
+	autocorrect = prompt
+
+[commit]
+	verbose = true
+	gpgSign = true
+	template = /Users/ingorichter/.stCommitMsg
+
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[core]
+	excludesfile = ~/.gitignore
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+# a matter of taste (uncomment if you dare)
+[core]
+	# fsmonitor = true
+	# untrackedCache = true
+
+[merge]
+	# (just 'diff3' if git version < 2.3)
+	# conflictstyle = zdiff3
+
+[pull]
+	# rebase = true
+
+# remote URL based config (requires Git 2.36+)
+# Higher priority - processed after path-based rules
+# GitHub Corporate (GHEC) - Adobe organizations
+# SSH alias patterns (github-adobe) - Git doesn't support SSH aliases in hasconfig patterns
+# Using path-based approach for GHEC repos instead
+
+# Path-based rules for specific GHEC repos
+[includeIf "gitdir:~/develop/work/repos/cloud-shared-components/"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "gitdir:~/develop/work/repos/analytics-sdk/"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# Direct GitHub patterns
+[includeIf "hasconfig:remote.*.url:https://github.com/adobe/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:adobe/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# Adobe AI Foundations
+[includeIf "hasconfig:remote.*.url:https://github.com/Adobe-AIFoundations/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:Adobe-AIFoundations/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# Adobe Brand Concierge
+[includeIf "hasconfig:remote.*.url:https://github.com/adobe-brand-concierge/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:adobe-brand-concierge/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# Adobe Firefly
+[includeIf "hasconfig:remote.*.url:https://github.com/Adobe-Firefly/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:Adobe-Firefly/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# AUP SDK Collaboration
+[includeIf "hasconfig:remote.*.url:https://github.com/aup-sdk-collab/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:aup-sdk-collab/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# Cloud Components Delivery Infrastructure
+[includeIf "hasconfig:remote.*.url:https://github.com/CloudComponentsDeliveryInfrastructure/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:CloudComponentsDeliveryInfrastructure/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# Copilot Adobe
+[includeIf "hasconfig:remote.*.url:https://github.com/copilot-Adobe/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:copilot-Adobe/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# Copilot Beta
+[includeIf "hasconfig:remote.*.url:https://github.com/Copilot-Beta/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:Copilot-Beta/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# One Adobe
+[includeIf "hasconfig:remote.*.url:https://github.com/OneAdobe/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:OneAdobe/**"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
+# GitHub Personal (fallback for all other github.com repos)
+# Note: SSH alias patterns handled above, these are for direct github.com URLs
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+	path = ~/.dotfiles/git/github.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+	path = ~/.dotfiles/git/github.gitconfig
+
+# Corporate Adobe Git
+[includeIf "hasconfig:remote.*.url:https://git.corp.adobe.com/**"]
+	path = ~/.dotfiles/git/gitcorp.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@git.corp.adobe.com:*/**"]
+	path = ~/.dotfiles/git/gitcorp.gitconfig
+
+# Other common Git hosts - add as needed
+# [includeIf "hasconfig:remote.*.url:https://gitlab.com/**"]
+# 	path = ~/.dotfiles/git/gitlab.gitconfig
+
+# [includeIf "hasconfig:remote.*.url:https://bitbucket.org/**"]
+# 	path = ~/.dotfiles/git/bitbucket.gitconfig
+
+# sign commits
+[gpg]
+	program = gpg
+
+# aliases
 [alias]
 	ci = commit
 	br = branch
@@ -50,45 +181,12 @@
 	visual = !gitk
 	ghcpr = "!git symbolic-ref HEAD | sed -e 's/^refs\\/heads\\///' | awk '{printf \"https://git.corp.adobe.com/webpa/sparkler-shell/compare/%s?expand=1\", $1}' | xargs open"
 	la = "!git config -l | grep alias | cut -c 7-"
-	blog = "!git log --graph --decorate --pretty=oneline --abbrev-commit --all"
+	blog = "!git log --graph --decorate --pretty oneline --abbrev-commit --all"
 	identity = "! git config user.name \"$(git config user.$1.name)\"; git config user.email \"$(git config user.$1.email)\"; git config user.signingkey \"$(git config user.$1.signingkey)\"; :"
 	dlog = "!f() { : git log ; GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
 
-[url "https://"]
-	insteadOf = git://
-
-[filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
-
-[filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-
-# [diff]
-#     algorithm = minimal
-#     compactionHeuristic = true
-#     renames = true
-#     tool = difftastic
-
-[cola]
-	spellcheck = false
-
-[commit]
-	# template = /Users/irichter/.stCommitMsg
-	gpgSign = true
-	template = /Users/ingorichter/.stCommitMsg
-
-[fetch]
-	prune = true
-
-[includeIf "gitdir:~/develop/"]
-	path = ~/.dotfiles/git/github.gitconfig
-
-[includeIf "gitdir:~/develop/work/"]
-	path = ~/.dotfiles/git/gitcorp.gitconfig
+# path based config (fallback when remote URL patterns don't match)
+# Note: ~/develop/ rule removed to prevent conflicts with specific GHEC repo rules
 
 [includeIf "gitdir:~/develop/fun/"]
 	path = ~/.dotfiles/git/github.gitconfig
@@ -96,59 +194,5 @@
 [includeIf "gitdir:~/.dotfiles/"]
 	path = ~/.dotfiles/git/github.gitconfig
 
-[gpg]
-	program = gpg
-
-[pull]
-	rebase = false
-
-[core]
-    whitespace = trailing-space,space-before-tab
-
-[apply]
-    whitespace = fix
-
-[init]
-	defaultBranch = main
-
-# Delta
-[core]
-    pager = delta
-
-[interactive]
-    diffFilter = delta --color-only
-
-[add.interactive]
-    useBuiltin = false # required for git 2.37.0
-
-[delta]
-    navigate = true    # use n and N to move between diff sections
-    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-	side-by-side = true
-
-[merge]
-    conflictstyle = diff3
-
-[diff]
-    colorMoved = default
-
-[maintenance]
-	repo = /Users/ingorichter/develop/work/repos/ace-analytics
-
-# difftastic
-[diff]
-    tool = difftastic
-
-[difftool]
-    prompt = false
-
-[difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
-
-[pager]
-    difftool = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
 [safe]
 	bareRepository = explicit

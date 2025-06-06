@@ -34,7 +34,7 @@ _zsh_timing_end $compinit_start "compinit"
 # Plugin setup (group related plugins)
 plugin_start=$(_zsh_timing_start)
 # Core plugins that are needed immediately
-plugins=(git git-extras colorize command-not-found)
+plugins=(git git-extras colorize command-not-found fzf)
 
 # Lazy load other plugins
 function load_plugin() {
@@ -168,12 +168,6 @@ function z() {
     z "$@"
 }
 
-function fzf() {
-    unfunction fzf
-    load_plugin fzf
-    fzf "$@"
-}
-
 function minikube() {
     unfunction minikube
     load_plugin minikube
@@ -254,7 +248,7 @@ posh_start=$(_zsh_timing_start)
 # Cache oh-my-posh theme if it doesn't exist or is older than 1 day
 if [[ ! -f ~/.cache/oh-my-posh.zsh ]] || [[ $(find ~/.cache/oh-my-posh.zsh -mtime +1 2>/dev/null) ]]; then
     mkdir -p ~/.cache
-    oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/night-owl.omp.json > ~/.cache/oh-my-posh.zsh
+    oh-my-posh init zsh --config ~/.dotfiles/oh-my-posh/night-owl-simple.omp.json > ~/.cache/oh-my-posh.zsh
 fi
 source ~/.cache/oh-my-posh.zsh
 _zsh_timing_end $posh_start "oh-my-posh"
