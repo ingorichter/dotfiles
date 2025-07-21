@@ -74,6 +74,9 @@
 # SSH alias patterns (github-adobe) - Git doesn't support SSH aliases in hasconfig patterns
 # Using path-based approach for GHEC repos instead
 
+[includeIf "hasconfig:remote.*.url:git@github-adobe:aup-sdk-collab/*"]
+	path = ~/.dotfiles/git/github-corp.gitconfig
+
 # Path-based rules for specific GHEC repos
 [includeIf "gitdir:~/develop/work/repos/cloud-shared-components/"]
 	path = ~/.dotfiles/git/github-corp.gitconfig

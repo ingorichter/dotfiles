@@ -32,6 +32,9 @@
 "iterm/com.googlecode.iterm2.plist"                                 = "~/Library/Preferences/com.googlecode.iterm2.plist"
 "macos/com.apple.Terminal.plist"                                    = "~/Library/Preferences/com.apple.Terminal.plist"
 
+#ghostty
+"ghostty/config"                                                    = "~/.config/ghostty/config"
+
 # =================================================================
 # TERMINAL MULTIPLEXERS
 # =================================================================
