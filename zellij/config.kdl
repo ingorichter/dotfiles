@@ -383,3 +383,4 @@ plugins {
 // Default: false
 //
 // disable_session_metadata true
+option "copy_env" "true"
