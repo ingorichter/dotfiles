@@ -1,3 +1,7 @@
+# enable performance profiling
+# Uncomment the following line to enable zsh profiling
+# zmodload zsh/zprof
+
 # Timing functions (silent by default)
 function _zsh_timing_start() {
   local start_time=$SECONDS
@@ -235,8 +239,7 @@ unsetopt beep
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
-# Add Homebrew paths before system paths
-export PATH=$HOME/bin:/usr/local/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}
+# PATH is configured in zshenv to avoid duplications
 
 # Load fabric-bootstrap if available
 fabric_start=$(_zsh_timing_start)
@@ -255,3 +258,6 @@ _zsh_timing_end $posh_start "oh-my-posh"
 
 # End overall timing
 _zsh_timing_end $overall_start "Total zsh initialization"
+
+# Dump timing results
+# zprof

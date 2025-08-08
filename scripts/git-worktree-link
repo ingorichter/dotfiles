@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# 
+# Symlink wrapper to make git-worktree available as 'git worktree'
+# This creates the symlink in a directory that should be in PATH
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TARGET_SCRIPT="$SCRIPT_DIR/git-worktree"
+
+# Common directories where git looks for git-* commands
+INSTALL_DIRS=(
+    "/usr/local/bin"
+    "$HOME/.local/bin" 
+    "$HOME/bin"
+)
+
+create_symlink() {
+    local target_dir="$1"
+    local link_name="$target_dir/git-worktree"
+    
+    if [[ ! -d "$target_dir" ]]; then
+        echo "Directory $target_dir does not exist, skipping..."
+        return 1
+    fi
+    
+    if [[ ! -w "$target_dir" ]]; then
+        echo "No write permission to $target_dir, skipping..."
+        return 1
+    fi
+    
+    if [[ -L "$link_name" ]]; then
+        echo "Symlink already exists at $link_name"
+        return 0
+    elif [[ -f "$link_name" ]]; then
+        echo "File already exists at $link_name, skipping..."
+        return 1
+    fi
+    
+    ln -s "$TARGET_SCRIPT" "$link_name"
+    echo "✅ Created symlink: $link_name -> $TARGET_SCRIPT"
+    return 0
+}
+
+echo "Creating symlinks for git-worktree..."
+echo "Target script: $TARGET_SCRIPT"
+echo
+
+for dir in "${INSTALL_DIRS[@]}"; do
+    if create_symlink "$dir"; then
+        echo "🎉 Successfully installed! You can now use 'git worktree'"
+        echo "Test with: git worktree help"
+        exit 0
+    fi
+done
+
+echo "❌ Could not create symlink in any standard directory."
+echo "You can manually create a symlink with:"
+echo "  ln -s '$TARGET_SCRIPT' /path/to/your/bin/git-worktree"
+echo
+echo "Or add the scripts directory to your PATH:"
+echo "  export PATH=\"$SCRIPT_DIR:\$PATH\""

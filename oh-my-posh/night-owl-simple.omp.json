@@ -67,15 +67,17 @@
         {
           "background": "#4CAF50",
           "background_templates": [
+            "{{ if (.Output | contains \"GITHUB.COM\") }}#FF5722{{ end }}",
+            "{{ if (.Output | contains \"GITCORP\") }}#FF9800{{ end }}",
             "{{ if (.Output | contains \"WORK\") }}#FF5722{{ end }}"
           ],
           "foreground": "#ffffff",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
-          "template": "{{ if .Output }} {{ if (.Output | contains \"WORK\") }}\uf0b1{{ else }}\uf015{{ end }} {{ .Output }} {{ end}}",
+          "template": "{{ if .Output }} {{ if (.Output | contains \"GITHUB.COM\") }}\uf09b{{ else if (.Output | contains \"GITCORP\") }}\uf0b1{{ else if (.Output | contains \"WORK\") }}\uf0b1{{ else }}\uf015{{ end }} {{ .Output }} {{ end}}",
           "type": "command",
           "properties": {
-            "command": "if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then email=$(git config user.email 2>/dev/null); if [[ -n \"$email\" ]]; then if [[ \"$email\" == *\"adobe.com\" || \"$email\" == *\"work\"* || \"$email\" == *\"corp\"* ]]; then echo \"WORK\"; else echo \"PERSONAL\"; fi; fi; fi"
+            "command": "if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then email=$(git config user.email 2>/dev/null); signingkey=$(git config user.signingkey 2>/dev/null); if [[ -n \"$email\" ]]; then if [[ \"$email\" == *\"adobe.com\" ]]; then if [[ \"$signingkey\" == \"DA67F86E8421C7A5\" ]]; then echo \"GITHUB.COM\"; elif [[ \"$signingkey\" == \"B2FC224B76A40BCC\" ]]; then echo \"GITCORP\"; else echo \"WORK\"; fi; else echo \"PERSONAL\"; fi; fi; fi"
           }
         },
         {

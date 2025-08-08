@@ -1,11 +1,16 @@
 # https://blog.gitbutler.com/how-git-core-devs-configure-git/
 # clearly makes git better
 
+# SSH alias patterns (github-adobe) - Git doesn't support SSH aliases in hasconfig patterns
+# Using path-based approach for GHEC repos instead
+
+[includeIf "hasconfig:remote.*.url:git@github-adobe:aup-sdk-collab/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
 ## default user
 [user]
 	useConfigOnly = true
 	name = Ingo Richter
-	email = ingo.richter@gmail.com
 
 [column]
 	ui = auto
@@ -69,91 +74,13 @@
 	# rebase = true
 
 # remote URL based config (requires Git 2.36+)
-# Higher priority - processed after path-based rules
+# URL-based rules work with worktrees, unlike path-based rules
 # GitHub Corporate (GHEC) - Adobe organizations
 # SSH alias patterns (github-adobe) - Git doesn't support SSH aliases in hasconfig patterns
-# Using path-based approach for GHEC repos instead
+# Using URL-based approach for all repos
 
-[includeIf "hasconfig:remote.*.url:git@github-adobe:aup-sdk-collab/*"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Path-based rules for specific GHEC repos
-[includeIf "gitdir:~/develop/work/repos/cloud-shared-components/"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "gitdir:~/develop/work/repos/analytics-sdk/"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Direct GitHub patterns
-[includeIf "hasconfig:remote.*.url:https://github.com/adobe/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:adobe/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Adobe AI Foundations
-[includeIf "hasconfig:remote.*.url:https://github.com/Adobe-AIFoundations/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:Adobe-AIFoundations/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Adobe Brand Concierge
-[includeIf "hasconfig:remote.*.url:https://github.com/adobe-brand-concierge/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:adobe-brand-concierge/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Adobe Firefly
-[includeIf "hasconfig:remote.*.url:https://github.com/Adobe-Firefly/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:Adobe-Firefly/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# AUP SDK Collaboration
-[includeIf "hasconfig:remote.*.url:https://github.com/aup-sdk-collab/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:aup-sdk-collab/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Cloud Components Delivery Infrastructure
-[includeIf "hasconfig:remote.*.url:https://github.com/CloudComponentsDeliveryInfrastructure/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:CloudComponentsDeliveryInfrastructure/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Copilot Adobe
-[includeIf "hasconfig:remote.*.url:https://github.com/copilot-Adobe/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:copilot-Adobe/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# Copilot Beta
-[includeIf "hasconfig:remote.*.url:https://github.com/Copilot-Beta/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:Copilot-Beta/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# One Adobe
-[includeIf "hasconfig:remote.*.url:https://github.com/OneAdobe/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:OneAdobe/**"]
-	path = ~/.dotfiles/git/github-corp.gitconfig
-
-# GitHub Personal (fallback for all other github.com repos)
-# Note: SSH alias patterns handled above, these are for direct github.com URLs
-[includeIf "hasconfig:remote.*.url:https://github.com/**"]
-	path = ~/.dotfiles/git/github.gitconfig
-
-[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
-	path = ~/.dotfiles/git/github.gitconfig
+[includeIf "hasconfig:remote.*.url:git@github.com:aup-sdk-collab/*"]
+	path = ~/.dotfiles/git/github.com.gitconfig
 
 # Corporate Adobe Git
 [includeIf "hasconfig:remote.*.url:https://git.corp.adobe.com/**"]
@@ -161,6 +88,78 @@
 
 [includeIf "hasconfig:remote.*.url:git@git.corp.adobe.com:*/**"]
 	path = ~/.dotfiles/git/gitcorp.gitconfig
+
+# GitHub Personal (fallback for all other github.com repos) - LOWER PRIORITY
+# Note: SSH alias patterns handled above, these are for direct github.com URLs
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+	path = ~/.dotfiles/git/github.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+	path = ~/.dotfiles/git/github.gitconfig
+
+# Adobe GitHub organizations - HIGHER PRIORITY (processed after general GitHub)
+# Direct GitHub patterns
+[includeIf "hasconfig:remote.*.url:https://github.com/adobe/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:adobe/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# Adobe AI Foundations
+[includeIf "hasconfig:remote.*.url:https://github.com/Adobe-AIFoundations/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:Adobe-AIFoundations/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# Adobe Brand Concierge
+[includeIf "hasconfig:remote.*.url:https://github.com/adobe-brand-concierge/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:adobe-brand-concierge/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# Adobe Firefly
+[includeIf "hasconfig:remote.*.url:https://github.com/Adobe-Firefly/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:Adobe-Firefly/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# AUP SDK Collaboration
+[includeIf "hasconfig:remote.*.url:https://github.com/aup-sdk-collab/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:aup-sdk-collab/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# Cloud Components Delivery Infrastructure
+[includeIf "hasconfig:remote.*.url:https://github.com/CloudComponentsDeliveryInfrastructure/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:CloudComponentsDeliveryInfrastructure/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# Copilot Adobe
+[includeIf "hasconfig:remote.*.url:https://github.com/copilot-Adobe/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:copilot-Adobe/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# Copilot Beta
+[includeIf "hasconfig:remote.*.url:https://github.com/Copilot-Beta/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:Copilot-Beta/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+# One Adobe
+[includeIf "hasconfig:remote.*.url:https://github.com/OneAdobe/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
+[includeIf "hasconfig:remote.*.url:git@github.com:OneAdobe/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
 
 # Other common Git hosts - add as needed
 # [includeIf "hasconfig:remote.*.url:https://gitlab.com/**"]
@@ -199,3 +198,8 @@
 
 [safe]
 	bareRepository = explicit
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

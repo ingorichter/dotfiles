@@ -195,7 +195,7 @@ keybinds {
                 ignore_case true
             }
         }
-        bind "Ctrl p" {
+        bind "Ctrl l" {
             LaunchPlugin "filepicker" {
                 cwd "/Users/ingorichter/develop/work/repos"
                 floating true
