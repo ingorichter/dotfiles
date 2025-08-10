@@ -23,8 +23,8 @@ HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
 HOMEBREW_FPATH=${HOMEBREW_PREFIX}/share/zsh/site-functions
 export HOMEBREW_CELLAR HOMEBREW_PREFIX HOMEBREW_FPATH
 
-# Ensure PATH includes Homebrew bin and sbin
-export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${PATH}"
+# Ensure PATH includes all necessary directories (avoiding duplications)
+export PATH="${HOME}/bin:/usr/local/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
 
 # Development environment defaults
 export DEV_ROOT="${HOME}/develop"
