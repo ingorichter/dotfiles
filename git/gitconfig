@@ -24,6 +24,16 @@
 	colorMoved = plain
 	mnemonicPrefix = true
 	renames = true
+[color "diff-highlight"]
+        oldNormal = red bold
+        oldHighlight = "red bold 52"
+        newNormal = "green bold"
+        newHighlight = "green bold 22"
+
+[core]
+	excludesfile = /Users/ingorichter/.gitignore_global
+	editor = vim
+	# pager = git-split-diffs --color | less -RFX
 
 [push]
 	default = simple
@@ -198,9 +208,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
