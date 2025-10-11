@@ -79,6 +79,9 @@
 # SSH alias patterns (github-adobe) - Git doesn't support SSH aliases in hasconfig patterns
 # Using URL-based approach for all repos
 
+[includeIf "hasconfig:remote.*.url:https://git.familie-richter.de/**"]
+	path = ~/.dotfiles/git/gitfr.gitconfig
+
 [includeIf "hasconfig:remote.*.url:git@github.com:aup-sdk-collab/*"]
 	path = ~/.dotfiles/git/github.com.gitconfig
 

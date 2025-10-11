@@ -184,6 +184,25 @@ function pass() {
     pass "$@"
 }
 
+zellij_tab_name_update() {
+    if [[ -n $ZELLIJ ]]; then
+        local tab_name=""
+        
+        # Check if in a git repo
+        if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            # Get current branch name
+            tab_name=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+        else
+            # Fallback to directory name
+            tab_name=$(basename "$PWD")
+        fi
+        
+        command nohup zellij action rename-tab "$tab_name" >/dev/null 2>&1
+    fi
+}
+
+chpwd_functions+=(zellij_tab_name_update)
+
 # Load oh-my-zsh with minimal plugins
 source "${ZSH}/oh-my-zsh.sh"
 _zsh_timing_end $plugin_start "plugin list setup"
@@ -229,7 +248,6 @@ HIST_STAMPS="yyyy-mm-dd"
 setopt appendhistory inc_append_history share_history hist_ignore_dups hist_ignore_space hist_reduce_blanks
 
 # Keybindings
-bindkey "^E" history-incremental-search-backward
 bindkey -e
 
 # Disable terminal beep
@@ -258,6 +276,24 @@ _zsh_timing_end $posh_start "oh-my-posh"
 
 # End overall timing
 _zsh_timing_end $overall_start "Total zsh initialization"
+
+# Fix Ctrl+E key binding (must be after all other configurations)
+bindkey -r "^E"-"^F"
+bindkey "^E" end-of-line
+bindkey "^F" forward-char
+
+# History search key bindings - choose one of these options:
+# Option 1: Use Ctrl+Shift+R (if your terminal supports it)
+# bindkey "^[R" history-incremental-search-backward
+
+# Option 2: Use Alt+R (Meta+R)
+bindkey "^[r" history-incremental-search-backward
+
+# Option 3: Use Ctrl+Shift+F (alternative)
+# bindkey "^[f" history-incremental-search-backward
+
+# Option 4: Use Ctrl+Shift+H (alternative)
+# bindkey "^[h" history-incremental-search-backward
 
 # Dump timing results
 # zprof
