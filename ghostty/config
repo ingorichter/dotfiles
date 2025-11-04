@@ -3,7 +3,7 @@
 # This template file has been automatically created at the following
 # path since Ghostty couldn't find any existing config files on your system:
 #
-#   /Users/ingorichter/Library/Application Support/com.mitchellh.ghostty/config
+#   /Users/irichter/Library/Application Support/com.mitchellh.ghostty/config
 #
 # The template does not set any default options, since Ghostty ships
 # with sensible defaults for all options. Users should only need to set
@@ -21,6 +21,7 @@
 # # separated by equals signs.
 # font-family = Iosevka
 # window-padding-x = 2
+window-save-state = always
 #
 # # Spacing around the equals sign does not matter.
 # # All of these are identical:
@@ -42,10 +43,4 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-font-family = "MesloLGS Nerd Font Mono"
-font-size = 20.0
-link-url
-
-macos-option-as-alt = true
-keybind = alt+left=unbind
-keybind = alt+right=unbind
+theme = Catppuccin Mocha

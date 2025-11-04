@@ -203,6 +203,8 @@ zellij_tab_name_update() {
 
 chpwd_functions+=(zellij_tab_name_update)
 
+## autosuggestions syntax highlight from ~/.zshrc.bk
+
 # Load oh-my-zsh with minimal plugins
 source "${ZSH}/oh-my-zsh.sh"
 _zsh_timing_end $plugin_start "plugin list setup"
