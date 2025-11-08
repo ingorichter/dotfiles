@@ -225,8 +225,8 @@ list_worktrees() {
     # Get worktree list and format it nicely
     git worktree list --porcelain | awk '
     BEGIN { 
-        print "PATH\t\t\t\tBRANCH\t\tSTATUS"
-        print "----\t\t\t\t------\t\t------"
+        print "PATH\t\t\t\t\t\tBRANCH\t\t\t\t\tSTATUS"
+        print "----\t\t\t\t\t\t------\t\t\t\t\t------"
     }
     /^worktree / { 
         path = substr($0, 10)
@@ -245,13 +245,13 @@ list_worktrees() {
     }
     /^$/ { 
         if (path && branch) {
-            printf "%-30s\t%-15s\t%s\n", path, branch, (status ? status : "normal")
+            printf "%-45s\t%-35s\t%s\n", path, branch, (status ? status : "normal")
         }
         path = branch = status = ""
     }
     END {
         if (path && branch) {
-            printf "%-30s\t%-15s\t%s\n", path, branch, (status ? status : "normal")
+            printf "%-45s\t%-35s\t%s\n", path, branch, (status ? status : "normal")
         }
     }'
 }
