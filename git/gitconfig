@@ -1,15 +1,59 @@
-# https://blog.gitbutler.com/how-git-core-devs-configure-git/
-# clearly makes git better
-
-## default user
+############################################################
+# User & Identity
+############################################################
 [user]
     useConfigOnly = true
-    name = Ingo Richter
-    email = ingo.richter+github@gmail.com
+	name = Ingo Richter
+	email = ingo.richter+github@gmail.com
 
+############################################################
+# Core Settings
+############################################################
+[core]
+	excludesfile = /Users/ingorichter/.gitignore_global
+############################################################
+# Commit & Signing
+############################################################
+    editor = vim
+    whitespace = trailing-space,space-before-tab
+    pager = delta
+    # pager = git-split-diffs --color | less -RFX
+    # fsmonitor = true
+    # untrackedCache = true
+
+############################################################
+# UI & Color
+############################################################
 [column]
     ui = auto
+############################################################
+# Push, Fetch, Pull
+############################################################
 
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = "red bold 52"
+    newNormal = "green bold"
+    newHighlight = "green bold 22"
+
+############################################################
+# Diff & Merge Tools
+############################################################
+[diff]
+# Diff & Merge Tools
+[diff]
+    algorithm = histogram
+    mnemonicPrefix = true
+    renames = true
+    colorMoved = default
+    tool = difftastic
+
+############################################################
+# Aliases
+############################################################
+############################################################
+# Repository Defaults
+############################################################
 [branch]
     sort = -committerdate
 
@@ -19,30 +63,11 @@
 [init]
     defaultBranch = main
 
-[diff]
-    algorithm = histogram
-    mnemonicPrefix = true
-    renames = true
-    colorMoved = default
-    tool = difftastic
-
-[color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = "red bold 52"
-    newNormal = "green bold"
-    newHighlight = "green bold 22"
-
-[core]
-    excludesfile = /Users/ingorichter/.gitignore_global
-    editor = vim
-    # pager = git-split-diffs --color | less -RFX
-    # fsmonitor = true
-    # untrackedCache = true
-    whitespace = trailing-space,space-before-tab
-    pager = delta
-
 [push]
     default = simple
+############################################################
+# Include Rules (URL-based, Path-based)
+############################################################
     autoSetupRemote = true
     followTags = true
 
@@ -58,7 +83,7 @@
 [commit]
     verbose = true
     gpgSign = true
-    template = /Users/ingorichter/.stCommitMsg
+	template = /Users/ingorichter/.stCommitMsg
 
 [rerere]
     enabled = true
@@ -129,6 +154,9 @@
 
 # Adobe Firefly
 [includeIf "hasconfig:remote.*.url:https://github.com/Adobe-Firefly/**"]
+############################################################
+# Miscellaneous
+############################################################
     path = ~/.dotfiles/git/github.com.gitconfig
 
 [includeIf "hasconfig:remote.*.url:git@github.com:Adobe-Firefly/**"]
@@ -214,8 +242,8 @@
     required = true
 
 [mergetool "sourcetree"]
-    cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-    trustExitCode = true
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 [difftool]
     prompt = false
@@ -239,3 +267,6 @@
 
 [maintenance]
     repo = /Users/ingorichter/develop/work/repos/ace-analytics
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 

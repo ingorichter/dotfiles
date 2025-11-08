@@ -8,3 +8,5 @@ for alias in $(find ~/.alias.d/ -type f -not -name .DS_Store)
 do
     source "$alias"
 done
+# Added by swiftly
+. "/Users/ingorichter/.swiftly/env.sh"
