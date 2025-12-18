@@ -7,6 +7,17 @@
 
 ;;; Code:
 
+;; Override MELPA recipe to use our custom files specification
+(straight-override-recipe
+ '(casual :type git :host github :repo "kickingvegas/casual" :files ("lisp/casual*.el")))
+
+;; Define stub function to fix native compiler warning
+;; casual-timezone-planner-current-remote is referenced but not defined
+(defun casual-timezone-planner-current-remote ()
+  "Stub function - the original was removed from casual-timezone-utils."
+  (interactive)
+  (message "casual-timezone-planner-current-remote is not implemented"))
+
 ;; (add-to-list 'package-selected-packages '(casual :type git :host github :repo "kickingvegas/casual-suite" :files ("lisp/casual-suite*.el")))
 (add-to-list 'package-selected-packages '(casual :type git :host github :repo "kickingvegas/casual" :files ("lisp/casual*.el")))
 (add-to-list 'package-selected-packages '(casual-suite :type git :host github :repo "kickingvegas/casual-suite" :files ("lisp/casual*.el")))

@@ -35,8 +35,6 @@
 (require 'crafted-updates-config)
 
 ;;; ensure that all packages are installed before doing any configuration
-(package-install-selected-packages :noconfirm)
-
 ;; Use the crafted-package helper
 (crafted-package-install-selected-packages)
 

@@ -11,6 +11,7 @@ zplug "wushenrong/zsh-eza"
 # zplug "wfxr/forgit"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "agkozak/zhooks"
+zplug "SaltedBlowfish/zsh-shellcolor"
 
 # zplug "zsh-users/zsh-history-substring-search"
 # zplug "zsh-users/zsh-syntax-highlighting", defer:2

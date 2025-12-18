@@ -12,6 +12,3 @@ alias maczip='zip -X -r '
 
 # show only softlinks
 alias sl="ls -G -ltra | grep '\->'"
-
-# git delete all node_modules in monorepo
-alias nukenm="lerna clean && rm -rf node_modules"

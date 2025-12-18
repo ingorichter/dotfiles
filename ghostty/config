@@ -43,4 +43,14 @@ window-save-state = always
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+background-opacity = 0.9
+
+font-family = "MesloLGS Nerd Font Mono"
+font-size = 20.0
+link-url
+
+macos-option-as-alt = true
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+
 theme = Catppuccin Mocha
