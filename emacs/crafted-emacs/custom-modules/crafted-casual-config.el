@@ -39,6 +39,5 @@
 (keymap-set symbol-overlay-map "C-o" #'casual-symbol-overlay-tmenu)
 (keymap-global-set "C-o" #'casual-editkit-main-tmenu)
 
-
 (provide 'crafted-casual-config)
 ;;; crafted-casual-config.el ends here

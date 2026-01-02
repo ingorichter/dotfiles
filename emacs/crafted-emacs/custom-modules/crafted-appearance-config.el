@@ -12,10 +12,7 @@
 (setq fontaine-latest-state-file
       (locate-user-emacs-file "fontaine-latest-state.eld"))
 
-;; Iosevka Comfy is my highly customised build of Iosevka with
-;; monospaced and duospaced (quasi-proportional) variants as well as
-;; support or no support for ligatures:
-;; <https://github.com/protesilaos/iosevka-comfy>.
+;; Using Aporetic font instead of Iosevka
 (setq fontaine-presets
       '((small
          :default-family "Aporetic Sans Mono"

@@ -38,7 +38,7 @@ _zsh_timing_end $compinit_start "compinit"
 # Plugin setup (group related plugins)
 plugin_start=$(_zsh_timing_start)
 # Core plugins that are needed immediately
-plugins=(git git-extras colorize command-not-found fzf)
+plugins=(git git-extras colorize command-not-found fzf eza)
 
 # Lazy load other plugins
 function load_plugin() {
