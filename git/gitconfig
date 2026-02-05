@@ -71,6 +71,7 @@
 	# conflictstyle = zdiff3
 
 [pull]
+	rebase = false
 	# rebase = true
 
 # remote URL based config (requires Git 2.36+)
