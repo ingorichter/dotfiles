@@ -8,3 +8,9 @@ for alias in $(find ~/.alias.d/ -type f -not -name .DS_Store)
 do
     source "$alias"
 done
+
+# Ensure Homebrew paths come first after /etc/zprofile runs path_helper
+# This is needed because path_helper rebuilds PATH from system files
+if [ -n "$HOMEBREW_PREFIX" ]; then
+    export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
+fi
