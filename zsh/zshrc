@@ -268,12 +268,26 @@ _zsh_timing_end $fabric_start "fabric-bootstrap"
 
 # Load oh-my-posh theme
 posh_start=$(_zsh_timing_start)
-# Cache oh-my-posh theme if it doesn't exist or is older than 1 day
-if [[ ! -f ~/.cache/oh-my-posh.zsh ]] || [[ $(find ~/.cache/oh-my-posh.zsh -mtime +1 2>/dev/null) ]]; then
-    mkdir -p ~/.cache
-    oh-my-posh init zsh --config ~/.dotfiles/oh-my-posh/night-owl-simple.omp.json > ~/.cache/oh-my-posh.zsh
+# Initialize oh-my-posh prompt
+# Try using init command first, fallback to manual setup if it doesn't work
+export POSH_THEME_PATH=~/.dotfiles/oh-my-posh/night-owl-simple.omp.json
+if command -v oh-my-posh >/dev/null 2>&1; then
+    # Try to use init command (works in interactive TTY contexts)
+    local init_output=$(oh-my-posh init zsh --config "$POSH_THEME_PATH" 2>/dev/null)
+    if [[ -n "$init_output" ]]; then
+        eval "$init_output"
+    else
+        # Fallback: manual prompt setup using print command
+        function _render_posh_prompt() {
+            local posh_prompt=$(oh-my-posh print primary --config "$POSH_THEME_PATH" 2>/dev/null)
+            if [[ -n "$posh_prompt" ]]; then
+                PROMPT="$posh_prompt"
+            fi
+        }
+        precmd_functions+=(_render_posh_prompt)
+        _render_posh_prompt
+    fi
 fi
-source ~/.cache/oh-my-posh.zsh
 _zsh_timing_end $posh_start "oh-my-posh"
 
 # End overall timing

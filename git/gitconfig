@@ -100,8 +100,8 @@
     conflictstyle = diff3
 
 [pull]
-    # rebase = true
-    rebase = false
+	rebase = false
+	# rebase = true
 
 # remote URL based config (requires Git 2.36+)
 # URL-based rules work with worktrees, unlike path-based rules

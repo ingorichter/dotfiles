@@ -3,7 +3,7 @@
 ## Intel= /usr/local/bin/brew
 ## M1= /opt/homebrew/bin/brew
 
-case "$(uname -m)" in
+case "$(/usr/bin/uname -m)" in
     "x86_64")
         HOMEBREW_BIN=/usr/local/bin/brew
     ;;
@@ -23,8 +23,8 @@ HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
 HOMEBREW_FPATH=${HOMEBREW_PREFIX}/share/zsh/site-functions
 export HOMEBREW_CELLAR HOMEBREW_PREFIX HOMEBREW_FPATH
 
-# Ensure PATH includes all necessary directories (avoiding duplications)
-export PATH="${HOME}/bin:/usr/local/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
+# Ensure Homebrew paths come first in PATH to take precedence over system binaries
+export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${HOME}/bin:/usr/local/bin:${PATH}"
 
 # Development environment defaults
 export DEV_ROOT="${HOME}/develop"

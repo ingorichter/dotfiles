@@ -44,6 +44,8 @@ window-save-state = always
 # resize-overlay-duration = 4s 200ms
 
 theme = Catppuccin Mocha
+background-opacity = 0.95
+
 font-family = "MesloLGS Nerd Font Mono"
 font-size = 20.0
 link-url

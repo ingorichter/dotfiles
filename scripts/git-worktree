@@ -25,6 +25,8 @@ set -euo pipefail
 SCRIPT_NAME="git-worktree"
 VERSION="1.0.0"
 DEFAULT_BASE_BRANCH="main"
+# Branch name prefix (e.g. ingo/SHARED-6448); set to "" to use worktree name as branch
+BRANCH_PREFIX="ingo/"
 
 # --- Colors for output ---
 RED='\033[0;31m'
@@ -95,6 +97,7 @@ EXAMPLES:
 
 NOTES:
     - Worktrees are created as sibling directories: repo-name-worktree-name
+    - New branches are named with prefix (e.g. create SHARED-6448 -> branch ingo/SHARED-6448)
     - New branches are automatically created if they don't exist
     - Use 'git worktree' directly for advanced operations
     
@@ -173,6 +176,12 @@ get_current_branch() {
     git rev-parse --abbrev-ref HEAD
 }
 
+# Branch name used for a worktree (prefix + name)
+get_branch_name_for_worktree() {
+    local name="$1"
+    echo "${BRANCH_PREFIX}${name}"
+}
+
 # --- Core Functions ---
 create_worktree() {
     local name="$1"
@@ -201,8 +210,9 @@ create_worktree() {
         fi
     fi
     
-    # Create the worktree with a new branch
-    local new_branch="$name"
+    # Create the worktree with a new branch (prefixed for easier identification)
+    local new_branch
+    new_branch="$(get_branch_name_for_worktree "$name")"
     
     # Check if branch with same name already exists
     if branch_exists "$new_branch"; then
@@ -286,15 +296,17 @@ remove_worktree() {
     
     log_success "Worktree '$name' removed successfully"
     
-    # Ask if user wants to delete the branch too
-    if branch_exists "$name"; then
+    # Ask if user wants to delete the branch too (branch uses same prefix as create)
+    local branch_name
+    branch_name="$(get_branch_name_for_worktree "$name")"
+    if branch_exists "$branch_name"; then
         echo
-        read -p "Also delete branch '$name'? (y/N): " -n 1 -r
+        read -p "Also delete branch '$branch_name'? (y/N): " -n 1 -r
         echo
         
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-            git branch -D "$name"
-            log_success "Branch '$name' deleted"
+            git branch -D "$branch_name"
+            log_success "Branch '$branch_name' deleted"
         fi
     fi
 }
