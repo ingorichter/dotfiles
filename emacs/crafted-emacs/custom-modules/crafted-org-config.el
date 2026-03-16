@@ -124,5 +124,14 @@
         (add-to-list 'org-babel-load-languages '(plantuml . t)))
     (warn "PlantUML executable not found. PlantUML support in org-babel will be disabled.")))
 
+;; Fix TAB behavior in org-mode to allow proper indentation
+;; When tab-always-indent is 'complete, it interferes with org-mode indentation
+(add-hook 'org-mode-hook
+          (lambda ()
+            ;; Allow TAB to indent in org-mode instead of triggering completion
+            (setq-local tab-always-indent t)
+            ;; Ensure org-mode's TAB cycling and indentation work properly
+            (local-set-key (kbd "TAB") 'org-cycle)))
+
 (provide 'crafted-org-config)
 ;;; crafted-org-packages.el ends here
