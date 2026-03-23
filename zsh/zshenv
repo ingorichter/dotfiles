@@ -23,8 +23,15 @@ HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
 HOMEBREW_FPATH=${HOMEBREW_PREFIX}/share/zsh/site-functions
 export HOMEBREW_CELLAR HOMEBREW_PREFIX HOMEBREW_FPATH
 
-# Ensure Homebrew paths come first in PATH to take precedence over system binaries
-export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${HOME}/bin:/usr/local/bin:${PATH}"
+# OpenJDK must be first so `java`/`javac` beat /usr/bin/java (macOS stub) and path_helper order.
+# Then Homebrew shims; then user paths.
+_JDK_BIN="${HOMEBREW_PREFIX}/opt/openjdk/bin"
+if [[ -d "$_JDK_BIN" ]]; then
+  export PATH="${_JDK_BIN}:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${HOME}/bin:/usr/local/bin:${PATH}"
+else
+  export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${HOME}/bin:/usr/local/bin:${PATH}"
+fi
+unset _JDK_BIN
 
 # Development environment defaults
 export DEV_ROOT="${HOME}/develop"
@@ -34,9 +41,6 @@ export PATH="${PATH}:${GOPATH}/bin"
 
 # Machine specific config file
 export MACHINE_CONFIG_FILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/MachineEnvs/$(/usr/sbin/scutil --get LocalHostName)"
-
-# Add OpenJDK to PATH
-export PATH="$(${HOMEBREW_BIN} --prefix openjdk)/bin:${PATH}"
 
 # Modify the $PATH for other binaries
 export PATH="${PATH}:/usr/local/sbin:${HOME}/.fastlane/bin:${HOME}/.local/bin"
@@ -71,3 +75,15 @@ fi
 if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
+
+# Remove duplicate PATH entries while preserving order (first occurrence wins).
+# Callable from zprofile/zshrc after path_helper or plugins add overlapping paths.
+dedupe_path() {
+    [[ -z "$PATH" ]] && return
+    local -aU _path_parts
+    _path_parts=(${(s.:.)PATH})
+    PATH=${(j.:.)_path_parts}
+    export PATH
+}
+
+dedupe_path

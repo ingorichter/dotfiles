@@ -290,6 +290,9 @@ if command -v oh-my-posh >/dev/null 2>&1; then
 fi
 _zsh_timing_end $posh_start "oh-my-posh"
 
+# Final PATH cleanup (oh-my-zsh, fabric, etc. may add overlapping dirs)
+dedupe_path
+
 # End overall timing
 _zsh_timing_end $overall_start "Total zsh initialization"
 

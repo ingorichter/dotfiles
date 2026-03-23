@@ -1,8 +1,10 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+_fzf_bin="${HOMEBREW_PREFIX}/opt/fzf/bin"
+if [[ -d "$_fzf_bin" ]] && [[ ! "$PATH" == *${_fzf_bin}* ]]; then
+  export PATH="${PATH:+${PATH}:}${_fzf_bin}"
 fi
+unset _fzf_bin
 
 FZF_SCRIPTS=$(${HOMEBREW_BIN} --prefix fzf)/shell
 

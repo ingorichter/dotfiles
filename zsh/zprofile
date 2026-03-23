@@ -9,10 +9,21 @@ do
     source "$alias"
 done
 
-# Ensure Homebrew paths come first after /etc/zprofile runs path_helper
-# This is needed because path_helper rebuilds PATH from system files
+# After path_helper: restore priority. OpenJDK first (same as zshenv), then Homebrew.
 if [ -n "$HOMEBREW_PREFIX" ]; then
-    export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
+    _JDK_BIN="${HOMEBREW_PREFIX}/opt/openjdk/bin"
+    if [ -d "$_JDK_BIN" ]; then
+        export PATH="${_JDK_BIN}:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
+    else
+        export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
+    fi
+    unset _JDK_BIN
 fi
+
+# path_helper + zshenv both contribute; drop duplicate entries
+dedupe_path
+
 # Added by swiftly
-. "/Users/ingorichter/.swiftly/env.sh"
+if [ -f "$HOME/.swiftly/env.sh" ]; then
+    . "$HOME/.swiftly/env.sh"
+fi

@@ -169,6 +169,10 @@
 [includeIf "hasconfig:remote.*.url:git@github.com:aup-sdk-collab/**"]
     path = ~/.dotfiles/git/github.com.gitconfig
 
+# irichter_adobe (Adobe corporate account)
+[includeIf "hasconfig:remote.*.url:git@github.com:irichter_adobe/**"]
+	path = ~/.dotfiles/git/github.com.gitconfig
+
 # Cloud Components Delivery Infrastructure
 [includeIf "hasconfig:remote.*.url:https://github.com/CloudComponentsDeliveryInfrastructure/**"]
     path = ~/.dotfiles/git/github.com.gitconfig

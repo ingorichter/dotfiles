@@ -43,8 +43,9 @@ window-save-state = always
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-theme = Catppuccin Mocha
-background-opacity = 0.95
+theme = dark:Catppuccin Mocha,light:Catppuccin Latte
+
+background-opacity = 0.98
 
 font-family = "MesloLGS Nerd Font Mono"
 font-size = 20.0
