@@ -10,7 +10,7 @@
 # Core Settings
 ############################################################
 [core]
-	excludesfile = /Users/ingorichter/.gitignore_global
+	excludesfile = $HOME/.gitignore_global
 ############################################################
 # Commit & Signing
 ############################################################
@@ -83,7 +83,7 @@
 [commit]
     verbose = true
     gpgSign = true
-	template = /Users/ingorichter/.stCommitMsg
+	# template = ~/.stCommitMsg
 
 [rerere]
     enabled = true
@@ -229,6 +229,10 @@
 
 # path based config (fallback when remote URL patterns don't match)
 # Note: ~/develop/ rule removed to prevent conflicts with specific GHEC repo rules
+
+# ccx-sharing: origin uses git@github-adobe:... so hasconfig URL rules never match
+[includeIf "gitdir:/Users/irichter/develop/work/repos/ccx-sharing/**"]
+	path = ~/.gitconfig-ccx-sharing
 
 [includeIf "gitdir:~/develop/fun/"]
     path = ~/.dotfiles/git/github.gitconfig
