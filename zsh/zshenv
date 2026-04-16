@@ -1,27 +1,26 @@
 ## Platform Switch
 ## The install location of Homebrew on Intel and M1 is different
-## Intel= /usr/local/bin/brew
-## M1= /opt/homebrew/bin/brew
+## Intel= /usr/local
+## M1= /opt/homebrew
 
 case "$(/usr/bin/uname -m)" in
     "x86_64")
-        HOMEBREW_BIN=/usr/local/bin/brew
+        HOMEBREW_PREFIX=/usr/local
     ;;
     "arm64")
-        HOMEBREW_BIN=/opt/homebrew/bin/brew
+        HOMEBREW_PREFIX=/opt/homebrew
     ;;
     *)
-        echo "Unsupported architecture"
-        exit 1
+        echo "zshenv: unsupported architecture, skipping Homebrew setup"
+        return
     ;;
 esac
 
-# Homebrew setup
-export HOMEBREW_BIN
-HOMEBREW_CELLAR=$(${HOMEBREW_BIN} --cellar)
-HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
-HOMEBREW_FPATH=${HOMEBREW_PREFIX}/share/zsh/site-functions
-export HOMEBREW_CELLAR HOMEBREW_PREFIX HOMEBREW_FPATH
+# Homebrew setup — derive paths from known prefix to avoid subprocess calls
+HOMEBREW_BIN="${HOMEBREW_PREFIX}/bin/brew"
+HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar"
+HOMEBREW_FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions"
+export HOMEBREW_BIN HOMEBREW_CELLAR HOMEBREW_PREFIX HOMEBREW_FPATH
 
 # OpenJDK must be first so `java`/`javac` beat /usr/bin/java (macOS stub) and path_helper order.
 # Then Homebrew shims; then user paths.
@@ -64,11 +63,6 @@ export ZPLUG_FPATH=${ZPLUG_HOME}/repos
 
 if [ -f "${MACHINE_CONFIG_FILE}" ]; then
     source "${MACHINE_CONFIG_FILE}"
-fi
-
-# Setup fnm (ensure fnm exists before running)
-if command -v fnm &> /dev/null; then
-    eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 
 # Cargo setup

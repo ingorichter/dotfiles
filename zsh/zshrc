@@ -293,6 +293,11 @@ _zsh_timing_end $posh_start "oh-my-posh"
 # Final PATH cleanup (oh-my-zsh, fabric, etc. may add overlapping dirs)
 dedupe_path
 
+# fnm: runs last so its paths are guaranteed at the front of PATH for all interactive shells.
+if command -v fnm &> /dev/null; then
+    eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
 # End overall timing
 _zsh_timing_end $overall_start "Total zsh initialization"
 
