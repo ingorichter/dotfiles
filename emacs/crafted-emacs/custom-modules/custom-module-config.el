@@ -35,6 +35,7 @@
 (require 'crafted-casual-packages)
 ;; (require 'crafted-writer-packages)
 (require 'crafted-llm-packages)
+(require 'crafted-empv-packages)
 (require 'crafted-misc-packages)
 
 (crafted-package-install-selected-packages)
@@ -56,6 +57,7 @@
 (require 'crafted-casual-config)
 ;; (require 'crafted-writer-config)
 (require 'crafted-llm-config)
-(provide 'custom-module-config)
+;; (provide 'custom-module-config)
+(require 'crafted-empv-config)
 (require 'crafted-misc-config)
 ;;; crafted-module-config.el ends here

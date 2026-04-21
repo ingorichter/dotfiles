@@ -17,6 +17,7 @@
 (require 'casual-info)
 (require 'casual-isearch)
 (require 'casual-re-builder)
+;; (require 'casual-org)
 ;; (require 'casual)
 ;; (require 'casual-avy)
 ;; (require 'casual-suite)

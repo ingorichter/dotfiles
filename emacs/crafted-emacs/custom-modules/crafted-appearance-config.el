@@ -97,6 +97,8 @@
 ;;     (info "(elisp) Key Binding Conventions")
 (define-key global-map (kbd "C-c f") #'fontaine-set-preset)
 
+(global-visual-line-mode t)
+
 (load-theme 'ef-kassio)
 
 (provide 'crafted-appearance-config)
