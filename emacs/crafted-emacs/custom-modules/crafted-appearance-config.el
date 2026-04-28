@@ -8,6 +8,7 @@
 ;;; Code:
 
 (require 'fontaine)
+(require 'lin)
 
 (setq fontaine-latest-state-file
       (locate-user-emacs-file "fontaine-latest-state.eld"))
@@ -97,9 +98,12 @@
 ;;     (info "(elisp) Key Binding Conventions")
 (define-key global-map (kbd "C-c f") #'fontaine-set-preset)
 
-(global-visual-line-mode t)
+;; (global-visual-line-mode t)
 
-(load-theme 'ef-kassio)
+(setopt lin-face 'lin-red)
+(lin-global-mode 1)
 
+(load-theme 'ef-cyprus)
+;; (load-theme 'ef-dream)
 (provide 'crafted-appearance-config)
 ;;; crafted-appearance-config.el ends here

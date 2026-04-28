@@ -11,5 +11,7 @@
 ;; Manually select "ef-themes" package
 (add-to-list 'package-selected-packages 'ef-themes)
 
+(add-to-list 'package-selected-packages 'lin)
+
 (provide 'crafted-appearance-packages)
 ;;; crafted-appearance-packages.el ends here

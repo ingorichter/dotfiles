@@ -12,6 +12,7 @@
 
 (setq empv-radio-channels
       '(("SomaFM - Groove Salad" . "http://www.somafm.com/groovesalad.pls")
+        ("SomaFM - Deep Space One" . "http://www.somafm.com/deepspaceone.pls")
         ("SomaFM - Drone Zone" . "http://www.somafm.com/dronezone.pls")
         ("SomaFM - Sonic Universe" . "https://somafm.com/sonicuniverse.pls")
         ("SomaFM - Metal" . "https://somafm.com/metal.pls")

@@ -57,7 +57,8 @@
 (require 'crafted-casual-config)
 ;; (require 'crafted-writer-config)
 (require 'crafted-llm-config)
-;; (provide 'custom-module-config)
 (require 'crafted-empv-config)
 (require 'crafted-misc-config)
+
 ;;; crafted-module-config.el ends here
+(provide 'custom-module-config)
