@@ -48,7 +48,7 @@ theme = dark:Catppuccin Mocha,light:Catppuccin Latte
 background-opacity = 0.98
 
 font-family = "MesloLGS Nerd Font Mono"
-font-size = 20.0
+font-size = 22.0
 link-url
 
 macos-option-as-alt = true
