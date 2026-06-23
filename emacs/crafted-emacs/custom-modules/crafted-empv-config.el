@@ -17,7 +17,7 @@
         ("SomaFM - Sonic Universe" . "https://somafm.com/sonicuniverse.pls")
         ("SomaFM - Metal" . "https://somafm.com/metal.pls")
         ("SomaFM - Vaporwaves" . "https://somafm.com/vaporwaves.pls")
-        ("ByteFM - Main" . https://bytefm.stream39.radiohost.de/bytefm-main_mp3-128)))
+        ("ByteFM - Main" . "https://bytefm.stream39.radiohost.de/bytefm-main_mp3-128")))
 
 (provide 'crafted-empv-config)
 ;;; crafted-empv-config.el ends here
