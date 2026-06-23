@@ -15,6 +15,37 @@
 (defun ir/treesit-message()
   (message "Install all grammars"))
 (advice-add 'treesit-auto-install-all :before #'ir/remove-janet-from-treesit)
+
+;; setup harper for grammar checks
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                '(org-mode . ("harper-ls" "--stdio"))))
+;; (add-hook 'org-mode-hook 'eglot-ensure)
+(setq-default eglot-workspace-configuration
+              '(:harper-ls (:userDictPath ""
+                            :workspaceDictPath ""
+                            :fileDictPath ""
+                            :linters (:SpellCheck t
+                                      :SpelledNumbers :json-false
+                                      :AnA t
+                                      :SentenceCapitalization t
+                                      :UnclosedQuotes t
+                                      :WrongQuotes :json-false
+                                      :LongSentences t
+                                      :RepeatedWords t
+                                      :Spaces t
+                                      :Matcher t
+                                      :CorrectNumberSuffix t)
+                            :codeActions (:ForceStable :json-false)
+                            :markdown (:IgnoreLinkTitle :json-false)
+                            :diagnosticSeverity "hint"
+                            :isolateEnglish :json-false
+                            :dialect "American"
+                            :maxFileLength 120000
+                            :ignoredLintsPath ""
+                            :excludePatterns [])))
+
+
 ;; (advice-remove 'treesit-auto-install-all #'ir/treesit-message)
 
 ;; packages
@@ -36,6 +67,7 @@
 ;; (require 'crafted-writer-packages)
 (require 'crafted-llm-packages)
 (require 'crafted-empv-packages)
+(require 'crafted-grove-packages)
 (require 'crafted-misc-packages)
 
 (crafted-package-install-selected-packages)
@@ -58,6 +90,7 @@
 ;; (require 'crafted-writer-config)
 (require 'crafted-llm-config)
 (require 'crafted-empv-config)
+(require 'crafted-grove-config)
 (require 'crafted-misc-config)
 
 ;;; crafted-module-config.el ends here
