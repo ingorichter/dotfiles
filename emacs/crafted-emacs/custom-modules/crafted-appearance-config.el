@@ -100,8 +100,8 @@
 
 ;; (global-visual-line-mode t)
 
-(setopt lin-face 'lin-red)
-(lin-global-mode 1)
+(setopt lin-face 'lin-blue)
+(lin-global-mode t)
 
 (load-theme 'ef-cyprus)
 ;; (load-theme 'ef-dream)

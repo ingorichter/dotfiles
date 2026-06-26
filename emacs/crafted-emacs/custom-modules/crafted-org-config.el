@@ -79,7 +79,14 @@
          "* %:description\n%u\n\n%c\n\n%i"
          :empty-lines 1)
         ("i" "Idea" entry (file+headline org-refile-location "Ideas")
-         "* Idea %^{Title} %^g\n  :LOGBOOK:\n - Added: %U\n:END:")))
+         "* Idea %^{Title} %^g\n  :LOGBOOK:\n - Added: %U\n:END:")
+        ("p" "Product to consider" entry
+         (file+headline org-default-todo-file "Purchase")
+         "* TODO %^{Product name} :product:
+%?
+:PROPERTIES:
+:CAPTURED: %U
+:END:")))
 
 ;; (setq org-capture-templates '(("t" "To Do Item" entry (file+headline org-refile-location "Inbox")
 ;;                                "* TODO %^{Titel} %^g\n %?\n\n:LOGBOOK:\n - Added: %U\n:END:")

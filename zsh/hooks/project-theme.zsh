@@ -13,11 +13,11 @@ typeset -A PROJECT_THEMES_LIGHT
 
 # component-core: darker green for dark mode, lighter for light mode
 PROJECT_THEMES_DARK[~/develop/work/repos/component-core]="#2d5f1f"  # darker, muted green
-PROJECT_THEMES_LIGHT[~/develop/work/repos/component-core]="#90c060" # lighter, softer green
+PROJECT_THEMES_LIGHT[~/develop/work/repos/component-core]="#2a5a18" # dark enough for white text
 
 # ccx-sharing: darker blue for dark mode, lighter for light mode  
 PROJECT_THEMES_DARK[~/develop/work/repos/ccx-sharing]="#1a3d8f"    # deeper blue
-PROJECT_THEMES_LIGHT[~/develop/work/repos/ccx-sharing]="#6090e0"   # lighter blue
+PROJECT_THEMES_LIGHT[~/develop/work/repos/ccx-sharing]="#1a3570"   # dark enough for white text
 
 project_chpwd() {
   local bg title themes_to_use
@@ -44,5 +44,6 @@ project_chpwd() {
 }
 
 chpwd_functions+=(project_chpwd)
+precmd_functions+=(project_chpwd)
 # Run on shell init if already in a project dir
 project_chpwd
