@@ -321,3 +321,15 @@ bindkey "^[r" history-incremental-search-backward
 
 # Dump timing results
 # zprof
+
+# >>> scout completion >>>
+if command -v scout >/dev/null 2>&1; then
+  autoload -Uz compinit
+  if (( ! $+functions[compdef] )); then
+    compinit
+  fi
+  if (( $+functions[compdef] )); then
+    eval "$(scout generate-shell-completion zsh)"
+  fi
+fi
+# <<< scout completion <<<

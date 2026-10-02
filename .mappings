@@ -98,3 +98,8 @@
 "snapscan/jp.co.pfu.ScanSnap.SearchablePDFConverterSetting.plist"   = "~/Library/Preferences/jp.co.pfu.ScanSnap.SearchablePDFConverterSetting.plist"
 "snapscan/jp.co.pfu.ScanSnap.SearchablePDFConverterSSSetting.plist" = "~/Library/Preferences/jp.co.pfu.ScanSnap.SearchablePDFConverterSSSetting.plist"
 "snapscan/jp.co.pfu.ScanSnap.V10L10.plist"                          = "~/Library/Preferences/jp.co.pfu.ScanSnap.V10L10.plist"
+
+# =================================================================
+# AI Stuff
+# =================================================================
+"aitools/copilot/copilot-instructions.md"                           = "~/.copilot/copilot-instructions.md"
