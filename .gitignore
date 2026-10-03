@@ -48,3 +48,5 @@ yarn-error.log*
 # The revealjs directory is kept in the repository for script compatibility
 # but is not part of the actual dotfiles and should not be linked
 # revealjs/
+
+scripts/scout*
