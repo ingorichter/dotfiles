@@ -45,6 +45,7 @@
 (require 'crafted-org-config)
 (require 'crafted-osx-config)
 (pixel-scroll-mode 1)
+(tab-bar-history-mode 1)
 (require 'crafted-ui-config)
 
 ;;; Optional configuration
