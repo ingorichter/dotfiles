@@ -184,6 +184,13 @@ function pass() {
     pass "$@"
 }
 
+oc() (
+  set -a
+  source "$HOME/.config/opencode/secrets.env" || return
+  set +a
+  command opencode "$@"
+)
+
 zellij_tab_name_update() {
     if [[ -n $ZELLIJ ]]; then
         local tab_name=""
@@ -333,3 +340,8 @@ if command -v scout >/dev/null 2>&1; then
   fi
 fi
 # <<< scout completion <<<
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/irichter/.lmstudio/bin"
+# End of LM Studio CLI section
+

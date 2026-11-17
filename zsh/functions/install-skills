@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for skill in "$HOME/develop/work/repos/skills-agents-plugins/skills"/*; do
+    [[ -d $skill ]] || continue
+    echo "Installing skill from $skill to $HOME/.agents/skills/$(basename "$skill")"
+    # Add your installation command here, e.g., cp -r "$skill" /desired/location/
+    ln -s "$skill" "$HOME/.agents/skills/$(basename "$skill")" 2>/dev/null || true
+done

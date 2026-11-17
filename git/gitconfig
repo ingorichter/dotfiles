@@ -131,6 +131,10 @@
     path = ~/.dotfiles/git/github.gitconfig
 
 # Adobe GitHub organizations - HIGHER PRIORITY (processed after general GitHub)
+# Use the Adobe identity for the github-adobe SSH alias.
+[includeIf "hasconfig:remote.*.url:git@github-adobe:*/**"]
+    path = ~/.dotfiles/git/github.com.gitconfig
+
 # Direct GitHub patterns
 [includeIf "hasconfig:remote.*.url:https://github.com/adobe/**"]
     path = ~/.dotfiles/git/github.com.gitconfig
