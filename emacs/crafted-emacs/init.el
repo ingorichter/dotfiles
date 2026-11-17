@@ -29,6 +29,7 @@
 (require 'crafted-completion-packages)
 (require 'crafted-defaults-config)
 (require 'crafted-ide-packages)
+(setq package-selected-packages (delq 'treesit-auto package-selected-packages))
 (require 'crafted-org-packages)
 (require 'crafted-startup-config)
 (require 'crafted-ui-packages)

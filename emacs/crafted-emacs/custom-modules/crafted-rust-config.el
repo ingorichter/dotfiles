@@ -15,10 +15,6 @@
 ;; modes (notably `rust-ts-mode').
 (crafted-ide-eglot-auto-ensure-all)
 
-;; The first time you run Emacs with this enabled, the Rust tree
-;; sitter parser will be installed for you automatically.
-(crafted-ide-configure-tree-sitter)
-
 ;; You will probably want to tweak this variable, it determines how
 ;; quickly the completion prompt provides LSP suggestions when
 ;; typing. Be careful if you set it to 0 in a large project!
