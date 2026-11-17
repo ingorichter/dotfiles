@@ -41,11 +41,9 @@
 
 ;;; Configuration phase
 (require 'crafted-completion-config)
-(require 'crafted-defaults-config)
 (require 'crafted-ide-config)
 (require 'crafted-org-config)
 (require 'crafted-osx-config)
-(require 'crafted-startup-config)
 (require 'crafted-ui-config)
 
 ;;; Optional configuration

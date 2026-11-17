@@ -39,7 +39,6 @@
 ;; denote is part of crafted emacs
 (require 'crafted-appearance-packages)
 (require 'crafted-denote-packages)
-(require 'crafted-org-packages)
 ;; (require 'crafted-rust-packages)
 (require 'crafted-customfunctions-packages)
 (require 'crafted-mu4e-packages)
@@ -62,7 +61,6 @@
 ;; configs
 (require 'crafted-appearance-config)
 (require 'crafted-denote-config)
-(require 'crafted-org-config)
 ;; (require 'crafted-rust-config)
 (require 'crafted-customfunctions-config)
 (require 'crafted-mu4e-config)
