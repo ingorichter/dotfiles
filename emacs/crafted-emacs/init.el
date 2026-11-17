@@ -47,6 +47,7 @@
 (pixel-scroll-mode 1)
 (tab-bar-history-mode 1)
 (require 'crafted-ui-config)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 ;;; Optional configuration
 (require 'custom-module-config)
