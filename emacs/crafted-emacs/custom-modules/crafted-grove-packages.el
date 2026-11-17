@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(add-to-list 'package-selected-packages '(grove :type git :host github :repo "jonathanchu/grove"))
+(add-to-list 'package-selected-packages 'grove)
 
 (provide 'crafted-grove-packages)
 ;;; crafted-grove-packages.el ends here

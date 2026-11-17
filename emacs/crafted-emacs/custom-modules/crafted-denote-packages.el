@@ -13,7 +13,7 @@
 (add-to-list 'package-selected-packages 'denote-silo)
 (add-to-list 'package-selected-packages 'denote-markdown)
 (add-to-list 'package-selected-packages 'denote-sequence)
-(add-to-list 'package-selected-packages '(denote-menu :type git :host github :repo "namilus/denote-menu"))
+(add-to-list 'package-selected-packages 'denote-menu)
 
 (provide 'crafted-denote-packages)
 ;;; crafted-denote-packages.el ends here

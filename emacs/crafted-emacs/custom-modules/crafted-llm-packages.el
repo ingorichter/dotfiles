@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(add-to-list 'package-selected-packages '(ollama-buddy :type git :repo "captainflasmr/ollama-buddy"))
+(add-to-list 'package-selected-packages 'ollama-buddy)
 
 (provide 'crafted-llm-packages)
 ;;; crafted-llm-packages.el ends here

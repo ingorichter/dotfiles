@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(add-to-list 'package-selected-packages '(hackernews :type git :repo "clarete/hackernews.el"))
+(add-to-list 'package-selected-packages 'hackernews)
 
 (provide 'crafted-misc-packages)
 ;;; crafted-misc-packages.el ends here

@@ -10,8 +10,12 @@
 
 ;;; Code:
 
-(straight-use-package
- '(tokyo-night :type git :host github :repo "bbatsov/tokyo-night-emacs"))
+(require 'use-package)
+
+(use-package tokyo-night
+  :defer t
+  :vc (:url "https://github.com/bbatsov/tokyo-night-emacs.git"
+       :rev :newest))
 
 (defun ir/apply-theme (appearance)
   "Load theme based on APPEARANCE (light or dark)."

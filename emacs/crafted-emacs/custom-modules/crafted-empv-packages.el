@@ -7,8 +7,10 @@
 
 ;;; Code:
 
-(add-to-list 'package-selected-packages '(empv :type git :repo "isamert/empv.el"))
-(add-to-list 'package-selected-packages '(ytr :type git :host github :repo "xenodium/ytr"))
+(add-to-list 'package-selected-packages 'empv)
+(unless (package-installed-p 'ytr)
+  (package-vc-install
+   '(ytr :url "https://github.com/xenodium/ytr.git")))
 
 (provide 'crafted-empv-packages)
 ;;; crafted-empv-packages.el ends here

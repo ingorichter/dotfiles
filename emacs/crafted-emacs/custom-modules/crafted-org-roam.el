@@ -68,7 +68,9 @@
 (require 'org-roam-protocol)
 
 ;; org-roam-timestamp
-(crafted-package-install-package '(org-roam-timestamps :type git :repo "ThomasFKJorna/org-roam-timestamps"))
+(unless (package-installed-p 'org-roam-timestamps)
+  (package-vc-install
+   '(org-roam-timestamps :url "https://github.com/ThomasFKJorna/org-roam-timestamps.git")))
 (add-hook 'org-roam 'org-roam-timestamps-mode)
 
 (provide 'crafted-org-roam-config)

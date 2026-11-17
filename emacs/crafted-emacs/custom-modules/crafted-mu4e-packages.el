@@ -8,7 +8,7 @@
 ;;; Code:
 
 ;; fix this loading
-(add-to-list 'package-selected-packages '(smtpmail-async :type git :host github :repo "jwiegley/emacs-async"))
+(add-to-list 'package-selected-packages 'async)
 
 (provide 'crafted-mu4e-packages)
 ;;; crafted-mu4e-packages.el ends here
