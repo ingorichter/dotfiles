@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: nil; -*-
 ;; (add-to-list 'load-path "/usr/local/Cellar/mu/1.6.8/share/emacs/site-lisp/mu/mu4e/")
 ;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
