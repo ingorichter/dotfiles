@@ -48,6 +48,7 @@
 (tab-bar-history-mode 1)
 (require 'crafted-ui-config)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'electric-pair-local-mode)
 (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
 
 ;;; Optional configuration
