@@ -50,6 +50,7 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (add-hook 'prog-mode-hook #'electric-pair-local-mode)
 (add-hook 'emacs-lisp-mode-hook #'flymake-mode)
+(add-hook 'rust-ts-mode-hook #'eglot-ensure)
 
 ;;; Optional configuration
 (require 'custom-module-config)
