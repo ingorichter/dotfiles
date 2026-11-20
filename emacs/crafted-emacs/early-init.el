@@ -16,6 +16,7 @@
 			      (getenv "CRAFTED_EMACS_HOME")
 			      "/modules/crafted-init-config"))
 
+(setq crafted-package-perform-stale-archive-check nil)
 (load (concat (getenv "CRAFTED_EMACS_HOME") "/modules/crafted-early-init-config"))
 (load (concat (getenv "CRAFTED_EMACS_HOME") "/modules/crafted-package-config"))
 
