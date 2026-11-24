@@ -21,5 +21,8 @@
         ("SomaFM - Vaporwaves" . "https://somafm.com/vaporwaves.pls")
         ("ByteFM - Main" . "https://bytefm.stream39.radiohost.de/bytefm-main_mp3-128")))
 
+(with-eval-after-load 'empv
+  (add-to-list 'empv-mpv-args "--curl-enabled=no" t))
+
 (provide 'crafted-empv-config)
 ;;; crafted-empv-config.el ends here
